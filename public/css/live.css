@@ -1,0 +1,24 @@
+.kotak{
+    border: 1px;
+    border-radius: 5px;
+    border-color:crimson;
+    border-style: solid;
+    margin-top: 10px;
+    text-align: center;
+    background-color: cyan;
+}
+
+.kotak2{
+    border-top: 0px;
+    border: 1px;
+    border-radius: 5px;
+    border-color:crimson;
+    border-style: solid;
+    text-align: center;
+}
+.kotak2 h1{
+    font-size: 72px;
+}
+.kotak2 h2{
+    font-size: 30px;
+}
