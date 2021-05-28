@@ -168,11 +168,20 @@ class LoketController extends Controller
     public function mobilePrint(Request $request)
     {
         $res = $request->get('qrCode');
-        $antri = Antrian::where('nik',$res)->update(['status_antrian' => 2]);
+        $antri = Antrian::where('nik',$res)->update(['status_antrian' => 1]);
         $antrix = Antrian::where('nik',$res)->get();
+
         return view ('printNomor')->with('antrians', $antrix);
     }
 
-    
+    public function MobileLoket($layanan)
+    {  
+        $loket = Loket::where('layanan_id', $layanan)->with('layanan')->get();
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $loket
+        ], 200);
+    }
         
 }

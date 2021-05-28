@@ -54,6 +54,11 @@ class Antrian extends Model
     {
         return $value ? "offline" : "online";
     }
+
+    public function getCountOfTodayAttribute()
+    {
+        return $this->where('tanggal_antrian',date('Y-m-d'))->Where('status_antrian',1)->count();
+    }
     
 
     

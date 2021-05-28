@@ -17,11 +17,11 @@
     <div class="container head">
         <h1 class="display-1"> <b>SELAMAT DATANG</b> </h1>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a href="{{route('dinas.offlines.create')}}" class="btn btn-success btn-rounded" target="_blank">DAFTAR
+            <a href="{{route('dinas.offlines.create')}}" class="btn btn-success btn-rounded">DAFTAR
                 OFFLINE</a>
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a href="{{route('scan')}}" class="btn btn-danger btn-rounded" target="_blank">SCAN QR CODE</a>
+            <a href="{{route('scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
         </div>
     </div>
 

@@ -16,7 +16,7 @@
     <title>{{ config('app.name', 'Antrian Online') }} | Cetak Nomor</title>
 </head>
 
-<body>
+<body>  
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -48,12 +48,13 @@
     </script>
 
 </body>
+<script type="text/javascript">
+    window.print();
+    window.onafterprint = function(event) {
+        window.location.href = "{{route('dinas.offlines.index')}}"
+    };
+</script>
 
 
-<!-- <script type="text/javascript">
-    $(document).ready(function(){
-      $('body').printPage();
-    });
-</script>  -->
 
 </html>

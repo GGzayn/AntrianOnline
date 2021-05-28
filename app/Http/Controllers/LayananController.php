@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 use App\Models\Layanan;
 use App\Models\Opd;
 
@@ -95,5 +95,15 @@ class LayananController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function MobileLayananList()
+    {
+        $layanan = Layanan::get();
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $layanan
+        ], 200);
     }
 }

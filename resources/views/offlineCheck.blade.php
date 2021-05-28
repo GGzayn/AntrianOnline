@@ -51,14 +51,8 @@
     $(document).ready(function () {
         $("a.klik").click(function () {
             var qrCode = $("#qrCode").val();
-            $("a.klik").attr("href", "{{url('mobilePrint?qrCode=')}}" + qrCode);
-            $.ajax({
-                url: "{{route('mobilePrint')}}",
-                type: "get",
-                data: {"qrCode": qrCode},
-            });
+            window.location.href="{{url('mobilePrint?qrCode=')}}" + qrCode;
         });
-        $("a.klik").printPage();
     });
 
 </script>

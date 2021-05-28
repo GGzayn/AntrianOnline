@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Opd;
 
 class OpdController extends Controller
@@ -93,5 +94,15 @@ class OpdController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function MobileOpdList()
+    {
+        $opd = Opd::get();
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $opd
+        ], 200);
     }
 }

@@ -26,7 +26,7 @@
                     <div class="card-body">
                         <video id="preview" height="300" weight="300"></video>
                         <input type="text" id="qrCode" name="qrCode" class="form-control">
-                        <a href="#" class="btn btn-success btn-rounded butt">CETAK NOMOR</a>
+                        <!-- <a href="#" class="btn btn-success btn-rounded butt">CETAK NOMOR</a> -->
                     </div>
                 </div>
             </div>
@@ -55,7 +55,9 @@
         video: document.getElementById('preview')
     });
     scanner.addListener('scan', function (content) {
-        $('#qrCode').val(content);
+        window.location.href="{{url('mobilePrint?qrCode=')}}" + content;
+        
+        
     });
 
     Instascan.Camera.getCameras().then(function (cameras) {
@@ -69,10 +71,11 @@
     });
 
 </script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function () {
         $("a.butt").click(function () {
             var qrCode = $("#qrCode").val();
+            alert(qrCode);
             $("a.butt").attr("href", "{{url('mobilePrint?qrCode=')}}" + qrCode);
             $.ajax({
                 url: "{{route('mobilePrint')}}",
@@ -83,6 +86,6 @@
         $("a.butt").printPage();
     });
 
-</script>
+</script> -->
 
 </html>

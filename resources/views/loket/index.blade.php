@@ -36,7 +36,7 @@
             <div class="box">
                 <div class="box-header with-border">
                     <a href="{{route('dinas.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
-                    <a href="{{route('loket.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
+                    <a href="{{route('dinas.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>

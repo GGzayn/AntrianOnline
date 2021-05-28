@@ -95,4 +95,49 @@ class AntrianController extends Controller
     {
         //
     }
+
+    public function MobileRegister(Request $request)
+    {
+        $validated = $request->validate([
+            'tanggal_booking' => 'required',
+            'loket_id' => 'required',
+            'nama' => 'required',
+            'nik' => 'required',
+            'tanggal_antrian' => 'required',
+            'waktu_antrian' => 'required',
+        ]);
+        
+        $antCount = Antrian::where('loket_id', $request->loket_id)->count();
+        $antrian = new Antrian;
+
+        $antrian->tanggal_booking = now();
+        $antrian->loket_id = $request->loket_id;
+        $antrian->nama = $request->nama;
+        $antrian->nik = $request->nik;
+        $antrian->tanggal_antrian = $request->tanggal_antrian;
+        $antrian->waktu_antrian = $request->waktu_antrian;
+        $antrian->jenis_antrian = 0;
+        $antrian->status_antrian = 0;
+        $antrian->no_antrian = $antCount+ 1;
+
+        $antrian->save();
+
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $antrian
+        ], 200);
+
+    }
+
+    public function historyAntrian($nik)
+    {
+        $antrian = Antrian:: where('nik', $nik)->get();
+
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $antrian
+        ], 200);
+    }
 }
