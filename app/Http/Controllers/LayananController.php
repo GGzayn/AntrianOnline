@@ -99,7 +99,7 @@ class LayananController extends Controller
 
     public function MobileLayananList()
     {
-        $layanan = Layanan::get();
+        $layanan = Layanan::with('opd')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
