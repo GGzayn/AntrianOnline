@@ -134,7 +134,10 @@ class LoketController extends Controller
      */
     public function edit($id)
     {
-        //
+        $loket = Loket::where('id', $id)->get();
+        $layanan = Layanan::dinas()->get();
+
+        return view('loket.edit',compact('loket','layanan'));
     }
 
     /**
@@ -146,8 +149,21 @@ class LoketController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $loket = Loket::find($id);
+        
+        $loket->nama_loket = $request->nama_loket;
+        $loket->layanan_id = $request->nama_layanan;
+        $loket->nama_petugas = $request->nama_petugas;
+        $loket->interval_waktu = $request->interval_waktu;
+        $loket->interval_booking = 30;
+        $loket->waktu_buka = $request->waktu_buka;
+        $loket->waktu_tutup = $request->waktu_tutup;
+
+        $loket->save();
+        return redirect()->route('dinas.lokets.index')->with('status','new Loket has Been Updated');
+
+
+    }   
 
     /**
      * Remove the specified resource from storage.
@@ -157,7 +173,11 @@ class LoketController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $loket = Loket::find($id);
+        $loket->delete();
+
+        return redirect()->route('dinas.lokets.index')->with('status','new Loket has Been Deleted');
+
     }
 
     public function scanQr ()
@@ -169,9 +189,19 @@ class LoketController extends Controller
     {
         $res = $request->get('qrCode');
         $antri = Antrian::where('nik',$res)->update(['status_antrian' => 1]);
-        $antrix = Antrian::where('nik',$res)->get();
+        $antrix = Antrian::where('nik',$res)->with('loket')->get();
 
-        return view ('printNomor')->with('antrians', $antrix);
+        $loket_id = Antrian::where('nik',$res)->pluck('loket_id');
+        $loks = Loket::where('id',$loket_id)->get();
+
+        $layanan_id = Loket::where('id',$loket_id)->pluck('layanan_id');
+        $layanan = Layanan::where('id',$layanan_id)->get();
+
+        $opd_id = Layanan::where('id',$layanan_id)->pluck('opd_id');
+        $opd = Opd::where('id', $opd_id)->get();
+
+        // dd($loks);
+        return view ('printNomor',compact('antrix','loks','layanan','opd'));
     }
 
     public function MobileLoket($layanan)

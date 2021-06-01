@@ -84,9 +84,16 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">VIEW</a></li>
-                                            <li><a href="#">EDIT</a></li>
-                                            <li><a href="#">DELETE</a></li>
+                                            <form action="{{route('dinas.lokets.edit', $row->id) }}" method="post">
+                                                @csrf
+                                                @method('GET')
+                                                <button type="submit" class="btn btn-info btn-rounded">EDIT</button>
+                                            </form>
+                                            <form action="{{route('dinas.lokets.destroy', $row->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-rounded">Delete</button>
+                                            </form>
 
                                         </ul>
                                     </div>

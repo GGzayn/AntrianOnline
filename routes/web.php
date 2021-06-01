@@ -30,8 +30,8 @@ Route::middleware(['cors'])->group(function () {
         Route::middleware('admin')->prefix('admin')->name('admin.')->group( function () {
             Route::resource('opds', OpdController::class);
             Route::resource('akuns', AkunController::class);
-            Route::resource('layanans', LayananController::class)->only(['index','show']);
-            Route::resource('lokets', LoketController::class)->only(['index','show']);
+            Route::resource('layanans', LayananController::class)->only(['index']);
+            Route::resource('lokets', LoketController::class)->only(['index']);
         });
 
         Route::middleware('dinas')->prefix('dinas')->name('dinas.')->group( function () {

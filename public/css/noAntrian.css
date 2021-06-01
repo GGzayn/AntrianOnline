@@ -1,14 +1,32 @@
 body{
     text-align: center;
     align-content: center;
+    margin: 40px;
 }
 .nama{
     font-size:40px;
+    font-weight: 500;
 }
 .nomor{
-    font-size: 50px;
+    font-size: 13rem;
+    font-weight: 600;
 }
 .judul{
     text-align: center;
     font-size: 40px;
+    margin-top: 30px;
+}
+.border{
+    border-radius: 1px;
+    border-color: #000;
+    text-align: center;
+    margin: 50px;
+
+}
+.loket{
+    font-size: 5rem;
+    font-weight: 500;
+}
+.tanggal{
+    font-size: 1.5rem;
 }

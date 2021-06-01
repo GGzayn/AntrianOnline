@@ -20,14 +20,28 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                @foreach ($antrix as $row)
                 <div class="judul">
-                    <p class="title">Nomor Antrian</p>
+                    <p class="title">{{$row->nama}}</p>
                 </div>
-                @foreach ($antrians as $row)
-                <h1 class="nomor">{{$row->no_antrian}}</h1>
-                <h3 class="nama">{{$row->nama}}</h3>
-                <br>
+                <div class="border">
+                    <p class="nomor">{{$row->no_antrian}}</p>
+                    @foreach($loks as $lok)
+                        <p class="loket">Loket : {{$lok->nama_loket}}</p>
+                    @endforeach
+                </div>
+                @foreach($layanan as $lay)
+                <h2>Layanan {{$lay->nama_layanan}} </h2>
                 @endforeach
+                @foreach($opd as $opds)
+                <h2>{{$opds->nama_opd}} </h2>
+                @endforeach
+                <br>
+                <p class="tanggal">Hari/Tanggal :{{ $row->updated_at->format('l') }}/ {{ $row->updated_at->format('j F Y') }}</p>
+                @endforeach
+                <h2>Untuk mendapatkan kemudahan layanan,<br>gunakan aplikasi Tangerang Gemilang</h2>
+                <br>
+                <h1>Terimakasih Atas Kunjungan Anda</h1>
             </div>
         </div>
     </div>

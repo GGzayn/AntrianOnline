@@ -60,7 +60,7 @@ class LayananController extends Controller
      */
     public function show($id)
     {
-        //
+       // 
     }
 
     /**
@@ -71,7 +71,8 @@ class LayananController extends Controller
      */
     public function edit($id)
     {
-        //
+        $layanan = Layanan::where('id', $id)->with('opd')->get();
+        return view('layanan.edit',compact('layanan'));
     }
 
     /**
@@ -83,7 +84,11 @@ class LayananController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $layanan = Layanan::find($id);
+        $layanan->nama_layanan = $request->nama_layanan;
+
+        $layanan->save();
+        return redirect()->route('dinas.layanans.index')->with('status','new Layanan has Been Updated');
     }
 
     /**
@@ -94,7 +99,10 @@ class LayananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $layanan = Layanan::find($id);
+
+        $layanan->delete();
+        return redirect()->route('dinas.layanans.index')->with('status','new Layanan has Been Deleted');
     }
 
     public function MobileLayananList()
