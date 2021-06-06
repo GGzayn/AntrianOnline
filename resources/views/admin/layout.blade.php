@@ -80,6 +80,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('adminlte')}}/dist/js/demo.js"></script>
 
+
 <script>
   $(function () {
     //Initialize Select2 Elements

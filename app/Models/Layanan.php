@@ -14,7 +14,10 @@ class Layanan extends Model
 
     protected $fillable = [
         'nama_layanan',
-        'opd_id'
+        'kode_layanan',
+        'opd_id',
+        'alamat',
+        'no_telepon'
     ];
 
     public function opd()
@@ -25,6 +28,11 @@ class Layanan extends Model
     public function loket()
     {
         return $this->hasMany(Loket::class);
+    }
+
+    public function loketAnt()
+    {
+        return $this->hasMany(Loket::class)->where('loket_antrian','=', 1);
     }
 
     public function scopeDinas($query)

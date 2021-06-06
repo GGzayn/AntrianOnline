@@ -20,6 +20,7 @@ class Loket extends Model
         'interval_booking',
         'waktu_buka',
         'waktu_tutup',
+        'loket_antrian',
         'status_loket'
     ];
 

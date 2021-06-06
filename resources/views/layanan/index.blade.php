@@ -45,7 +45,8 @@
                         <thead>
                             <tr>
                                 <th>Nama Layanan</th>
-                                <th>Nama Dinas</th>
+                                <th>Kode Layanan</th>
+                                <th>OPD</th>
                                 <th>ACTION</th>
                             </tr>
                         </thead>
@@ -53,7 +54,8 @@
                             @foreach ($data as $row)
                             <tr>
 
-                                <td>{{$row->nama_layanan}}</td>
+                                <td>{{ $row->nama_layanan }}</td>
+                                <td>{{ $row->kode_layanan }}</td>
                                 <td>{{ $row->opd->nama_opd }}</td>
                                 <td>
                                     <div class="btn-group">

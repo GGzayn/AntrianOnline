@@ -38,6 +38,32 @@
                         <input type="hidden" name="opd_id" class="form-control" id="opd_id">
                         </div>
                     </div>
+                    <div class="form-group">
+                      <label for="kode_layanan" class="col-sm-2 control-label">Kode Layanan</label>
+
+                      <div class="col-sm-10">
+                        <input type="text" name="kode_layanan" class="form-control" id="kode_layanan" value="{{$row->kode_layanan}}" placeholder="Kode Layanan">
+                      </div>
+                      
+                    </div>
+
+                    <div class="form-group">
+                      <label for="alamat" class="col-sm-2 control-label">Alamat</label>
+
+                      <div class="col-sm-10">
+                        <textarea type="text" name="alamat" id="alamat" cols="30" rows="10">{{$row->alamat}}</textarea>
+                      </div>
+                      
+                    </div>
+
+                    <div class="form-group">
+                      <label for="no_telepon" class="col-sm-2 control-label">Kode Layanan</label>
+
+                      <div class="col-sm-10">
+                        <input type="text" name="no_telepon" class="form-control" id="no_telepon" value="{{$row->no_telepon}}" placeholder="Nomor Telepon">
+                      </div>
+                      
+                    </div>
                     
                     </div>
                     <!-- /.box-body -->

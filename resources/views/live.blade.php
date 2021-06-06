@@ -18,7 +18,7 @@
         @foreach ($data as $row)
             <div class="col-sm-3">
               <div class="kotak">
-                <h1>{{$row->nama_loket}}</h1> 
+                <h1>Loket : {{$row->nama_loket}}</h1> 
               </div> 
                 @foreach ($row->antrian as $ant)
                     @if ($ant->tanggal_antrian == date('Y-m-d') && $ant->status_antrian == 2)

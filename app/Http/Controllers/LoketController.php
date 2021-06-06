@@ -50,7 +50,7 @@ class LoketController extends Controller
         $loket->save();
 
 
-        return redirect()->route('loket.lokets.index');
+        return redirect()->route('loket.antrians.index');
     }
 
     public function hapusLoket(Request $request)
@@ -59,7 +59,7 @@ class LoketController extends Controller
         $loket->status_loket = 0;
         $loket->save();
 
-        return redirect()->route('loket.lokets.index');
+        return redirect()->route('loket.antrians.index');
     }
 
     public function statusAntrian(Request $request)
@@ -68,7 +68,7 @@ class LoketController extends Controller
         $loket->status_antrian = 2;
         $loket->save();
 
-        return redirect()->route('loket.lokets.index');
+        return redirect()->route('loket.antrians.index');
     }
 
     public function hapusAntrian(Request $request)
@@ -77,7 +77,7 @@ class LoketController extends Controller
         $loket->status_antrian = 3;
         $loket->save();
 
-        return redirect()->route('loket.lokets.index');
+        return redirect()->route('loket.antrians.index');
     }
 
     
@@ -110,6 +110,7 @@ class LoketController extends Controller
         $loket->interval_booking = 30;
         $loket->waktu_buka = $request->waktu_buka;
         $loket->waktu_tutup = $request->waktu_tutup;
+        $loket->loket_antrian = $request->loket_antrian;
 
         $loket->save();
         return redirect()->route('dinas.lokets.index')->with('status','new Loket has Been Created');
@@ -158,6 +159,7 @@ class LoketController extends Controller
         $loket->interval_booking = 30;
         $loket->waktu_buka = $request->waktu_buka;
         $loket->waktu_tutup = $request->waktu_tutup;
+        $loket->loket_antrian = $request->loket_antrian;
 
         $loket->save();
         return redirect()->route('dinas.lokets.index')->with('status','new Loket has Been Updated');
@@ -188,10 +190,10 @@ class LoketController extends Controller
     public function mobilePrint(Request $request)
     {
         $res = $request->get('qrCode');
-        $antri = Antrian::where('nik',$res)->update(['status_antrian' => 1]);
-        $antrix = Antrian::where('nik',$res)->with('loket')->get();
+        $antri = Antrian::where('id',$res)->update(['status_antrian' => 1]);
+        $antrix = Antrian::where('id',$res)->with('loket')->get();
 
-        $loket_id = Antrian::where('nik',$res)->pluck('loket_id');
+        $loket_id = Antrian::where('id',$res)->pluck('loket_id');
         $loks = Loket::where('id',$loket_id)->get();
 
         $layanan_id = Loket::where('id',$loket_id)->pluck('layanan_id');

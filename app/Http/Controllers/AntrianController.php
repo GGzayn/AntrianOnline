@@ -18,18 +18,22 @@ class AntrianController extends Controller
     public function index()
     {
        
-        $dataTotalAntrianLoket = Loket::with('antrian')->LayananDinas()
+        $role = auth()->user()->role->id;
+        if ($role != 1) {
+            $data = Loket::with(['layanan.opd', 'antrian'])->layananDinas()->paginate(10);
+            $data2 = Loket::where('status_loket',1)->layananDinas()
             ->whereHas('antrian', function ($query) {
-                $query->where('tanggal_antrian', date('Y-m-d'))->where('status_antrian',1);
-            })->paginate(10);
-
-       
-        $dataAntrian = Antrian::with('loket')->where('status_antrian',1)->paginate(10);
+            })
+            ->get();
 
 
-        return view ('antrian.index',compact('dataTotalAntrianLoket','dataAntrian'));
+
+        }else{
+            $data = Loket::with('layanan.opd')->paginate(10);
+        }
+        // dd($data2);
+        return view ('antrian.index',compact('data','data2'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -96,18 +100,43 @@ class AntrianController extends Controller
         //
     }
 
+    public function test(Request $request)
+    {
+        
+        return Response([
+            'status' => 'success',
+            'message' => 'Input data berhasil',
+            'data' => "tai"
+        ], 200);
+
+    }
+
     public function MobileRegister(Request $request)
     {
-        $validated = $request->validate([
-            'tanggal_booking' => 'required',
-            'loket_id' => 'required',
-            'nama' => 'required',
-            'nik' => 'required',
-            'tanggal_antrian' => 'required',
-            'waktu_antrian' => 'required',
-        ]);
+        // $validated = $request->validate([
+        //     'tanggal_booking' => 'required',
+        //     'loket_id' => 'required', 
+        //     'nama' => 'required',
+        //     'nik' => 'required',
+        //     'tanggal_antrian' => 'required',
+        //     'waktu_antrian' => 'required',
+        // ]);
+
+        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 2)->pluck('id');
+        $kodelay = Layanan::where('id',$request->layanan_id)->pluck('kode_layanan');
+        $antCount = Antrian::where('loket_id', $request->loket_id)->get();
+
+        $nomAntri = count($antCount) +1;
+        foreach($kodelay as $r)
+        {
+            $has = $r;
+        }
         
-        $antCount = Antrian::where('loket_id', $request->loket_id)->count();
+        $finalNoAntri = " $has - $nomAntri ";
+        
+        // print_r($finalNoAntri);exit;
+
+        
         $antrian = new Antrian;
 
         $antrian->tanggal_booking = now();
@@ -118,13 +147,14 @@ class AntrianController extends Controller
         $antrian->waktu_antrian = $request->waktu_antrian;
         $antrian->jenis_antrian = 0;
         $antrian->status_antrian = 0;
-        $antrian->no_antrian = $antCount+ 1;
+        $antrian->no_antrian = $finalNoAntri;
+
 
         $antrian->save();
 
         return Response([
             'status' => 'success',
-            'message' => 'Pengambilan data berhasil',
+            'message' => 'Input data berhasil',
             'data' => $antrian
         ], 200);
 
@@ -134,6 +164,17 @@ class AntrianController extends Controller
     {
         $antrian = Antrian:: where('nik', $nik)->get();
 
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $antrian
+        ], 200);
+    }
+
+    public function homeAntrian($nik)
+    {
+        $antrian = Antrian:: where('nik', $nik)->limit(5)->get();
+        
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',

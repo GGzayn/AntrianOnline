@@ -65,7 +65,7 @@
 <script type="text/javascript">
     window.print();
     window.onafterprint = function(event) {
-        window.location.href = "{{route('dinas.offlines.index')}}"
+        document.location.href = "{{route('dinas.offlines.index')}}";
     };
 </script>
 

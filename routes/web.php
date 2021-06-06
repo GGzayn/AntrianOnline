@@ -38,21 +38,20 @@ Route::middleware(['cors'])->group(function () {
             Route::resource('layanans', LayananController::class);
             Route::resource('lokets', LoketController::class);
             Route::resource('offlines', OfflineRegisterController::class);
-            Route::resource('antrians', AntrianController::class);
+            Route::resource('antrians', AntrianController::class)->only(['index']);
             Route::get('liveAntrian', [LoketController::class, 'liveAntrian'])->name('liveAntrian');
             Route::post('statusLoket', [LoketController::class, 'statusLoket'])->name('statusLoket');
             Route::post('hapusLoket', [LoketController::class, 'hapusLoket'])->name('hapusLoket');
         });
 
         Route::middleware('loket')->prefix('loket')->name('loket.')->group( function () {
+            Route::resource('layanans', LayananController::class)->only(['index']);
             Route::resource('lokets', LoketController::class);
-            Route::resource('offlines', OfflineRegisterController::class);
             Route::resource('antrians', AntrianController::class);
             Route::post('statusLoket', [LoketController::class, 'statusLoket'])->name('statusLoket');
             Route::post('hapusLoket', [LoketController::class, 'hapusLoket'])->name('hapusLoket');
             Route::post('statusAntrian', [LoketController::class, 'statusAntrian'])->name('statusAntrian');
             Route::post('hapusAntrian', [LoketController::class, 'hapusAntrian'])->name('hapusAntrian');
-            Route::get('liveAntrian', [LoketController::class, 'liveAntrian'])->name('liveAntrian');
         
             
         });

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Layanan;
 use App\Models\Opd;
+use App\Model\Loket;
 
 class LayananController extends Controller
 {
@@ -46,6 +47,9 @@ class LayananController extends Controller
         $data = new Layanan;
         $data->opd_id = auth()->user()->child_id;
         $data->nama_layanan = $request->nama_layanan;
+        $data->kode_layanan = $request->kode_layanan;
+        $data->alamat = $request->alamat;
+        $data->no_telepon = $request->no_telepon;
 
         $data->save();
 
@@ -86,6 +90,9 @@ class LayananController extends Controller
     {
         $layanan = Layanan::find($id);
         $layanan->nama_layanan = $request->nama_layanan;
+        $layanan->kode_layanan = $request->kode_layanan;
+        $layanan->alamat = $request->alamat;
+        $layanan->no_telepon = $request->no_telepon;
 
         $layanan->save();
         return redirect()->route('dinas.layanans.index')->with('status','new Layanan has Been Updated');
@@ -107,11 +114,11 @@ class LayananController extends Controller
 
     public function MobileLayananList()
     {
-        $layanan = Layanan::with('opd')->get();
+        $layanan = Layanan::with('opd','loketAnt')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
-            'data' => $layanan
+            'layanan' => $layanan,
         ], 200);
     }
 }

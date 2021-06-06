@@ -25,7 +25,7 @@
                     <h1 class="text-center">SCAN YOUR QR CODE HERE</h1>
                     <div class="card-body">
                         <video id="preview" height="300" weight="300"></video>
-                        <input type="text" id="qrCode" name="qrCode" class="form-control">
+                        <input type="hidden" id="qrCode" name="qrCode" class="form-control">
                         <!-- <a href="#" class="btn btn-success btn-rounded butt">CETAK NOMOR</a> -->
                     </div>
                 </div>

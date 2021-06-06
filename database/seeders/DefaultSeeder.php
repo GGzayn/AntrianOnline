@@ -67,7 +67,10 @@ class DefaultSeeder extends Seeder
         $layanan = new Layanan;
 
         $layanan->nama_layanan = 'Layanan 1';
+        $layanan->kode_layanan = 'AI';
         $layanan->opd_id = $opd->id;
+        $layanan->alamat = 'Alamat Layanan 1';
+        $layanan->no_telepon = '02154455444';
 
         $layanan->save();
 
@@ -81,6 +84,7 @@ class DefaultSeeder extends Seeder
         $loket->waktu_buka = '08:00:00';
         $loket->waktu_tutup = '15:00:00';
         $loket->status_loket = 0;
+        $loket->loket_antrian = 'online';
         $loket->save();
 
 

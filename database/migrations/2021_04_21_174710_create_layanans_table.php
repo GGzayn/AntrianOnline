@@ -16,6 +16,9 @@ class CreateLayanansTable extends Migration
         Schema::create('layanans', function (Blueprint $table) {
             $table->id();
             $table->string('nama_layanan');
+            $table->string('kode_layanan');
+            $table->string('alamat');
+            $table->bigInteger('no_telepon');
             $table->bigInteger('opd_id');
             $table->timestamps();
         });

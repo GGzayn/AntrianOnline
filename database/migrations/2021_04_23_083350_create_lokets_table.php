@@ -23,6 +23,7 @@ class CreateLoketsTable extends Migration
             $table->time('waktu_buka');
             $table->time('waktu_tutup');
             $table->integer('status_loket')->default(0);
+            $table->string('loket_antrian');
             $table->timestamps();
         });
     }

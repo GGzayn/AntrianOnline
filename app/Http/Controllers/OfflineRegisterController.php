@@ -41,7 +41,8 @@ class OfflineRegisterController extends Controller
      */
     public function store(Request $request)
     {
-        $loket = Loket::where('layanan_id', $request->layanan_id)->pluck('id');
+        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 2)->pluck('id');
+        $kodelay = Layanan::where('id',$request->layanan_id)->pluck('kode_layanan');
         $antrian = Antrian::selectRaw('loket_id, count(*) as total')->whereIn('loket_id', $loket)->groupBy('loket_id')->get()->pluck('total', 'loket_id');
         
         $loket_id = $loket[0];
@@ -87,6 +88,14 @@ class OfflineRegisterController extends Controller
         $waktu_antrian = $diff_array[array_key_first($diff_array)];
 
 
+        $nomAntri = count($data_antrian) +1;
+        foreach($kodelay as $r)
+        {
+            $has = $r;
+        }
+        
+        $finalNoAntri = " $has - $nomAntri ";
+
         $antrian = new Antrian;
 
         $antrian->tanggal_booking = now();
@@ -97,10 +106,10 @@ class OfflineRegisterController extends Controller
         $antrian->waktu_antrian = substr($waktu_antrian, 0, -3);
         $antrian->jenis_antrian = 1;
         $antrian->status_antrian = 1;
-        $antrian->no_antrian = count($data_antrian) + 1;
+        $antrian->no_antrian = $finalNoAntri;
 
         $antrian->save();
-        $nik = $antrian->nik;
+        $nik = $antrian->id;
         $nama = $antrian->nama;
 
         return view ('offlineCheck',compact('nik','nama'));
@@ -154,12 +163,20 @@ class OfflineRegisterController extends Controller
     public function MobileTimeAvail(Request $request)
     {
         $ant = $request->tanggal_antrian;
-        $lay = Layanan::where('id', $request->layanan_id)->pluck('nama_layanan');
 
-        $loket = Loket::where('layanan_id', $request->layanan_id)->pluck('id');
+        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 1)->pluck('id');
         $antrian = Antrian::selectRaw('loket_id, count(*) as total')->whereIn('loket_id', $loket)->groupBy('loket_id')->get()->pluck('total', 'loket_id');
         
+
+        // $loketx =  Loket::where('id', $request->loket_id)->with('layanan')->get(); 
+        // $lokets =  Loket::where('id', $request->loket_id)->with('layanan')->get()->pluck('layanan_id');  
+
+        // $loket = Loket::where('layanan_id', $lokets)->where('loket_antrian', 1)->pluck('id');
+        // $antrian = Antrian::selectRaw('loket_id, count(*) as total')->whereIn('loket_id', $loket)->groupBy('loket_id')->get()->pluck('total', 'loket_id');
+        
         $loket_id = $loket[0];
+        
+        
         if (count($antrian) > 0) {
             $minTotal = 1;
             foreach ($loket as $k => $v) {
@@ -174,18 +191,22 @@ class OfflineRegisterController extends Controller
                 $loket_id = $v;
             }
         }
+        
         $lok = Loket::find($loket_id);
-        $datenow = strtotime($ant);
-       
+        // $datenow = strtotime($ant);
+        $datenow = strtotime(date('Y-m-d H:i:s'));
+        
+        
         // Get different minutes of open and close time
         $start = strtotime($lok->waktu_buka);
         $end = strtotime($lok->waktu_tutup);
         $mins = ($end - $start) / 60;
-
+        
         $interval_mins = $lok->interval_waktu;
-        $m = 0;
+        $m = 0; 
         while ($m <= $mins) {
             $x = strtotime(date('Y-m-d H:i:s', $start).' + '.$m.' minutes');
+            // $x = strtotime($ant, $start.' + '.$m.' minutes');
             $value = date('H:i:s', $x);
             $m += $interval_mins;
             if ($x <= $datenow) {
@@ -195,15 +216,17 @@ class OfflineRegisterController extends Controller
             }
             $result[] = $value;
         }
-        // $data_antrian = Antrian::selectRaw('CAST(waktu_antrian AS char) AS waktu_antrian_text')->where('loket_id', $loket_id)->get()->pluck('waktu_antrian_text')->toArray();
-        // $diff_array = array_diff($result, $data_antrian);
-        // $waktu_antrian = $diff_array[array_key_first($diff_array)];
+        // dd($x);
+        
+        $data_antrian = Antrian::selectRaw('CAST(waktu_antrian AS char) AS waktu_antrian_text')->where('loket_id', $loket_id)->get()->pluck('waktu_antrian_text')->toArray();
+        $diff_array = array_diff($result, $data_antrian);
+        $waktu_antrian = $diff_array[array_key_first($diff_array)];
+        
 
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
-            'layanan' => $lay,
-            'waktu' => $result,
+            'waktu' => $diff_array,
         ], 200);
     }
 

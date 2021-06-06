@@ -78,13 +78,16 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label for="interval_booking" class="col-sm-2 control-label">Interval Booking</label>
+                    <div class="form-group">
+                        <label for="loket_antrian" class="col-sm-2 control-label">Loket Antrian</label>
 
                         <div class="col-sm-10">
-                            <input type="number" name="interval_booking" class="form-control" id="interval_booking" placeholder="Interval Booking Dalam menit">
+                            <select class="form-control select2" style="width: 100%;" name="loket_antrian">
+                                <option value="1">Antrian Online</option>
+                                <option value="2">Antrian Offline</option>
+                            </select>
                         </div>
-                    </div> -->
+                    </div>
 
                     
 
