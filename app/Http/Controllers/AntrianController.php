@@ -165,7 +165,7 @@ class AntrianController extends Controller
 
     public function homeAntrian($nik)
     {
-        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->get();
+        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->limit()5->get();
 
         return Response([
             'status' => 'success',
