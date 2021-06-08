@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Layanan;
 use App\Models\Antrian;
 use App\Models\Loket;
+use App\Models\Opd;
 
 class AntrianController extends Controller
 {
@@ -100,31 +101,20 @@ class AntrianController extends Controller
         //
     }
 
-    public function test(Request $request)
-    {
-        
-        return Response([
-            'status' => 'success',
-            'message' => 'Input data berhasil',
-            'data' => "tai"
-        ], 200);
-
-    }
+    
 
     public function MobileRegister(Request $request)
     {
-        // $validated = $request->validate([
-        //     'tanggal_booking' => 'required',
-        //     'loket_id' => 'required', 
-        //     'nama' => 'required',
-        //     'nik' => 'required',
-        //     'tanggal_antrian' => 'required',
-        //     'waktu_antrian' => 'required',
-        // ]);
 
-        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 2)->pluck('id');
+        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 1)->pluck('id');
+
+        foreach($loket as $l)
+        {
+            $idLok = $l;
+        }
+
         $kodelay = Layanan::where('id',$request->layanan_id)->pluck('kode_layanan');
-        $antCount = Antrian::where('loket_id', $request->loket_id)->get();
+        $antCount = Antrian::where('loket_id', $idLok)->get();
 
         $nomAntri = count($antCount) +1;
         foreach($kodelay as $r)
@@ -132,7 +122,7 @@ class AntrianController extends Controller
             $has = $r;
         }
         
-        $finalNoAntri = " $has - $nomAntri ";
+        $finalNoAntri = "$has - $nomAntri";
         
         // print_r($finalNoAntri);exit;
 
@@ -140,7 +130,7 @@ class AntrianController extends Controller
         $antrian = new Antrian;
 
         $antrian->tanggal_booking = now();
-        $antrian->loket_id = $request->loket_id;
+        $antrian->loket_id = $idLok;
         $antrian->nama = $request->nama;
         $antrian->nik = $request->nik;
         $antrian->tanggal_antrian = $request->tanggal_antrian;
@@ -162,23 +152,25 @@ class AntrianController extends Controller
 
     public function historyAntrian($nik)
     {
-        $antrian = Antrian:: where('nik', $nik)->get();
+        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->get();
+       
 
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
-            'data' => $antrian
+            'antrian' => $antrian,
+           
         ], 200);
     }
 
     public function homeAntrian($nik)
     {
-        $antrian = Antrian:: where('nik', $nik)->limit(5)->get();
-        
+        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->get();
+
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
-            'data' => $antrian
+            'antrian' => $antrian
         ], 200);
     }
 }

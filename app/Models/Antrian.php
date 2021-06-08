@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Loket;
 use App\Models\Layanan;
+use App\Models\Opd;
 
 class Antrian extends Model
 {
@@ -36,6 +37,8 @@ class Antrian extends Model
     {
         return $this->belongsTo(Loket::class);
     }
+
+    
     public function getStatusAntrianNameAttribute($value)
     {
         switch($value) {
@@ -59,9 +62,6 @@ class Antrian extends Model
     {
         return $this->where('tanggal_antrian',date('Y-m-d'))->Where('status_antrian',1)->count();
     }
-    
-
-    
 }
 
 

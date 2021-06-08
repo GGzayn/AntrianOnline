@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Models\Layanan;
 use App\Models\Opd;
-use App\Model\Loket;
+use App\Models\Loket;
 
 class LayananController extends Controller
 {
@@ -114,7 +114,9 @@ class LayananController extends Controller
 
     public function MobileLayananList()
     {
-        $layanan = Layanan::with('opd','loketAnt')->get();
+        $layanan = Layanan::with('opd')->get();
+
+        // $layanan = Loket::where('loket_antrian' ,1)->with('layanan.opd')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
