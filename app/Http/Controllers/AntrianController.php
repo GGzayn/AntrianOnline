@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Http\Response;
 use App\Models\Layanan;
 use App\Models\Antrian;
 use App\Models\Loket;
 use App\Models\Opd;
+
+use Illuminate\Support\Facades\Validator;
 
 class AntrianController extends Controller
 {
@@ -106,6 +108,21 @@ class AntrianController extends Controller
     public function MobileRegister(Request $request)
     {
 
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required|string',
+            'nik' => 'required|',
+            'tanggal_antrian' => 'required|',
+            'waktu_antrian' => 'required|',
+        ]);
+
+        if ($validator->fails()) {
+            return Response([
+                'status' => 'error',
+                'message' => $validator->errors(),
+                'data' => []
+            ], 500);
+        }
+
         $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 1)->pluck('id');
 
         foreach($loket as $l)
@@ -124,8 +141,6 @@ class AntrianController extends Controller
         
         $finalNoAntri = "$has - $nomAntri";
         
-        // print_r($finalNoAntri);exit;
-
         
         $antrian = new Antrian;
 
@@ -139,7 +154,16 @@ class AntrianController extends Controller
         $antrian->status_antrian = 0;
         $antrian->no_antrian = $finalNoAntri;
 
-
+        $dataAntri = Antrian::where('tanggal_antrian',$request->tanggal_antrian)->where('waktu_antrian',$request->waktu_antrian)->get();
+        
+        if(count($dataAntri) > 0)
+        {
+            return Response([
+                'status' => 'error',
+                'message' => 'Silahkan Pilih Waktu yang Lain',
+            ], 500);
+        }
+        
         $antrian->save();
 
         return Response([
@@ -165,7 +189,7 @@ class AntrianController extends Controller
 
     public function homeAntrian($nik)
     {
-        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->limit()5->get();
+        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->orderBy('id', 'desc')->limit(5)->get();
 
         return Response([
             'status' => 'success',
