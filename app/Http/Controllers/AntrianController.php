@@ -154,14 +154,15 @@ class AntrianController extends Controller
         $antrian->status_antrian = 0;
         $antrian->no_antrian = $finalNoAntri;
 
-        $dataAntri = Antrian::where('tanggal_antrian',$request->tanggal_antrian)->where('waktu_antrian',$request->waktu_antrian)->get();
+        $dataAntri = Antrian::where('tanggal_antrian',$request->tanggal_antrian)->where('waktu_antrian',$request->waktu_antrian)->where('loket_id',$idLok)->get();
+        // dd($dataAntri);
         
         if(count($dataAntri) > 0)
         {
             return Response([
-                'status' => 'error',
+                'status' => 'false',
                 'message' => 'Silahkan Pilih Waktu yang Lain',
-            ], 500);
+            ], 200);
         }
         
         $antrian->save();
@@ -176,7 +177,7 @@ class AntrianController extends Controller
 
     public function historyAntrian($nik)
     {
-        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->get();
+        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->orderBy('id','desc')->get();
        
 
         return Response([

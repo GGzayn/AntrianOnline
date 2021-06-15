@@ -21,7 +21,6 @@
         <!-- <li><a href="{{route('admin.lokets.index')}}"><i class="fa fa-circle"></i> <span>Loket</span></a></li> -->
         <li><a href="{{route('admin.opds.index')}}"><i class="fa fa-circle"></i> <span>Opd</span></a></li>
         <li><a href="{{route('admin.akuns.index')}}"><i class="fa fa-circle"></i> <span>Akun Dinas</span></a></li>
-
         @elseif(Auth::user()->role_id == 2)
         <li><a href="{{route('dinas.layanans.index')}}"><i class="fa fa-circle"></i> <span>Layanan</span></a></li>
         <li><a href="{{route('dinas.lokets.index')}}"><i class="fa fa-circle"></i> <span>Loket</span></a></li>

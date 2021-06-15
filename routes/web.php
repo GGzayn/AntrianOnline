@@ -52,7 +52,6 @@ Route::middleware(['cors'])->group(function () {
             Route::post('hapusLoket', [LoketController::class, 'hapusLoket'])->name('hapusLoket');
             Route::post('statusAntrian', [LoketController::class, 'statusAntrian'])->name('statusAntrian');
             Route::post('hapusAntrian', [LoketController::class, 'hapusAntrian'])->name('hapusAntrian');
-        
             
         });
         

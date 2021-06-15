@@ -251,7 +251,7 @@
 
             responsiveVoice.speak(
                 "Nomor Antrian '" + col3 + "' Atas Nama '" + col1 + "' Ke Loket '" + lok + "'",
-                "Indonesian Male",
+                "Indonesian Female",
                 {
                 pitch: 1, 
                 rate: 0.9, 
