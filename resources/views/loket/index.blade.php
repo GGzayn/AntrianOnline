@@ -35,6 +35,8 @@
                 <div class="box-header with-border">
                     <a href="{{route('dinas.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
                     <a href="{{route('dinas.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
+                    <a href="{{route('dinas.export')}}" class="btn btn-rounded btn-primary">Report/Hari</a>
+                    <a href="{{route('dinas.exportMonth')}}" class="btn btn-rounded btn-primary">Report/Bulan</a>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -77,6 +79,7 @@
                                             <span class="caret"></span>
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
+                                        
                                         <ul class="dropdown-menu" role="menu">
                                             <form action="{{route('dinas.lokets.edit', $row->id) }}" method="post">
                                                 @csrf

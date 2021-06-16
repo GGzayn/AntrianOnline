@@ -8,6 +8,8 @@ use App\Models\Layanan;
 use App\Models\Opd;
 use App\Models\Loket;
 use App\Models\Antrian;
+use PDF;
+use Carbon\Carbon;
 
 class LoketController extends Controller
 {
@@ -32,6 +34,23 @@ class LoketController extends Controller
             $data = Loket::with('layanan.opd')->paginate(10);
         }
         return view ('loket.index',compact('data','data2'));
+    }
+
+    public function exportPDF()
+    {
+        $data = Loket::with(['layanan.opd', 'antrian'])->layananDinas()->get();
+        $pdf = PDF::loadView('pdf_view', compact('data'));
+        // download PDF file with download method
+        return $pdf->download('report_harian.pdf');
+    }
+    public function exportPDFMonth()
+    {
+        $data = Antrian::with('loket.layanan')->selectRaw('loket_id, count(*) as total')->whereMonth('tanggal_antrian', Carbon::now()->month)->groupBy('loket_id')->get();
+        $pdf = PDF::loadView('pdf_viewMonth', compact('data'));
+        // print_r($data);exit;
+        // download PDF file with download method
+        return $pdf->download('report_bulanan.pdf');
+        
     }
 
     public function liveAntrian()

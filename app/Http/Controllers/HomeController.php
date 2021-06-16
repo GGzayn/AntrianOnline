@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Opd;
 use App\Models\Layanan;
+use App\Models\Loket;
+use App\Models\Antrian;
+use PDF;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -26,9 +30,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $opdCount = Opd::count();
-        $userCount = User::count();
-        $layananCount = Layanan::count();
-        return view('home',compact('userCount','opdCount','layananCount'));
+        
+        // $loket = Loket::with('layanan')->pluck('id');
+        // $antrian = Antrian::select('loket_id')->groupBy('loket_id')->count();
+        $antrian = Antrian::with('loket.layanan')->selectRaw('loket_id, count(*) as total')->groupBy('loket_id')->get();
+
+        
+        // dd($loket);
+        return view('home',compact('antrian'));
     }
 }

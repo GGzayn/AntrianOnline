@@ -20,17 +20,19 @@ use Composer\Semver\VersionParser;
 
 
 
+
+
 class InstalledVersions
 {
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '4f43deb56f19e01fe6796a6acfc2a9ee33df4aac',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -43,6 +45,15 @@ private static $installed = array (
       array (
       ),
       'reference' => '9cb795bf30988e8c96dd3c40623c48a877bc6714',
+    ),
+    'barryvdh/laravel-dompdf' => 
+    array (
+      'pretty_version' => 'v0.9.0',
+      'version' => '0.9.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5b99e1f94157d74e450f4c97e8444fcaffa2144b',
     ),
     'brick/math' => 
     array (
@@ -93,6 +104,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'e864bbf5904cb8f5bb334f99209b48018522f042',
+    ),
+    'dompdf/dompdf' => 
+    array (
+      'pretty_version' => 'v1.0.2',
+      'version' => '1.0.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '8768448244967a46d6e67b891d30878e0e15d25c',
     ),
     'dragonmantank/cron-expression' => 
     array (
@@ -455,12 +475,12 @@ private static $installed = array (
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '4f43deb56f19e01fe6796a6acfc2a9ee33df4aac',
     ),
     'laravel/sail' => 
     array (
@@ -607,6 +627,24 @@ private static $installed = array (
       array (
       ),
       'reference' => 'bae7c545bef187884426f042434e561ab1ddb182',
+    ),
+    'phenx/php-font-lib' => 
+    array (
+      'pretty_version' => '0.5.2',
+      'version' => '0.5.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'ca6ad461f032145fff5971b5985e5af9e7fa88d8',
+    ),
+    'phenx/php-svg-lib' => 
+    array (
+      'pretty_version' => 'v0.3.3',
+      'version' => '0.3.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '5fa61b65e612ce1ae15f69b3d223cb14ecc60e32',
     ),
     'phpdocumentor/reflection-common' => 
     array (
@@ -839,6 +877,15 @@ private static $installed = array (
       array (
         0 => '4.1.1',
       ),
+    ),
+    'sabberworm/php-css-parser' => 
+    array (
+      'pretty_version' => '8.3.1',
+      'version' => '8.3.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd217848e1396ef962fb1997cf3e2421acba7f796',
     ),
     'sebastian/cli-parser' => 
     array (
@@ -1313,7 +1360,6 @@ foreach (self::getInstalled() as $installed) {
 $packages[] = array_keys($installed['versions']);
 }
 
-
 if (1 === \count($packages)) {
 return $packages[0];
 }
@@ -1505,6 +1551,7 @@ public static function reload($data)
 self::$installed = $data;
 self::$installedByVendor = array();
 }
+
 
 
 

@@ -40,6 +40,8 @@ Route::middleware(['cors'])->group(function () {
             Route::resource('offlines', OfflineRegisterController::class);
             Route::resource('antrians', AntrianController::class)->only(['index']);
             Route::get('liveAntrian', [LoketController::class, 'liveAntrian'])->name('liveAntrian');
+            Route::get('export', [LoketController::class, 'exportPDF'])->name('export');
+            Route::get('exportMonth', [LoketController::class, 'exportPDFMonth'])->name('exportMonth');
             Route::post('statusLoket', [LoketController::class, 'statusLoket'])->name('statusLoket');
             Route::post('hapusLoket', [LoketController::class, 'hapusLoket'])->name('hapusLoket');
         });

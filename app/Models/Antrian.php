@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Carbon\Carbon;
 use App\Models\Loket;
 use App\Models\Layanan;
 use App\Models\Opd;
@@ -30,7 +30,9 @@ class Antrian extends Model
     ];
 
     protected $appends = [
-        'count_of_today'
+        'count_of_today',
+        'count_of_day',
+        'count_of_month',
     ];
 
     public function loket()
@@ -61,6 +63,16 @@ class Antrian extends Model
     public function getCountOfTodayAttribute()
     {
         return $this->where('tanggal_antrian',date('Y-m-d'))->Where('status_antrian',1)->count();
+    }
+    public function getCountOfDayAttribute()
+    {
+        return $this->antrian()->where('tanggal_antrian',date('Y-m-d'))->count();
+    }
+    public function getCountOfMonthAttribute()
+    {
+        return $this->antrian()
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->count();
     }
 }
 
