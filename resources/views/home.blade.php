@@ -37,7 +37,7 @@
             <span class="info-box-icon bg-purple"><i class="ion-ios-paper-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">{{$row->loket->layanan->nama_layanan}}</span>
+              <span class="info-box-text">{{$row->loket->layanan['nama_layanan']}}</span>
               <span class="info-box-text">LOKET : {{$row->loket->nama_loket}}</span>
               <span class="info-box-number">TOTAL ANTRIAN : {{$row->total}}</span>
             </div>
