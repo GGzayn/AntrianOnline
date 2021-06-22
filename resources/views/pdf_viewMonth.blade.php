@@ -8,14 +8,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <title>Report Loket / Bulan <?php echo date('F')?></title>
+    <title>Report Loket / Bulan </title>
   </head>
   <body>
-      <div class="col-md-12">
-        <h1>Report Bulan <?php echo date('F')?></h1>
-      </div>
+      
   <table class="table table-bordered">
-    <thead class="thead-dark">
+    <thead>
         <tr>
             <th>Nama Petugas</th>
             <th>Nama Loket</th>

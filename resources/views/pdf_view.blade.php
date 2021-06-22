@@ -12,7 +12,7 @@
   </head>
   <body>
   <table class="table table-bordered">
-    <thead class="thead-dark">
+    <thead >
         <tr>
             <th>Nama Petugas</th>
             <th>Nama Loket</th>

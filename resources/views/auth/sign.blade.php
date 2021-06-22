@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link rel="apple-touch-icon" sizes="180x180" href="{{asset('favicon')}}/apple-touch-icon.png">
+  	<link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon')}}/favicon-32x32.png">
+  	<link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon')}}/favicon-16x16.png">
+  	<link rel="manifest" href="{{asset('favicon')}}/site.webmanifest">
 	<title>{{ config('app.name', 'Antrian Online') }} | Dashboard</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +39,8 @@
 				<form class="login100-form validate-form" method="POST" action="{{ route('login') }}">
                     @csrf
 					<span class="login100-form-logo">
-						<!-- <i class="zmdi zmdi-landscape"></i> -->
+						<img src="{{asset('img')}}/logo-kabtangerang-sesuaiperda.png" alt="Logo Kabupaten Tangerang" width="100px" height="100px">
+						<img src="{{asset('img')}}/Smartcity.png" alt="Smart City Logo" width="200px" height="100px">
 					</span>
 
 					<span class="login100-form-title p-b-34 p-t-27">
