@@ -22,8 +22,12 @@
               </div>
               <!-- /.box-header -->
               <!-- form start -->
-              @foreach($loket as $row)
-              <form action="{{route('dinas.lokets.update', $row->id)}}" method="post" class="form-horizontal">
+                @foreach($loket as $row)
+                @if(Auth::user()->role_id == 2)
+                <form action="{{route('dinas.lokets.update', $row->id)}}" method="post" class="form-horizontal">
+                @elseif(Auth::user()->role_id == 4)
+                <form action="{{route('kecamatan.lokets.update', $row->id)}}" method="post" class="form-horizontal">
+                @endif
                 @csrf
                 @method('PUT')
                 <div class="box-body">
@@ -77,6 +81,17 @@
 
                         <div class="col-sm-10">
                             <input type="number" name="interval_waktu" class="form-control" id="interval_waktu" value="{{$row->interval_waktu}}" placeholder="Interval Waktu Dalam menit">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loket_antrian" class="col-sm-2 control-label">Loket Antrian</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control select2" style="width: 100%;" name="loket_antrian">
+                                <option value="1">Antrian Online</option>
+                                <option value="2">Antrian Offline</option>
+                            </select>
                         </div>
                     </div>
 

@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="/home" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>O</span>
+      <span class="logo-mini"><b>TTM</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>ANTRIAN ONLINE</b></span>
+      <span class="logo-lg"><b>LAMAN TTM</b></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->

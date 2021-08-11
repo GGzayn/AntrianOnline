@@ -50,6 +50,8 @@ class LayananController extends Controller
         $data->kode_layanan = $request->kode_layanan;
         $data->alamat = $request->alamat;
         $data->no_telepon = $request->no_telepon;
+        $data->jenis_layanan = $request->jenis_layanan;
+        $data->kata_kunci = $request->kata_kunci;
 
         $data->save();
 
@@ -93,6 +95,8 @@ class LayananController extends Controller
         $layanan->kode_layanan = $request->kode_layanan;
         $layanan->alamat = $request->alamat;
         $layanan->no_telepon = $request->no_telepon;
+        $layanan->jenis_layanan = $request->jenis_layanan;
+        $layanan->kata_kunci = $request->kata_kunci;
 
         $layanan->save();
         return redirect()->route('dinas.layanans.index')->with('status','new Layanan has Been Updated');
@@ -115,8 +119,6 @@ class LayananController extends Controller
     public function MobileLayananList()
     {
         $layanan = Layanan::with('opd')->get();
-
-        // $layanan = Loket::where('loket_antrian' ,1)->with('layanan.opd')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',

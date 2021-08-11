@@ -46,6 +46,7 @@
                             <tr>
                                 <th>Nama Layanan</th>
                                 <th>Kode Layanan</th>
+                                <th>Jenis Layanan</th>
                                 <th>OPD</th>
                                 <th>ACTION</th>
                             </tr>
@@ -56,6 +57,11 @@
 
                                 <td>{{ $row->nama_layanan }}</td>
                                 <td>{{ $row->kode_layanan }}</td>
+                                @if($row->jenis_layanan == 1)
+                                    <td>Antrian Online</td>
+                                @else
+                                    <td>Full Online</td>
+                                @endif
                                 <td>{{ $row->opd->nama_opd }}</td>
                                 <td>
                                     <div class="btn-group">

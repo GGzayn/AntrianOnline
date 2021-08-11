@@ -2,7 +2,16 @@
 
 @section('content')
 
-
+<style>
+  .row{
+    text-align:center;
+    font-family : roboto;
+    
+  }
+  #info{
+    padding:10px;
+  }
+</style>
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -26,34 +35,19 @@
     @endif
 </section>
 
-<!-- Main content -->
 <section class="content">
-    <!-- Info boxes -->
+  <div class="container-fluid">
     <div class="row">
-      @foreach($antrian as $row)
-        <div class="col-md-3 col-sm-6 col-xs-12">
-          
-          <div class="info-box">
-            <span class="info-box-icon bg-purple"><i class="ion-ios-paper-outline"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">{{$row->loket->layanan['nama_layanan']}}</span>
-              <span class="info-box-text">LOKET : {{$row->loket->nama_loket}}</span>
-              <span class="info-box-number">TOTAL ANTRIAN : {{$row->total}}</span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-          
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="info-box" id="info">
+          <img src="{{asset('img')}}/logo-kabtangerang-sesuaiperda.png" alt="Logo Kabupaten Tangerang" width="100px" height="100px">
+          <img src="{{asset('img')}}/Smartcity.png" alt="Smart City Logo" width="200px" height="100px">
+          <h1>SELAMAT DATANG {{ Auth::user()->name }}</h1>
         </div>
-        <!-- /.col -->
-        @endforeach
       </div>
-    <!-- /.row -->
-
-
-    
+    </div>
+  </div>
 </section>
-<!-- /.content -->
+
 
 @endsection

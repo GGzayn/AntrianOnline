@@ -17,19 +17,35 @@
         <li class="header">MAIN NAVIGATION</li>
         @if(Auth::user()->role_id == 1)
         <!-- <li class="header">MASTER DATA</li> -->
-        <!-- <li><a href="{{route('admin.layanans.index')}}"><i class="fa fa-circle"></i> <span>Layanan</span></a></li> -->
-        <!-- <li><a href="{{route('admin.lokets.index')}}"><i class="fa fa-circle"></i> <span>Loket</span></a></li> -->
-        <li><a href="{{route('admin.opds.index')}}"><i class="fa fa-circle"></i> <span>Opd</span></a></li>
-        <li><a href="{{route('admin.akuns.index')}}"><i class="fa fa-circle"></i> <span>Akun Dinas</span></a></li>
+        <li><a href="{{route('admin.opds.index')}}"><i class="fa fa-building"></i> <span>Opd</span></a></li>
+        <li><a href="{{route('admin.akuns.index')}}"><i class="fa fa-users"></i> <span>Akun Dinas</span></a></li>
+        <li><a href="{{route('admin.a_kecamatans.index')}}"><i class="fa fa-users"></i> <span>Akun Kecamatan</span></a></li>
+        <li><a href="{{route('admin.a_kelurahans.index')}}"><i class="fa fa-users"></i> <span>Akun Kelurahan</span></a></li>
+        <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
         @elseif(Auth::user()->role_id == 2)
-        <li><a href="{{route('dinas.layanans.index')}}"><i class="fa fa-circle"></i> <span>Layanan</span></a></li>
-        <li><a href="{{route('dinas.lokets.index')}}"><i class="fa fa-circle"></i> <span>Loket</span></a></li>
-        <li><a href="{{route('dinas.antrians.index')}}"><i class="fa fa-circle"></i> <span>Antrian</span></a></li>
-        <li><a href="{{route('dinas.offlines.index')}}" target="_blank"><i class="fa fa-circle"></i> <span>Register offline</span></a></li>
+        <li><a href="{{route('dinas.layanans.index')}}"><i class="fa fa-file"></i> <span>Layanan</span></a></li>
+        <li><a href="{{route('dinas.lokets.index')}}"><i class="fa fa-file"></i> <span>Loket</span></a></li>
+        <li><a href="{{route('dinas.antrians.index')}}"><i class="fa fa-file"></i> <span>Antrian</span></a></li>
+        <li><a href="{{route('dinas.offlines.index')}}" target="_blank"><i class="fa fa-registered"></i> <span>Register offline</span></a></li>
+        <li><a href="{{route('dinas.documents.index')}}"><i class="fa fa-file-text-o"></i> <span>Berkas</span></a></li>
+        <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
         @elseif(Auth::user()->role_id == 3)
-        <li><a href="{{route('loket.layanans.index')}}"><i class="fa fa-circle"></i> <span>Layanan</span></a></li>
-        <li><a href="{{route('loket.lokets.index')}}"><i class="fa fa-circle"></i> <span>Loket</span></a></li>
-        <li><a href="{{route('loket.antrians.index')}}"><i class="fa fa-circle"></i> <span>Antrian</span></a></li>
+        <li><a href="{{route('loket.antrians.index')}}"><i class="fa fa-file"></i> <span>Antrian</span></a></li>
+        <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
+        @elseif(Auth::user()->role_id == 4)
+        <li><a href="{{route('kecamatan.a_kelurahans.index')}}"><i class="fa fa-users"></i> <span>Akun Kelurahan</span></a></li>
+        <li><a href="{{route('kecamatan.lokets.index')}}"><i class="fa fa-file"></i> <span>Loket</span></a></li>
+        <li><a href="{{route('kecamatan.antrians.index')}}"><i class="fa fa-file"></i> <span>Antrian</span></a></li>
+        <li><a href="{{route('kecamatan.documents.index')}}"><i class="fa fa-file-text-o"></i> <span>Berkas</span></a></li>
+        <li><a href="{{route('kecamatan.berkasTercetak')}}"><i class="fa fa-file-text"></i> <span>Berkas Tercetak</span></a></li>
+        <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
+        <li><a href="{{route('kecamatan.offlines.index')}}" target="_blank"><i class="fa fa-registered"></i> <span>Register offline</span></a></li>
+        @elseif(Auth::user()->role_id == 5)
+        <li><a href="{{route('loketKecamatan.antrians.index')}}"><i class="fa fa-file"></i> <span>Antrian</span></a></li>
+        <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
+        @elseif(Auth::user()->role_id == 6)
+        <li><a href="{{route('kelurahan.kelurahanBerkas')}}"><i class="fa fa-file-text"></i> <span>Berkas Tercetak</span></a></li>
+        <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
         @endif
         
         

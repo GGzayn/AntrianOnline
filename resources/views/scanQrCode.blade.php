@@ -8,27 +8,40 @@
     <script src="{{url('/js/jquery-2.2.4.min.js')}}"></script>
     <script src="{{url('/js/instascan.min.js')}}"></script>
     <script src="{{url('/js/print.js')}}"></script>
-    <link rel="stylesheet" href="{{url('/css/qr.css')}}">
+    
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{url('/css/qr.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('sign')}}/css/util.css">
+	<link rel="stylesheet" type="text/css" href="{{asset('sign')}}/css/main.css">
 
     <title>{{ config('app.name', 'Antrian Online') }} | Scan Code</title>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="card-header bg-transparent mb-0">
-                    <h1 class="text-center">SCAN YOUR QR CODE HERE</h1>
+    <div class="container-login100" style="background-image: url('{{asset('sign')}}/images/bg-02.jpg')">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="wrap-login100">
+                    <span class="">
+						<img src="{{asset('img')}}/logo-kabtangerang-sesuaiperda.png" alt="Logo Kabupaten Tangerang" width="100px" height="100px">
+						<img src="{{asset('img')}}/Smartcity.png" alt="Smart City Logo" width="200px" height="100px">
+					</span>
+                    <span class="login100-form-title p-b-15 p-t-27">    
+                        SCAN YOUR QR CODE HERE
+					</span>
+                    <video id="preview" height="250" weight="250"></video>
+                    <input type="hidden" id="qrCode" name="qrCode" class="form-control">
+                </div>
+                <!-- <div class="card-header bg-transparent mb-0">
+                    <h1 class="text-center" id="judul">SCAN YOUR QR CODE HERE</h1>
                     <div class="card-body">
                         <video id="preview" height="300" weight="300"></video>
                         <input type="hidden" id="qrCode" name="qrCode" class="form-control">
-                        <!-- <a href="#" class="btn btn-success btn-rounded butt">CETAK NOMOR</a> -->
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

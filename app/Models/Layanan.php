@@ -17,7 +17,9 @@ class Layanan extends Model
         'kode_layanan',
         'opd_id',
         'alamat',
-        'no_telepon'
+        'no_telepon',
+        'jenis_layanan',
+        'kata_kunci'
     ];
 
     public function opd()

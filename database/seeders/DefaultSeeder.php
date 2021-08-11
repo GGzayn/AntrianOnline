@@ -78,6 +78,7 @@ class DefaultSeeder extends Seeder
 
         $loket->nama_loket = 'Loket 1';
         $loket->layanan_id = $layanan->id;
+        $loket->child_id = $roleAdminDinas->id;
         $loket->nama_petugas = 'Petugas 1';
         $loket->interval_waktu = 10;
         $loket->interval_booking = 30;

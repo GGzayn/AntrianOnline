@@ -44,7 +44,10 @@
 					</span>
 
 					<span class="login100-form-title p-b-34 p-t-27">
-						LAYANAN MANDIRI TANPA TATAP MUKA
+						LAYANAN MANDIRI <br> TANPA TATAP MUKA
+                      <p style="font-size:24px; color:white; font-weight:700;">
+                        <i>(LAMAN TTM)</i>
+                      </p>
                         <!-- LAMAN TTM -->
 					</span>
                         

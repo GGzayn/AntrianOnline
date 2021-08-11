@@ -23,20 +23,20 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($data as $row)
+    @foreach ($data as $row)
         <tr>
 
-            <td>{{$row->loket->nama_petugas}}</td>
-            <td>{{$row->loket->nama_loket}}</td>
-            <td>{{$row->loket->layanan->nama_layanan}}</td>
+            <td>{{$row->nama_petugas}}</td>
+            <td>{{$row->nama_loket}}</td>
+            <td>{{$row->layanan->nama_layanan}}</td>
             <td>
-                @if($row->loket->loket_antrian == 1)
+                @if($row->loket_antrian == 1)
                 Antrian Online
                 @else
                 Antrian Offline
                 @endif
             </td>
-            <td><b>{{$row->total}}</b></td>
+            <td><b>{{$row->count_of_month}}</b></td>
         </tr>
         @endforeach
 

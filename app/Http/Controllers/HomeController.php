@@ -31,12 +31,6 @@ class HomeController extends Controller
     public function index()
     {
         
-        // $loket = Loket::with('layanan')->pluck('id');
-        // $antrian = Antrian::select('loket_id')->groupBy('loket_id')->count();
-        $antrian = Antrian::with('loket.layanan')->selectRaw('loket_id, count(*) as total')->groupBy('loket_id')->get();
-
-        
-        // dd($loket);
-        return view('home',compact('antrian'));
+        return view('home');
     }
 }

@@ -24,6 +24,16 @@ class CreateAntriansTable extends Migration
             $table->time('waktu_antrian');
             $table->tinyInteger('jenis_antrian')->default(0);
             $table->tinyInteger('status_antrian')->default(0);
+            $table->string('alamat')->nullable();
+            $table->string('rt')->nullable();
+            $table->string('rw')->nullable();
+            $table->bigInteger('urban_id')->nullable();
+            $table->bigInteger('district_id')->nullable();
+            $table->bigInteger('city_id')->nullable();
+            $table->bigInteger('province_id')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
+            $table->longText('patokan')->nullable();
             $table->timestamps();
         });
     }

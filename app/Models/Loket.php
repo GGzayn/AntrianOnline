@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Models\Layanan;
 use App\Models\Antrian;
+use App\Models\Districts;
 
 class Loket extends Model
 {
@@ -16,6 +17,7 @@ class Loket extends Model
         'nama_loket',
         'nama_petugas',
         'layanan_id',
+        'child_id',
         'interval_waktu',
         'interval_booking',
         'waktu_buka',
@@ -33,6 +35,10 @@ class Loket extends Model
     public function layanan()
     {
         return $this->belongsTo(Layanan::class);
+    }
+    public function district()
+    {
+        return $this->belongsTo(Districts::class,'child_id','id');
     }
 
     public function antrian()

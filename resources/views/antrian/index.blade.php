@@ -76,40 +76,28 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <form action="{{route('dinas.lokets.edit', $row->id) }}" method="post">
-                                                @csrf
-                                                @method('GET')
-                                                <button type="submit" class="btn btn-info btn-rounded">EDIT</button>
-                                            </form>
-                                            <form action="{{route('dinas.lokets.destroy', $row->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-rounded">Delete</button>
-                                            </form>
-
-                                        </ul>
-                                    </div>
-                                    <hr>
-                                        @if($row->count_of_today != 0)
-                                            <form action="{{route('loket.statusLoket')}}" method="post" class="form-horizontal">
-                                                @csrf
-                                                <input type="hidden" value="{{$row->id}}" name="idLoket">
-                                                <button type="submit" class="btn btn-rounded btn-success">Mulai Antrian</button>
-                                            </form>
+                                    @if($row->count_of_today != 0)
+                                        @if(Auth::user()->role_id == 3)
+                                        <form action="{{route('loket.statusLoket')}}" method="post" class="form-horizontal">
+                                        @elseif(Auth::user()->role_id == 5)
+                                        <form action="{{route('loketKecamatan.statusLoket')}}" method="post" class="form-horizontal">
                                         @endif
-                                            <br>
-                                            <form action="{{route('loket.hapusLoket')}}" method="post" class="form-horizontal">
-                                                @csrf
-                                                <input type="hidden" value="{{$row->id}}" name="idLoket">
-                                                <button type="submit" class="btn btn-rounded btn-danger">Stop Antrian</button>
-                                            </form>
+                                            @csrf
+                                            <input type="hidden" value="{{$row->id}}" name="idLoket">
+                                            <button type="submit" class="btn btn-rounded btn-success">Mulai Antrian</button>
+                                        </form>
+                                        <hr>
+                                    @endif
+                                        <br>
+                                        @if(Auth::user()->role_id == 3)
+                                        <form action="{{route('loket.hapusLoket')}}" method="post" class="form-horizontal">
+                                        @elseif(Auth::user()->role_id == 5)
+                                        <form action="{{route('loketKecamatan.hapusLoket')}}" method="post" class="form-horizontal">
+                                        @endif
+                                            @csrf
+                                            <input type="hidden" value="{{$row->id}}" name="idLoket">
+                                            <button type="submit" class="btn btn-rounded btn-danger">Stop Antrian</button>
+                                        </form>
                                         
                                 </td>
 
@@ -130,102 +118,7 @@
     </div>
     <!-- /.row -->
 
-    <div class="row">
-        @foreach($data2 as $row)
-        <div class="col-xs-12">
-            <div class="box">
-               
-                <div class="box-header">
-                    <h1 class="box-title">
-                        @if($row->loket_antrian == 1)
-                        {{$row->layanan->nama_layanan}} / Antrian ONLINE
-                        @else
-                        {{$row->layanan->nama_layanan}} / Antrian Offline
-                        @endif
-                    </h1>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <input type="hidden" value="{{$row->nama_loket}}" name="naLok" id="naLok">
-                <div class="box-body">
-                    <table id="myTable" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nama </th>
-                                <th>NIK</th>
-                                <th>Nomor Antrian</th>
-                                <th>Tanggal Antrian</th>
-                                <th>Status</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($row->antrian as $ska)
-                                @if($ska->status_antrian == 1 && $ska->tanggal_antrian == date('Y-m-d') )
-                                    <tr>
-                                        <td>{{$ska->nama }}</td>
-                                        <td>{{$ska->nik }}</td>
-                                        <td>{{$ska->no_antrian }}</td>
-                                        <td>{{$ska->tanggal_antrian }}</td>
-                                        <td><b style = "color : red ">Mengantri</b></td>
-                                        <td>
-                                            <button class=" btn btnSelect"><i class="fa fa-microphone"></i></button>
-                                            <form action="{{route('loket.statusAntrian')}}" method="post" class="form-horizontal">
-                                                @csrf
-                                                <input type="hidden" value="{{$ska->id}}" name="idAntrian">
-                                                <button type="submit" class="btn btn-rounded btn-info">Panggil</button>
-                                                
-                                            </form>
-                                            <br>
-                                            <form action="#" method="post" class="form-horizontal">
-                                                @csrf
-                                                <input type="hidden" value="{{$ska->id}}" name="idAntrian">
-                                                <button type="submit" class="btn btn-rounded btn-danger">Selesai</button>
-                                            </form>
-                                            <br>
-                                            
-                                        </td>
-                                        
-                                    </tr>
-
-                                @elseif($ska->status_antrian == 2 && $ska->tanggal_antrian == date('Y-m-d') )
-                                    <tr>
-                                        <td>{{$ska->nama }}</td>
-                                        <td>{{$ska->nik }}</td>
-                                        <td>{{$ska->no_antrian }}</td>
-                                        <td>{{$ska->tanggal_antrian }}</td>
-                                        <td><b style = "color : green ">Di Loket</b></td>
-                                        <td>
-                                            <button class=" btn btnSelect"><i class="fa fa-microphone"></i></button>
-                                            <form action="{{route('loket.hapusAntrian')}}" method="post" class="form-horizontal">
-                                                @csrf
-                                                <input type="hidden" value="{{$ska->id}}" name="idAntrian">
-                                                <button type="submit" class="btn btn-rounded btn-danger">Selesai</button>
-                                            </form>
-                                            <br>
-                                        </td>
-                                        
-                                    </tr>
-                                
-                                @endif
-                            @endforeach
-
-                            </tfoot>
-                    </table>
-                </div>
-                <!-- /.box-body -->
-                
-            </div>
-            <!-- /.box -->
-        </div>
-        @endforeach
-        <!-- /.col -->
-    </div>
+    
     <!-- /.row -->
 
    
@@ -244,13 +137,14 @@
             var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
             var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
             var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
-            var lok = $("#naLok").val();
+            var col4=currentRow.find("td:eq(4)").text(); // get current row 3rd TD
+            // var lok = $("#naLok").val();
             var data=col1+"\n"+col2+"\n"+col3;
             
             // alert(data);
 
             responsiveVoice.speak(
-                "Nomor Antrian '" + col3 + "' Atas Nama '" + col1 + "' Ke Loket '" + lok + "'",
+                "Nomor Antrian '" + col3 + "' Atas Nama '" + col1 + "' Ke Loket '" + col4 + "'",
                 "Indonesian Female",
                 {
                 pitch: 1, 

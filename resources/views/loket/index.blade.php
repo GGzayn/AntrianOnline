@@ -33,10 +33,16 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header with-border">
+                    @if(Auth::user()->role_id == 2)
                     <a href="{{route('dinas.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
                     <a href="{{route('dinas.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
                     <a href="{{route('dinas.export')}}" class="btn btn-rounded btn-primary">Report/Hari</a>
                     <a href="{{route('dinas.exportMonth')}}" class="btn btn-rounded btn-primary">Report/Bulan</a>
+                    @elseif(Auth::user()->role_id == 4)
+                    <a href="{{route('kecamatan.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
+                    <a href="{{route('kecamatan.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
+                    @endif
+                    
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -81,13 +87,21 @@
                                         </button>
                                         
                                         <ul class="dropdown-menu" role="menu">
+                                            @if(Auth::user()->role_id == 2)
                                             <form action="{{route('dinas.lokets.edit', $row->id) }}" method="post">
+                                            @elseif(Auth::user()->role_id == 4)
+                                            <form action="{{route('kecamatan.lokets.edit', $row->id) }}" method="post">
+                                            @endif
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="btn btn-info btn-rounded">EDIT</button>
                                             </form>
                                             <hr>
+                                            @if(Auth::user()->role_id == 2)
                                             <form action="{{route('dinas.lokets.destroy', $row->id) }}" method="post">
+                                            @elseif(Auth::user()->role_id == 4)
+                                            <form action="{{route('kecamatan.lokets.destroy', $row->id) }}" method="post">
+                                            @endif
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger btn-rounded">Delete</button>

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
 use App\Models\Opd;
+use App\Models\Districts;
+use App\Models\Urbans;
+
 
 class User extends Authenticatable
 {
@@ -53,10 +56,19 @@ class User extends Authenticatable
         
         return $this->belongsTo(Opd::class,'child_id','id');
     }
+    public function district()
+    {
+        return $this->belongsTo(Districts::class,'child_id','id');
+    }
+    public function urban()
+    {
+        
+        return $this->belongsTo(Urbans::class,'child_id','id');
+    }
 
     public function scopeDinas()
     {
-        return $query->where('child_id',auth()->user()->child_id);
+        return $this->where('child_id',auth()->user()->child_id);
     }
     
 }

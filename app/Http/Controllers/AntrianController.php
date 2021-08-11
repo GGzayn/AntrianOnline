@@ -8,6 +8,10 @@ use App\Models\Layanan;
 use App\Models\Antrian;
 use App\Models\Loket;
 use App\Models\Opd;
+use App\Models\Districts;
+use App\Models\Urbans;
+use App\Models\Cities;
+use App\Models\Provinces;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -20,22 +24,15 @@ class AntrianController extends Controller
      */
     public function index()
     {
-       
         $role = auth()->user()->role->id;
-        if ($role != 1) {
-            $data = Loket::with(['layanan.opd', 'antrian'])->layananDinas()->paginate(10);
-            $data2 = Loket::where('status_loket',1)->layananDinas()
-            ->whereHas('antrian', function ($query) {
-            })
-            ->get();
-
-
-
-        }else{
-            $data = Loket::with('layanan.opd')->paginate(10);
+        if ($role == 2 || $role == 3) {
+            $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->layananDinas()->paginate(10);
         }
-        // dd($data2);
-        return view ('antrian.index',compact('data','data2'));
+        elseif($role == 4 || $role == 5)
+        {
+            $data = Loket::where('child_id',auth()->user()->child_id)->with('district','layanan.opd','antrian')->paginate(10);
+        }
+        return view ('antrian.index',compact('data'));
     }
     /**
      * Show the form for creating a new resource.
@@ -113,6 +110,7 @@ class AntrianController extends Controller
             'nik' => 'required|',
             'tanggal_antrian' => 'required|',
             'waktu_antrian' => 'required|',
+            'loket_id' => 'required|',
         ]);
 
         if ($validator->fails()) {
@@ -123,7 +121,7 @@ class AntrianController extends Controller
             ], 500);
         }
 
-        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 1)->pluck('id');
+        $loket = Loket::where('id', $request->loket_id)->where('loket_antrian', 1)->pluck('id');
 
         foreach($loket as $l)
         {
@@ -153,16 +151,26 @@ class AntrianController extends Controller
         $antrian->jenis_antrian = 0;
         $antrian->status_antrian = 0;
         $antrian->no_antrian = $finalNoAntri;
+        $antrian->alamat = $request->alamat;
+        $antrian->rt = $request->rt;
+        $antrian->rw = $request->rw;
+        $antrian->urban_id = $request->urban_id;
+        $antrian->district_id = $request->district_id;
+        $antrian->city_id = $request->city_id;
+        $antrian->province_id = $request->province_id;
+        $antrian->longitude = $request->longitude;
+        $antrian->latitude = $request->latitude;
+        $antrian->patokan = $request->patokan;
 
         $dataAntri = Antrian::where('tanggal_antrian',$request->tanggal_antrian)->where('waktu_antrian',$request->waktu_antrian)->where('loket_id',$idLok)->get();
-        // dd($dataAntri);
+       
         
         if(count($dataAntri) > 0)
         {
             return Response([
                 'status' => 'false',
                 'message' => 'Silahkan Pilih Waktu yang Lain',
-            ], 200);
+            ], 401);
         }
         
         $antrian->save();
@@ -192,6 +200,16 @@ class AntrianController extends Controller
     {
         $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->orderBy('id', 'desc')->limit(5)->get();
 
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'antrian' => $antrian
+        ], 200);
+    }
+
+    public function pengaju()
+    {
+        $antrian = Antrian::with('loket.layanan','userDoc')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',

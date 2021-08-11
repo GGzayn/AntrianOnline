@@ -8,6 +8,12 @@ use Carbon\Carbon;
 use App\Models\Loket;
 use App\Models\Layanan;
 use App\Models\Opd;
+use App\Models\UserDocuments;
+use App\Models\NotifDocuments;
+use App\Models\Districts;
+use App\Models\Urbans;
+use App\Models\Cities;
+use App\Models\Provinces;
 
 class Antrian extends Model
 {
@@ -23,6 +29,17 @@ class Antrian extends Model
         'tanggal_booking',
         'status_antrian',
         'jenis_antrian',
+        'alamat',
+        'rt',
+        'rw',
+        'urban_id',
+        'district_id',
+        'city_id',
+        'province_id',
+        'longitude',
+        'latitude',
+        'patokan',
+
     ];
 
     protected $casts = [
@@ -39,8 +56,34 @@ class Antrian extends Model
     {
         return $this->belongsTo(Loket::class);
     }
+    public function province()
+    {
+        return $this->belongsTo(Provinces::class);
+    }
+    public function city()
+    {
+        return $this->belongsTo(Cities::class);
+    }
+    public function district()
+    {
+        return $this->belongsTo(Districts::class);
+    }
+    public function urban()
+    {
+        return $this->belongsTo(Urbans::class);
+    }
 
-    
+    public function userDoc()
+    {
+        return $this->hasMany(UserDocuments::class);
+    }
+
+    public function notifDoc()
+    {
+        return $this->hasMany(NotifDocuments::class);
+    }
+
+
     public function getStatusAntrianNameAttribute($value)
     {
         switch($value) {
@@ -66,11 +109,11 @@ class Antrian extends Model
     }
     public function getCountOfDayAttribute()
     {
-        return $this->antrian()->where('tanggal_antrian',date('Y-m-d'))->count();
+        return $this->where('tanggal_antrian',date('Y-m-d'))->count();
     }
     public function getCountOfMonthAttribute()
     {
-        return $this->antrian()
+        return $this
         ->whereMonth('created_at', Carbon::now()->month)
         ->count();
     }

@@ -22,7 +22,11 @@
               </div>
               <!-- /.box-header -->
               <!-- form start -->
-              <form action="{{route('dinas.lokets.store')}}" method="post" class="form-horizontal">
+                @if(Auth::user()->role_id == 2)
+                <form action="{{route('dinas.lokets.store')}}" method="post" class="form-horizontal">
+                @elseif(Auth::user()->role_id == 4)
+                <form action="{{route('kecamatan.lokets.store')}}" method="post" class="form-horizontal">
+                @endif
                 @csrf
                 <div class="box-body">
 

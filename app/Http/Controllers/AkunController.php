@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Lyanan;
+use App\Models\Layanan;
 use App\Models\Opd;
 use App\Models\Role;
 
@@ -17,7 +17,7 @@ class AkunController extends Controller
      */
     public function index()
     {
-        $data =  User::with(['opd','role'])->where('id','!=',1)->paginate(5);
+        $data =  User::with(['opd','role'])->where('role_id',2)->orWhere('role_id',3)->paginate(5);
         return view ('akun.index',compact('data'));
     }
 
@@ -97,5 +97,15 @@ class AkunController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function pengguna()
+    {
+        $user = User::with('role')->get();
+        return Response([
+            'status' => 'success',
+            'message' => 'Input data berhasil',
+            'data' => $user
+        ], 200);
     }
 }

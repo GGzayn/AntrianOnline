@@ -163,11 +163,11 @@ class OfflineRegisterController extends Controller
     public function MobileTimeAvail(Request $request)
     {
 
-        $loket = Loket::where('layanan_id', $request->layanan_id)->where('loket_antrian', 1)->pluck('id');
+        $loket = Loket::where('id', $request->loket_id)->where('loket_antrian', 1)->pluck('id');
         $antrian = Antrian::selectRaw('loket_id, count(*) as total')->whereIn('loket_id', $loket)->where('tanggal_antrian', $request->tanggal_antrian)->groupBy('loket_id')->get()->pluck('total', 'loket_id');
         
         $loket_id = $loket[0];
-        
+        // dd($loket_id);
         
         if (count($antrian) > 0) {
             $minTotal = 1;
@@ -205,10 +205,17 @@ class OfflineRegisterController extends Controller
                 return Response([
                     'status' => 'error', 
                     'message' => 'Silahkan Pilih Tanggal Antrian yang Benar',
-                ]);
+                ],401);
+            }
+            elseif($datenow <= $x)
+            {
+                return Response([
+                    'status' => 'error', 
+                    'message' => 'Anda Tidak Bisa Memilih Antrian di Tanggal Tersebut!',
+                ],401);
             }
             else{
-                if ($x == $datenow) {
+                if ($x >= $datenow) {
                     continue;
                 } 
             }
@@ -225,7 +232,7 @@ class OfflineRegisterController extends Controller
         {
             $how[] = $v;
         }
-        
+        // dd($how);
 
         return Response([
             'status' => 'success', 

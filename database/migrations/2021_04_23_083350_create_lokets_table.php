@@ -17,6 +17,7 @@ class CreateLoketsTable extends Migration
             $table->id();
             $table->string('nama_loket');
             $table->bigInteger('layanan_id');
+            $table->bigInteger('child_id');
             $table->string('nama_petugas');
             $table->integer('interval_waktu');
             $table->integer('interval_booking');

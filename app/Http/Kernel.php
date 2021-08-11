@@ -65,6 +65,9 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\IsAdmin::class,
         'dinas' => \App\Http\Middleware\IsDinas::class,
         'loket' => \App\Http\Middleware\IsLoket::class,
+        'kecamatan' => \App\Http\Middleware\IsAdkec::class,
+        'kelurahan' => \App\Http\Middleware\IsAdkel::class,
+        'loketKecamatan' => \App\Http\Middleware\IsLoketKecamatan::class,
         'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

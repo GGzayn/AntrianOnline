@@ -17,9 +17,11 @@ class CreateLayanansTable extends Migration
             $table->id();
             $table->string('nama_layanan');
             $table->string('kode_layanan');
+            $table->string('kata_kunci')->nullable();
             $table->string('alamat');
             $table->bigInteger('no_telepon');
             $table->bigInteger('opd_id');
+            $table->string('jenis_layanan')->nullable();
             $table->timestamps();
         });
     }

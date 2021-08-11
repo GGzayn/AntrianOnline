@@ -47,6 +47,15 @@
                   </div>
 
                   <div class="form-group">
+                    <label for="kata_kunci" class="col-sm-2 control-label">Kata Kunci</label>
+
+                    <div class="col-sm-10">
+                      <input type="text" name="kata_kunci" class="form-control" id="kata_kunci" placeholder="Masukkan Maksimal 3 Karakter Menggunakan Huruf Kapital">
+                    </div>
+                    
+                  </div>
+
+                  <div class="form-group">
                     <label for="alamat" class="col-sm-2 control-label">Alamat</label>
 
                     <div class="col-sm-10">
@@ -56,12 +65,23 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="no_telepon" class="col-sm-2 control-label">Kode Layanan</label>
+                    <label for="no_telepon" class="col-sm-2 control-label">Nomor Telepon</label>
 
                     <div class="col-sm-10">
                       <input type="text" name="no_telepon" class="form-control" id="no_telepon" placeholder="Nomor Telepon">
                     </div>
                     
+                  </div>
+
+                  <div class="form-group">
+                      <label for="jenis_layanan" class="col-sm-2 control-label">Jenis Layanan</label>
+
+                      <div class="col-sm-10">
+                          <select class="form-control select2" style="width: 100%;" name="jenis_layanan">
+                            <option value = "1">Antrian Online</option>
+                            <option value = "2">Full Online</option>
+                          </select>
+                      </div>
                   </div>
                   
                   

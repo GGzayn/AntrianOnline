@@ -54,7 +54,7 @@
                         <label for="role" class="col-sm-2 control-label">Role</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" style="width: 100%;" name="role">
+                            <select class="form-control select2" style="width: 100%;" name="role">
                                 @foreach($role as $row)
                                     <option value = "{{$row->id}}"  id="role">{{$row->role}}</option>
                                 @endforeach
@@ -66,7 +66,7 @@
                         <label for="opd" class="col-sm-2 control-label">OPD</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control" style="width: 100%;" name="opd">
+                            <select class="form-control select2" style="width: 100%;" name="opd">
                                 @foreach($opd as $row)
                                     <option value = "{{$row->id}}" id="opd">{{$row->nama_opd}}</option>
                                 @endforeach
