@@ -81,6 +81,8 @@
                                         <form action="{{route('loket.statusLoket')}}" method="post" class="form-horizontal">
                                         @elseif(Auth::user()->role_id == 5)
                                         <form action="{{route('loketKecamatan.statusLoket')}}" method="post" class="form-horizontal">
+                                        @elseif(Auth::user()->role_id == 7)
+                                        <form action="{{route('upt.statusLoket')}}" method="post" class="form-horizontal">
                                         @endif
                                             @csrf
                                             <input type="hidden" value="{{$row->id}}" name="idLoket">
@@ -93,6 +95,8 @@
                                         <form action="{{route('loket.hapusLoket')}}" method="post" class="form-horizontal">
                                         @elseif(Auth::user()->role_id == 5)
                                         <form action="{{route('loketKecamatan.hapusLoket')}}" method="post" class="form-horizontal">
+                                        @elseif(Auth::user()->role_id == 7)
+                                        <form action="{{route('upt.hapusLoket')}}" method="post" class="form-horizontal">
                                         @endif
                                             @csrf
                                             <input type="hidden" value="{{$row->id}}" name="idLoket">

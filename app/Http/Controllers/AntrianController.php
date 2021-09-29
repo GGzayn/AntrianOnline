@@ -32,6 +32,11 @@ class AntrianController extends Controller
         {
             $data = Loket::where('child_id',auth()->user()->child_id)->with('district','layanan.opd','antrian')->paginate(10);
         }
+
+        elseif($role == 7)
+        {
+            $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->paginate(10);
+        }
         return view ('antrian.index',compact('data'));
     }
     /**
@@ -146,6 +151,7 @@ class AntrianController extends Controller
         $antrian->loket_id = $idLok;
         $antrian->nama = $request->nama;
         $antrian->nik = $request->nik;
+        $antrian->no_telp = $request->no_telp;
         $antrian->tanggal_antrian = $request->tanggal_antrian;
         $antrian->waktu_antrian = $request->waktu_antrian;
         $antrian->jenis_antrian = 0;
@@ -163,14 +169,23 @@ class AntrianController extends Controller
         $antrian->patokan = $request->patokan;
 
         $dataAntri = Antrian::where('tanggal_antrian',$request->tanggal_antrian)->where('waktu_antrian',$request->waktu_antrian)->where('loket_id',$idLok)->get();
-       
-        
-        if(count($dataAntri) > 0)
+        $antriQ = Antrian::where('nik',$request->nik)->where('tanggal_antrian',$request->tanggal_antrian)->with('loket.layanan')->get()->pluck('loket.layanan.id');
+        // dd(count($antriQ));
+        if(count($antriQ) > 0 )
         {
             return Response([
                 'status' => 'false',
-                'message' => 'Silahkan Pilih Waktu yang Lain',
+                'message' => 'Harap Selesaikan Antrian Anda Terlebih Dahulu',
             ], 401);
+        }
+        else{
+            if(count($dataAntri) > 0)
+                {
+                    return Response([
+                        'status' => 'false',
+                        'message' => 'Silahkan Pilih Waktu yang Lain',
+                    ], 401);
+                }
         }
         
         $antrian->save();

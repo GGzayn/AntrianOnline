@@ -32,6 +32,8 @@
             <div class="box">
                 <div class="box-header">
                 <h3 class="box-title">Table Berkas Pengguna Tercetak </h3>
+                <br>
+                <h3 class="box-title">Total Berkas yang Harus Di Kirim Ke Masyarakat : {{$newBerkas}} </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>

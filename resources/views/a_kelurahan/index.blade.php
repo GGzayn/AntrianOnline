@@ -46,6 +46,7 @@
                             <tr>
                                 <th>Nama</th>
                                 <th>Email</th>
+                                <th>Kelurahan</th>
                                 <th>Role</th>
                                 <th>ACTION</th>
                             </tr>
@@ -55,6 +56,7 @@
                             <tr>
                                 <td>{{$row->name}}</td>
                                 <td>{{$row->email}}</td>
+                                <td>{{$row->urban['urban']}}</td>
                                 <td>{{$row->role->role}}</td>
                                 <td>
                                     <div class="btn-group">

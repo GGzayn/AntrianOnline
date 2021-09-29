@@ -41,6 +41,8 @@
                     @elseif(Auth::user()->role_id == 4)
                     <a href="{{route('kecamatan.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
                     <a href="{{route('kecamatan.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
+                    @elseif(Auth::user()->role_id == 7)
+                    <a href="{{route('upt.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
                     @endif
                     
                     <div class="box-tools pull-right">
@@ -91,6 +93,8 @@
                                             <form action="{{route('dinas.lokets.edit', $row->id) }}" method="post">
                                             @elseif(Auth::user()->role_id == 4)
                                             <form action="{{route('kecamatan.lokets.edit', $row->id) }}" method="post">
+                                            @elseif(Auth::user()->role_id == 7)
+                                            <form action="{{route('upt.lokets.edit', $row->id) }}" method="post">
                                             @endif
                                                 @csrf
                                                 @method('GET')
@@ -101,6 +105,8 @@
                                             <form action="{{route('dinas.lokets.destroy', $row->id) }}" method="post">
                                             @elseif(Auth::user()->role_id == 4)
                                             <form action="{{route('kecamatan.lokets.destroy', $row->id) }}" method="post">
+                                            @elseif(Auth::user()->role_id == 7)
+                                            <form action="{{route('upt.lokets.destroy', $row->id) }}" method="post">
                                             @endif
                                                 @csrf
                                                 @method('DELETE')

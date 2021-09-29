@@ -32,6 +32,8 @@
             <div class="box">
                 <div class="box-header">
                 <h3 class="box-title">Table Berkas Pengguna </h3>
+                <br>
+                <h3 class="box-title">Total Berkas yang Harus Di Cetak dan Dikirim Ke Kecamatan : {{$newBerkas}} </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -61,13 +63,7 @@
                         @if($row->status_pengiriman == 0)
                         <td><b style = "color : blue ">Proses Pencetakan Berkas</b></td>
                         @elseif($row->status_pengiriman == 1)
-                        <td><b style = "color : green ">Berkas Di Kirim ke Kecamatan </b></td>
-                        @elseif($row->status_pengiriman == 2)
-                        <td><b style = "color : green ">Berkas Di Kirim ke Kelurahan </b></td>
-                        @elseif($row->status_pengiriman == 3)
-                        <td><b style = "color : green ">Berkas Di Kirim ke Masyarakat </b></td>
-                        elseif($row->status_pengiriman == 3)
-                        <td><b style = "color : green ">Berkas Di Terima ke Masyarakat </b></td>
+                        <td><b style = "color : green ">Berkas Selesai Dicetak dan Dikirim ke Kecamatan/UPT </b></td>
                         @endif
                         <td>{{$row->updated_at}}</td>
                         <td>

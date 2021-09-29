@@ -23,87 +23,93 @@
               <!-- /.box-header -->
               <!-- form start -->
                 @foreach($loket as $row)
-                @if(Auth::user()->role_id == 2)
-                <form action="{{route('dinas.lokets.update', $row->id)}}" method="post" class="form-horizontal">
-                @elseif(Auth::user()->role_id == 4)
-                <form action="{{route('kecamatan.lokets.update', $row->id)}}" method="post" class="form-horizontal">
-                @endif
-                @csrf
-                @method('PUT')
-                <div class="box-body">
+                    @if(Auth::user()->role_id == 2)
+                    <form action="{{route('dinas.lokets.update', $row->id)}}" method="post" class="form-horizontal">
+                    @elseif(Auth::user()->role_id == 4)
+                    <form action="{{route('kecamatan.lokets.update', $row->id)}}" method="post" class="form-horizontal">
+                    @elseif(Auth::user()->role_id == 7)
+                    <form action="{{route('upt.lokets.update', $row->id)}}" method="post" class="form-horizontal">
+                    @endif
+                    @csrf
+                    @method('PUT')
+                    <div class="box-body">
 
-                    <div class="form-group">
-                        <label for="nama_petugas" class="col-sm-2 control-label">Nama Petugas</label>
+                        <div class="form-group">
+                            <label for="nama_petugas" class="col-sm-2 control-label">Nama Petugas</label>
 
-                        <div class="col-sm-10">
-                            <input type="text" name="nama_petugas" class="form-control" id="nama_petugas" value="{{$row->nama_petugas}}" placeholder="Nama Petugas">
+                            <div class="col-sm-10">
+                                <select class="form-control select2" style="width: 100%;" name="nama_petugas">
+                                    @foreach($namaLoket as $row)
+                                        <option value = "{{$row->email}}"  id="nama_petugas">{{$row->email}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="nama_loket" class="col-sm-2 control-label">Nama Loket</label>
+                        <div class="form-group">
+                            <label for="nama_loket" class="col-sm-2 control-label">Nama Loket</label>
 
-                        <div class="col-sm-10">
-                            <input type="text" name="nama_loket" class="form-control" id="nama_loket" value="{{$row->nama_loket}}" placeholder="Nama Loket">
+                            <div class="col-sm-10">
+                                <input type="text" name="nama_loket" class="form-control" id="nama_loket" value="{{$row->nama_loket}}" placeholder="Nama Loket">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="nama_layanan" class="col-sm-2 control-label">Nama Layanan</label>
+                        <div class="form-group">
+                            <label for="nama_layanan" class="col-sm-2 control-label">Nama Layanan</label>
 
-                        <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="nama_layanan">
-                                @foreach($layanan as $row)
-                                    <option value = "{{$row->id}}"  id="role">{{$row->nama_layanan}}</option>
-                                @endforeach
-                            </select>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" style="width: 100%;" name="nama_layanan">
+                                    @foreach($layanan as $row)
+                                        <option value = "{{$row->id}}"  id="role">{{$row->nama_layanan}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="waktu_buka" class="col-sm-2 control-label">Waktu Buka</label>
+                        <div class="form-group">
+                            <label for="waktu_buka" class="col-sm-2 control-label">Waktu Buka</label>
 
-                        <div class="col-sm-10">
-                            <input type="text" name="waktu_buka" class="form-control" id="waktu_buka" value="{{$row->waktu_buka}}" placeholder="Waktu Buka">
+                            <div class="col-sm-10">
+                                <input type="text" name="waktu_buka" class="form-control" id="waktu_buka" value="{{$row->waktu_buka}}" placeholder="Waktu Buka">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="waktu_tutup" class="col-sm-2 control-label">Waktu Tutup</label>
+                        <div class="form-group">
+                            <label for="waktu_tutup" class="col-sm-2 control-label">Waktu Tutup</label>
 
-                        <div class="col-sm-10">
-                            <input type="text" name="waktu_tutup" class="form-control" id="waktu_tutup" value="{{$row->waktu_tutup}}" placeholder="Waktu Tutup">
+                            <div class="col-sm-10">
+                                <input type="text" name="waktu_tutup" class="form-control" id="waktu_tutup" value="{{$row->waktu_tutup}}" placeholder="Waktu Tutup">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="interval_waktu" class="col-sm-2 control-label">Interval Waktu</label>
+                        <div class="form-group">
+                            <label for="interval_waktu" class="col-sm-2 control-label">Interval Waktu</label>
 
-                        <div class="col-sm-10">
-                            <input type="number" name="interval_waktu" class="form-control" id="interval_waktu" value="{{$row->interval_waktu}}" placeholder="Interval Waktu Dalam menit">
+                            <div class="col-sm-10">
+                                <input type="number" name="interval_waktu" class="form-control" id="interval_waktu" value="{{$row->interval_waktu}}" placeholder="Interval Waktu Dalam menit">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="loket_antrian" class="col-sm-2 control-label">Loket Antrian</label>
+                        <div class="form-group">
+                            <label for="loket_antrian" class="col-sm-2 control-label">Loket Antrian</label>
 
-                        <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="loket_antrian">
-                                <option value="1">Antrian Online</option>
-                                <option value="2">Antrian Offline</option>
-                            </select>
+                            <div class="col-sm-10">
+                                <select class="form-control select2" style="width: 100%;" name="loket_antrian">
+                                    <option value="1">Antrian Online</option>
+                                    <option value="2">Antrian Offline</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                  
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                  <button type="submit" class="btn btn-info pull-right">SUBMIT</button>
-                </div>
-                <!-- /.box-footer -->
-              </form>
-              @endforeach
+                    
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                    <button type="submit" class="btn btn-info pull-right">SUBMIT</button>
+                    </div>
+                    <!-- /.box-footer -->
+                    </form>
+                @endforeach
           </div>
         </div>
       </div>

@@ -18,7 +18,6 @@ class A_kecamatanController extends Controller
     public function index()
     {
         $data =  User::with(['district','role'])->where('role_id',4)->orWhere('role_id',5)->paginate(5);
-        // dd($data);
         return view ('a_kecamatan.index',compact('data'));
     }
 

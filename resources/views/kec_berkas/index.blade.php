@@ -31,7 +31,9 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                <h3 class="box-title">Table Berkas Pengguna </h3>
+                    <h3 class="box-title">Table Berkas Pengguna </h3>
+                    <br>
+                    <h3 class="box-title">Total Berkas Baru Hari ini : {{$newBerkas}} </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -68,13 +70,13 @@
                                     @endif
                                     <td>{{$usr->note}}</td>
                                 
-                                <td>
-                                    <form action="{{route('kecamatan.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
-                                        @csrf
-                                        @method('GET')
-                                        <button type="submit" class="btn btn-success btn-rounded">Update Status Berkas</button>
-                                    </form>
-                                </td>
+                                    <td>
+                                        <form action="{{route('kecamatan.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
+                                            @csrf
+                                            @method('GET')
+                                            <button type="submit" class="btn btn-success btn-rounded">Update Status Berkas</button>
+                                        </form>
+                                    </td>
                                 @endforeach
                             </tr>
                             @endif

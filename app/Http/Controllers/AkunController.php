@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Layanan;
 use App\Models\Opd;
 use App\Models\Role;
+use App\Models\Districts;
 
 class AkunController extends Controller
 {
@@ -101,7 +102,7 @@ class AkunController extends Controller
 
     public function pengguna()
     {
-        $user = User::with('role')->get();
+        $user = User::where('role_id',2)->orWhere('role_id',4)->orWhere('role_id',6)->orWhere('role_id',7)->with('opd','role','district','urban','upt')->get();
         return Response([
             'status' => 'success',
             'message' => 'Input data berhasil',

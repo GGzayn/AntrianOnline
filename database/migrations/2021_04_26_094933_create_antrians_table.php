@@ -14,9 +14,10 @@ class CreateAntriansTable extends Migration
     public function up()
     {
         Schema::create('antrians', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(1000000);
             $table->bigInteger('loket_id');
             $table->string('no_antrian');
+            $table->string('no_telp')->nullable();
             $table->date('tanggal_booking')->nullable();
             $table->string('nama')->nullable();
             $table->string('nik')->nullable();

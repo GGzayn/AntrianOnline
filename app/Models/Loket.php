@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Layanan;
 use App\Models\Antrian;
 use App\Models\Districts;
+use App\Models\Upt;
 
 class Loket extends Model
 {
@@ -39,6 +40,10 @@ class Loket extends Model
     public function district()
     {
         return $this->belongsTo(Districts::class,'child_id','id');
+    }
+    public function upt()
+    {
+        return $this->belongsTo(Upt::class,'child_id','id');
     }
 
     public function antrian()

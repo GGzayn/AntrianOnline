@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\Opd;
 use App\Models\Districts;
 use App\Models\Urbans;
+use App\Models\Upt;
 
 
 class User extends Authenticatable
@@ -55,6 +56,11 @@ class User extends Authenticatable
     {
         
         return $this->belongsTo(Opd::class,'child_id','id');
+    }
+    public function upt()
+    {
+        
+        return $this->belongsTo(Upt::class,'child_id','id');
     }
     public function district()
     {

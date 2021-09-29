@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'kecamatan' => \App\Http\Middleware\IsAdkec::class,
         'kelurahan' => \App\Http\Middleware\IsAdkel::class,
         'loketKecamatan' => \App\Http\Middleware\IsLoketKecamatan::class,
+        'upt' => \App\Http\Middleware\IsUpt::class,
         'cors' => \App\Http\Middleware\Cors::class,
     ];
 }

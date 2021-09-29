@@ -47,8 +47,7 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function () {
-        setTimeout("location.href = '{{route('dinas.offlines.index')}}';",5000);
-        
+        setTimeout("location.href = '{{route('dinas.offlines.index')}}';",1000);
     });
 </script>
 

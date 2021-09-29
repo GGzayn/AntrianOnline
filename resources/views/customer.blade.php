@@ -15,13 +15,34 @@
 
 <body>
     <div class="container head">
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{ session('status') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>{{ session('error') }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
         <h1 class="display-1"> <b>SELAMAT DATANG</b> </h1>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a href="{{route('dinas.offlines.create')}}" class="btn btn-success btn-rounded">DAFTAR
+            @if(Auth::user()->role_id == 2)
+                <a href="{{route('dinas.offlines.create')}}" class="btn btn-success btn-rounded">DAFTAR
                 OFFLINE</a>
+            @elseif(Auth::user()->role_id == 4)
+                <a href="{{route('kecamatan.offlines.create')}}" class="btn btn-success btn-rounded">DAFTAR OFFLINE</a>
+            @endif
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
-            <a href="{{route('scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
+            @if(Auth::user()->role_id == 2)
+                <a href="{{route('dinas.scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
+            @elseif(Auth::user()->role_id == 4)
+                <a href="{{route('kecamatan.scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
+            @endif
         </div>
     </div>
 

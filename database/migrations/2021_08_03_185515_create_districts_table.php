@@ -17,6 +17,7 @@ class CreateDistrictsTable extends Migration
             $table->id();
             $table->string('district');
             $table->bigInteger('city_id');
+            $table->bigInteger('upt_id')->nullable();
             $table->timestamps();
         });
     }

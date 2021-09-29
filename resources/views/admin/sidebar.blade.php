@@ -19,6 +19,8 @@
         <!-- <li class="header">MASTER DATA</li> -->
         <li><a href="{{route('admin.opds.index')}}"><i class="fa fa-building"></i> <span>Opd</span></a></li>
         <li><a href="{{route('admin.akuns.index')}}"><i class="fa fa-users"></i> <span>Akun Dinas</span></a></li>
+        <li><a href="{{route('admin.uptsAcc.index')}}"><i class="fa fa-users"></i> <span>Akun UPT</span></a></li>
+        <li><a href="{{route('admin.upts.index')}}"><i class="fa fa-building"></i> <span>UPT</span></a></li>
         <li><a href="{{route('admin.a_kecamatans.index')}}"><i class="fa fa-users"></i> <span>Akun Kecamatan</span></a></li>
         <li><a href="{{route('admin.a_kelurahans.index')}}"><i class="fa fa-users"></i> <span>Akun Kelurahan</span></a></li>
         <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
@@ -46,16 +48,12 @@
         @elseif(Auth::user()->role_id == 6)
         <li><a href="{{route('kelurahan.kelurahanBerkas')}}"><i class="fa fa-file-text"></i> <span>Berkas Tercetak</span></a></li>
         <li><a href="{{route('laporan')}}"><i class="fa fa-file-text-o"></i> <span>Laporan Berkas</span></a></li>
+        @elseif(Auth::user()->role_id == 7)
+        <li><a href="{{route('upt.lokets.index')}}"><i class="fa fa-file"></i> <span>Loket</span></a></li>
+        <li><a href="{{route('upt.antrians.index')}}"><i class="fa fa-file"></i> <span>Antrian</span></a></li>
         @endif
         
         
-        
-        
-        
-        
-        
-        
-     
         
       </ul>
     </section>

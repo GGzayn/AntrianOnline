@@ -73,15 +73,19 @@
                             <td>{{$row->antrian['nik']}}</td>
                             <td>{{$row->updated_at}}</td>
                             @if($row->status_pengiriman == 0)
-                                <td>Proses Pengiriman</td>
+                                <td> <b style = "color : green "> Proses Pencetakan Berkas di Dinas </b></td>
                             @elseif($row->status_pengiriman == 1)
-                                <td>Berkas Dikirim Ke Kecamatan</td>
+                                <td> <b style = "color : green "> Berkas Telah Dicetak dan Dikirim ke Kecamatan/UPT </b></td>
                             @elseif($row->status_pengiriman == 2)
-                                <td>Berkas Dikirim Ke Kelurahan</td>
+                                <td> <b style = "color : green "> Berkas Dikirim Ke Kelurahan </b></td>
                             @elseif($row->status_pengiriman == 3)
-                                <td>Berkas Dikirim Ke Masyarakat</td>
+                                <td> <b style = "color : green "> Berkas Di Pickup Oleh Kurir Tancap Gas </b></td>
+                            @elseif($row->status_pengiriman == 4)
+                                <td> <b style = "color : green "> Berkas Di Antar Oleh Kurir Tancap Gas </b></td>
                             @elseif($row->status_pengiriman == 5)
-                                <td>Berkas Diterima Oleh Masyarakat</td>
+                                <td> <b style = "color : green "> Berkas Berhasil Terkirim </b></td>
+                            @elseif($row->status_pengiriman == 6)
+                                <td> <b style = "color : red "> Berkas Gagal Terkirim </b></td>
                             @endif
                         </tr>
                         

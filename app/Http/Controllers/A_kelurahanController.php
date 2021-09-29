@@ -18,7 +18,8 @@ class A_kelurahanController extends Controller
      */
     public function index()
     {
-        $data =  User::with(['urban','role'])->where('role_id',6)->paginate(5);
+        $data =  User::with('urban','role')->where('role_id',6)->paginate(5);
+        // dd($data);
         return view ('a_kelurahan.index',compact('data'));
     }
 
@@ -48,7 +49,7 @@ class A_kelurahanController extends Controller
         $data->email = $request->email;
         $data->password = bcrypt($request->password);
         $data->role_id = $request->role;
-        $data->child_id = auth()->user()->child_id;
+        $data->child_id = $request->urban;
 
         $data->save();
 

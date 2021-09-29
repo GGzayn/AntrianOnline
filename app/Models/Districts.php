@@ -9,6 +9,7 @@ use App\Models\Cities;
 use App\Models\Urbans;
 use App\Models\Loket;
 use App\Models\Antrian;
+use App\Models\Upt;
 
 class Districts extends Model
 {
@@ -16,8 +17,14 @@ class Districts extends Model
 
     protected $fillable = [
         'district',
-        'city_id'
+        'city_id',
+        'upt_id'
     ];
+
+    public function upt()
+    {
+        return $this->belongsTo(Upt::class);
+    }
 
     public function city()
     {

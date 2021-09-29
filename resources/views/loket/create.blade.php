@@ -26,6 +26,8 @@
                 <form action="{{route('dinas.lokets.store')}}" method="post" class="form-horizontal">
                 @elseif(Auth::user()->role_id == 4)
                 <form action="{{route('kecamatan.lokets.store')}}" method="post" class="form-horizontal">
+                @elseif(Auth::user()->role_id == 7)
+                <form action="{{route('upt.lokets.store')}}" method="post" class="form-horizontal">
                 @endif
                 @csrf
                 <div class="box-body">
@@ -34,7 +36,11 @@
                         <label for="nama_petugas" class="col-sm-2 control-label">Nama Petugas</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="nama_petugas" class="form-control" id="nama_petugas" placeholder="Nama Petugas">
+                            <select class="form-control select2" style="width: 100%;" name="nama_petugas">
+                                @foreach($namaLoket as $row)
+                                    <option value = "{{$row->email}}"  id="nama_petugas">{{$row->email}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
@@ -52,7 +58,7 @@
                         <div class="col-sm-10">
                             <select class="form-control select2" style="width: 100%;" name="nama_layanan">
                                 @foreach($layanan as $row)
-                                    <option value = "{{$row->id}}"  id="role">{{$row->nama_layanan}}</option>
+                                    <option value = "{{$row->id}}"  id="nama_layanan">{{$row->nama_layanan}}</option>
                                 @endforeach
                             </select>
                         </div>

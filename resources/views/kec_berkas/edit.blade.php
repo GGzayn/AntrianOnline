@@ -36,7 +36,7 @@
 
                             <div class="col-sm-10">
                                 <select class="form-control select2" style="width: 100%;" name="status_berkas">
-                                    <option value = "0">Berkas Di Proses</option>
+                                    <!-- <option value = "0">Berkas Di Proses</option> -->
                                     <option value = "1">Berkas Di Terima </option>
                                     <option value = "2">Berkas Di Tolak </option>
                                 </select>

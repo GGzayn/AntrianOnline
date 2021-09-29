@@ -26,6 +26,7 @@ class Antrian extends Model
         'tanggal_antrian',
         'waktu_antrian',
         'no_antrian',
+        'no_telp',
         'tanggal_booking',
         'status_antrian',
         'jenis_antrian',

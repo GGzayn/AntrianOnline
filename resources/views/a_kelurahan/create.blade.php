@@ -62,6 +62,18 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+                        <label for="urban" class="col-sm-2 control-label">Kelurahan</label>
+
+                        <div class="col-sm-10">
+                            <select class="form-control select2" style="width: 100%;" name="urban">
+                                @foreach($urban as $row)
+                                    <option value = "{{$row->id}}"  id="urban">{{$row->urban}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                    
                   
                 </div>

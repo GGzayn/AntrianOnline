@@ -32,6 +32,8 @@
             <div class="box">
                 <div class="box-header">
                 <h3 class="box-title">Table Berkas Pengguna Tercetak </h3>
+                <br>
+                <h3 class="box-title">Total Berkas yang Harus Dikirim Ke Kelurahan : {{$newBerkas}} </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -44,7 +46,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                    <th>Nama</th>
+                        <th>Nama</th>
                         <th>NIK</th>
                         <th>Status Berkas</th>
                         <th>Status Pengiriman</th>
@@ -54,43 +56,24 @@
                 </thead>
                 <tbody>
                     @foreach($data as $row)
-                        @foreach($row->antrian as $waw)
-                            @if($waw->status_antrian == 3)
-                            <tr>
-                                <td>{{$waw->nama}}</td>
-                                <td>{{$waw->nik}}</td>
-                                @foreach($waw->userDoc as $usr)
-                                    @if($usr->status_berkas == 0)
-                                    <td><b style = "color : blue ">Berkas Di Proses</b> </td>
-                                    @elseif($usr->status_berkas == 1)
-                                    <td> <b style = "color : green "> Berkas Di Terima </b></td>
-                                    @elseif($usr->status_berkas == 2)
-                                    <td> <b style = "color : red "> Berkas Di Tolak </b></td>
-                                    @endif
-                                    @if($usr->status_pengiriman == 0)
-                                    <td><b style = "color : blue ">Proses</b></td>
-                                    @elseif($usr->status_pengiriman == 1)
-                                    <td><b style = "color : green ">Berkas Di Kirim ke Kecamatan </b></td>
-                                    @elseif($usr->status_pengiriman == 2)
-                                    <td><b style = "color : green ">Berkas Di Kirim ke Kelurahan </b></td>
-                                    @elseif($usr->status_pengiriman == 3)
-                                    <td><b style = "color : green ">Berkas Di Kirim ke Masyarakat </b></td>
-                                    elseif($usr->status_pengiriman == 5)
-                                    <td><b style = "color : green ">Berkas Di Terima ke Masyarakat </b></td>
-                                    @endif
-                                    <td>{{$usr->updated_at}}</td>
-                                
-                                    <td>
-                                        <form action="{{route('kecamatan.berkasKelurahan')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" value="{{$usr->id}}" name="idBerkas">
-                                            <button type="submit" class="btn btn-success btn-rounded">Proses Pengiriman ke Kelurahan</button>
-                                        </form>
-                                    </td>
-                                @endforeach
-                            </tr>
+                        <tr>
+                            <td>{{$row->antrian['nama']}}</td>
+                            <td>{{$row->antrian['nik']}}</td>
+                            @if($row->status_berkas == 1)
+                                <td> <b style = "color : green "> Berkas Di Terima </b></td>
                             @endif
-                        @endforeach
+                            @if($row->status_pengiriman == 1)
+                                <td><b style = "color : green ">Berkas Telah Dicetak dan Dikirim ke Kecamatan/UPT </b></td>
+                            @endif
+                            <td>{{$row->updated_at}}</td>
+                            <td>
+                                <form action="{{route('kecamatan.berkasKelurahan')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" value="{{$row->id}}" name="idBerkas">
+                                    <button type="submit" class="btn btn-success btn-rounded">Kirim ke Kelurahan</button>
+                                </form>
+                            </td>
+                        </tr>  
                     
                     @endforeach
                 </tbody>

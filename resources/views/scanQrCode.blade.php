@@ -64,12 +64,19 @@
 </body>
 
 <script type="text/javascript">
+    var role = {{Auth::user()->role_id}};
     let scanner = new Instascan.Scanner({
         video: document.getElementById('preview')
     });
     scanner.addListener('scan', function (content) {
-        window.location.href="{{url('mobilePrint?qrCode=')}}" + content;
-        
+        if(role == 2)
+        {
+            window.location.href="{{url('dinas/mobilePrint?qrCode=')}}" + content;
+        }
+        else if(role == 4)
+        {
+            window.location.href="{{url('kecamatan/mobilePrint?qrCode=')}}" + content;
+        }
         
     });
 
