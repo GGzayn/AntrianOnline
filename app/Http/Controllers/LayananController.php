@@ -118,7 +118,7 @@ class LayananController extends Controller
 
     public function MobileLayananList()
     {
-        $layanan = Layanan::with('opd')->get();
+        $layanan = Layanan::with('opd')->has('loketAnt')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',

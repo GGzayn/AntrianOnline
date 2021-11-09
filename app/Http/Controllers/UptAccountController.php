@@ -17,7 +17,7 @@ class UptAccountController extends Controller
      */
     public function index()
     {
-        $data =  User::with(['upt','role'])->where('role_id',7)->paginate(5);
+        $data =  User::with(['upt','role'])->where('role_id',7)->orWhere('role_id',8)->paginate(5);
         return view ('a_upt.index',compact('data'));
     }
 

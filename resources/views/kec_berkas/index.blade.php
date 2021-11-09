@@ -71,7 +71,11 @@
                                     <td>{{$usr->note}}</td>
                                 
                                     <td>
+                                    @if(Auth::user()->role_id == 4)
                                         <form action="{{route('kecamatan.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
+                                    @elseif(Auth::user()->role_id == 8)
+                                        <form action="{{route('adminUpt.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
+                                    @endif
                                             @csrf
                                             @method('GET')
                                             <button type="submit" class="btn btn-success btn-rounded">Update Status Berkas</button>

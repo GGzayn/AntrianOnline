@@ -33,7 +33,7 @@
                 <div class="box-header">
                 <h3 class="box-title">Table Berkas Pengguna Tercetak </h3>
                 <br>
-                <h3 class="box-title">Total Berkas yang Harus Dikirim Ke Kelurahan : {{$newBerkas}} </h3>
+                <h3 class="box-title">Total Berkas yang Harus Dikirim Ke Petugas Pengiriman : {{$newBerkas}} </h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                     </button>
@@ -67,7 +67,11 @@
                             @endif
                             <td>{{$row->updated_at}}</td>
                             <td>
+                                @if(Auth::user()->role_id == 4)
                                 <form action="{{route('kecamatan.berkasKelurahan')}}" method="post">
+                                @elseif(Auth::user()->role_id == 8)
+                                <form action="{{route('adminUpt.berkasKelurahan')}}" method="post">
+                                @endif
                                     @csrf
                                     <input type="hidden" value="{{$row->id}}" name="idBerkas">
                                     <button type="submit" class="btn btn-success btn-rounded">Kirim ke Kelurahan</button>

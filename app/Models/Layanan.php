@@ -36,6 +36,10 @@ class Layanan extends Model
     {
         return $this->hasMany(Loket::class)->where('loket_antrian','=', 1);
     }
+    public function loketOff()
+    {
+        return $this->hasMany(Loket::class)->where('loket_antrian','=', 2);
+    }
 
     public function scopeDinas($query)
     {

@@ -10,6 +10,7 @@ use App\Http\Controllers\LoketController;
 use App\Http\Controllers\OfflineRegisterController;
 use App\Http\Controllers\AntrianController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\UptController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,3 +42,4 @@ Route::get('statusBerkas/{id}', [DocumentController::class, 'get_berkas'])->name
 Route::post('berkas', [DocumentController::class, 'post_berkas'])->name('berkas');
 Route::get('berkasPengguna', [DocumentController::class, 'g_berkas'])->name('berkasPengguna');
 Route::post('status_kirim/{id}', [DocumentController::class, 'status_kirim'])->name('status_kirim');
+Route::get('show_upt', [UptController::class, 'show_upt'])->name('show_upt');

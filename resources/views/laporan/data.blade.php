@@ -86,6 +86,8 @@
                                 <td> <b style = "color : green "> Berkas Berhasil Terkirim </b></td>
                             @elseif($row->status_pengiriman == 6)
                                 <td> <b style = "color : red "> Berkas Gagal Terkirim </b></td>
+                            @elseif($row->status_pengiriman == 7)
+                                <td> <b style = "color : green "> Kurir Ditugaskan </b></td>
                             @endif
                         </tr>
                         

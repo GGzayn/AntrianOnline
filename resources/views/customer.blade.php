@@ -35,6 +35,8 @@
                 OFFLINE</a>
             @elseif(Auth::user()->role_id == 4)
                 <a href="{{route('kecamatan.offlines.create')}}" class="btn btn-success btn-rounded">DAFTAR OFFLINE</a>
+            @elseif(Auth::user()->role_id == 8)
+                <a href="{{route('adminUpt.offlines.create')}}" class="btn btn-success btn-rounded">DAFTAR OFFLINE</a>
             @endif
         </div>
         <div class="btn-group" role="group" aria-label="Basic example">
@@ -42,6 +44,8 @@
                 <a href="{{route('dinas.scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
             @elseif(Auth::user()->role_id == 4)
                 <a href="{{route('kecamatan.scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
+            @elseif(Auth::user()->role_id == 8)
+                <a href="{{route('adminUpt.scan')}}" class="btn btn-danger btn-rounded">SCAN QR CODE</a>
             @endif
         </div>
     </div>

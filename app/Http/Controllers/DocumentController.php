@@ -25,14 +25,28 @@ class DocumentController extends Controller
     {
         $role = auth()->user()->role->id;
         if ($role == 2 ) {
-            $data = UserDocuments::where('status_berkas',1)->where('status_pengiriman',0)->with('antrian')->orderBy('id','ASC')->get();
-            $newBerkas = UserDocuments::Where('status_pengiriman',0)->where('status_berkas',1)->count();
+            $data = UserDocuments::where('status_berkas',1)->where('status_pengiriman',0)->with('antrian')->orderBy('id','DESC')->get();
+            // $newBerkas = UserDocuments::Where('status_pengiriman',0)->where('status_berkas',1)->count();
+            $newBerkas = Loket::where('child_id',auth()->user()->child_id)->whereHas('antrian', function($q)
+                {
+                    $q->where('status_antrian', '=', 3)->whereHas('userDoc',function($e)
+                    {
+                        $e->where('status_berkas','=', 1)->where('status_pengiriman','=',0);
+                    });
+                })->count();
             return view('opd_berkas.index',compact('data','newBerkas'));
         }
-        elseif($role == 4)
+        elseif($role == 4 )
         {
-            $data = Loket::where('child_id',auth()->user()->child_id)->with('antrian.userDoc')->orderBy('id','ASC')->get();
-            $newBerkas = UserDocuments::Where('status_berkas',0)->count();
+            $data = Loket::where('child_id',auth()->user()->child_id)->with('antrian.userDoc')->orderBy('id','DESC')->get();
+            // $newBerkas = UserDocuments::Where('status_berkas',0)->count();
+            $newBerkas = Loket::where('child_id',auth()->user()->child_id)->whereHas('antrian', function($q)
+                {
+                    $q->where('status_antrian', '=', 3)->whereHas('userDoc',function($e)
+                    {
+                        $e->where('status_berkas','=', 0);
+                    });
+                })->count();
             return view('kec_berkas.index',compact('data','newBerkas'));
         }
         
@@ -115,9 +129,9 @@ class DocumentController extends Controller
         {
             return redirect()->route('kecamatan.documents.index')->with('status','Berkas Telah DiPerbarui');
         }
-        elseif($role == 7)
+        elseif($role == 8)
         {
-            return redirect()->route('upt.documents.index')->with('status','Berkas Telah DiPerbarui');
+            return redirect()->route('adminUpt.documents.index')->with('status','Berkas Telah DiPerbarui');
         }
         
     }
@@ -195,7 +209,7 @@ class DocumentController extends Controller
 
     public function g_berkas()
     {
-        $doc = UserDocuments::where('status_pengiriman',2)->with('antrian')->get();
+        $doc = UserDocuments::where('status_pengiriman',2)->orWhere('status_pengiriman',1)->with('antrian')->get();
         return Response([
             'status' => true,
             'message' => 'Pengambilan data berhasil',
@@ -205,7 +219,7 @@ class DocumentController extends Controller
 
     public function status_kirim(Request $request, $id)
     {
-        $doc = UserDocuments::find($id);
+        $doc = UserDocuments::where('antrian_id',$id)->first();
         $doc->status_pengiriman = $request->status_pengiriman;
         $doc->save();
 
@@ -248,7 +262,17 @@ class DocumentController extends Controller
         $not->status_pengiriman = $doc->status_pengiriman;
         $not->save();
 
-        return redirect()->route('kecamatan.berkasTercetak')->with('status','Berkas Telah DiPerbarui');
+        $role = auth()->user()->role->id;
+        if ($role == 4)
+        {
+            return redirect()->route('kecamatan.berkasTercetak')->with('status','Berkas Telah DiPerbarui');
+        }
+        elseif($role == 8)
+        {
+            return redirect()->route('adminUpt.berkasTercetak')->with('status','Berkas Telah DiPerbarui');
+        }
+
+        
     }
 
     public function kelurahan_berkas()

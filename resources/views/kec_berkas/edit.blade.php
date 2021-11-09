@@ -27,6 +27,8 @@
                 <form action="{{route('dinas.documents.update', $row->id)}}" method="post" class="form-horizontal">
                 @elseif(Auth::user()->role_id == 4)
                 <form action="{{route('kecamatan.documents.update', $row->id)}}" method="post" class="form-horizontal">
+                @elseif(Auth::user()->role_id == 8)
+                <form action="{{route('adminUpt.documents.update', $row->id)}}" method="post" class="form-horizontal">
                 @endif
                     @csrf
                     @method('PUT')

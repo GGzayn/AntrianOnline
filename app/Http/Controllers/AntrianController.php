@@ -26,16 +26,16 @@ class AntrianController extends Controller
     {
         $role = auth()->user()->role->id;
         if ($role == 2 || $role == 3) {
-            $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->layananDinas()->paginate(10);
+            $data = Loket::where('nama_petugas',auth()->user()->email)->with(['layanan.opd', 'antrian'])->layananDinas()->paginate(10);
         }
         elseif($role == 4 || $role == 5)
         {
-            $data = Loket::where('child_id',auth()->user()->child_id)->with('district','layanan.opd','antrian')->paginate(10);
+            $data = Loket::where('layanan_id',1)->where('child_id',auth()->user()->child_id)->with('district','layanan.opd','antrian')->paginate(10);
         }
 
         elseif($role == 7)
         {
-            $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->paginate(10);
+            $data = Loket::where('layanan_id',2)->where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->paginate(10);
         }
         return view ('antrian.index',compact('data'));
     }

@@ -77,6 +77,10 @@
         {
             window.location.href="{{url('kecamatan/mobilePrint?qrCode=')}}" + content;
         }
+        else if(role == 8)
+        {
+            window.location.href="{{url('adminUpt/mobilePrint?qrCode=')}}" + content;
+        }
         
     });
 

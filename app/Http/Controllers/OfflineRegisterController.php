@@ -18,7 +18,6 @@ class OfflineRegisterController extends Controller
      */
     public function index()
     {
-
         return view ('customer');
     }
 
@@ -29,7 +28,12 @@ class OfflineRegisterController extends Controller
      */
     public function create()
     {
-        $layanan = Layanan::with('opd')->dinas()->get();
+        $role = auth()->user()->role->id;
+        if ($role == 2) {
+            $layanan = Layanan::with('opd')->has('loketOff')->dinas()->get();
+        }else{
+            $layanan = Layanan::has('loketOff')->get();
+        }
         return view ('offlineRegister',compact('layanan'));
     }
 
@@ -109,10 +113,26 @@ class OfflineRegisterController extends Controller
         $antrian->no_antrian = $finalNoAntri;
 
         $antrian->save();
-        $nik = $antrian->id;
-        $nama = $antrian->nama;
+        // $nik = $antrian->id;
+        // $nama = $antrian->nama;
 
-        return view ('offlineCheck',compact('nik','nama'));
+        // return view ('offlineCheck',compact('nik','nama'));
+
+        $role = auth()->user()->role->id;
+        if($role == 2)
+        {
+            return redirect()->route('dinas.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
+        }
+        elseif($role == 4)
+        {
+            return redirect()->route('kecamatan.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
+        }
+        elseif($role == 8)
+        {
+            return redirect()->route('adminUpt.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
+        }
+
+        
     }
 
     /**

@@ -26,8 +26,8 @@
                 <form action="{{route('dinas.lokets.store')}}" method="post" class="form-horizontal">
                 @elseif(Auth::user()->role_id == 4)
                 <form action="{{route('kecamatan.lokets.store')}}" method="post" class="form-horizontal">
-                @elseif(Auth::user()->role_id == 7)
-                <form action="{{route('upt.lokets.store')}}" method="post" class="form-horizontal">
+                @elseif(Auth::user()->role_id == 8)
+                <form action="{{route('adminUpt.lokets.store')}}" method="post" class="form-horizontal">
                 @endif
                 @csrf
                 <div class="box-body">

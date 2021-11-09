@@ -90,4 +90,14 @@ class UptController extends Controller
     {
         //
     }
+
+    public function show_upt()
+    {
+        $upt = Upt::get();
+        return Response([
+            'status' => true,
+            'message' => 'Pengambilan Data Berhasil',
+            'data' => $upt,
+        ], 200);
+    }
 }

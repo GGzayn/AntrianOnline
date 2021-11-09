@@ -48,7 +48,13 @@
                     </div>
                     <!-- /.box-header -->
                     <!-- form start -->
-                    <form action="{{route('dinas.offlines.store')}}" method="post" class="form-horizontal">
+                    @if(Auth::user()->role_id == 2)
+                        <form action="{{route('dinas.offlines.store')}}" method="post" class="form-horizontal">
+                    @elseif(Auth::user()->role_id == 4)
+                        <form action="{{route('kecamatan.offlines.store')}}" method="post" class="form-horizontal">
+                    @elseif(Auth::user()->role_id == 8)
+                        <form action="{{route('adminUpt.offlines.store')}}" method="post" class="form-horizontal">
+                    @endif
                         @csrf
                         <div class="box-body">
 

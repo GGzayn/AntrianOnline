@@ -27,7 +27,7 @@
                     <form action="{{route('dinas.lokets.update', $row->id)}}" method="post" class="form-horizontal">
                     @elseif(Auth::user()->role_id == 4)
                     <form action="{{route('kecamatan.lokets.update', $row->id)}}" method="post" class="form-horizontal">
-                    @elseif(Auth::user()->role_id == 7)
+                    @elseif(Auth::user()->role_id == 8)
                     <form action="{{route('upt.lokets.update', $row->id)}}" method="post" class="form-horizontal">
                     @endif
                     @csrf
