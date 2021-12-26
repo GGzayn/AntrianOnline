@@ -35,7 +35,7 @@ class LoketController extends Controller
         }
         elseif($role == 8 )
         {
-            $data = Loket::where('layanan_id',2)->where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->paginate(10);
+            $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->paginate(10);
         }
         return view ('loket.index',compact('data'));
     }
@@ -63,17 +63,20 @@ class LoketController extends Controller
         $role = auth()->user()->role->id;
         if ($role == 2) {
             $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->layananDinas()->get();
+            $title1 = "";
         }
         elseif($role == 4)
         {
             $data = Loket::where('child_id',auth()->user()->child_id)->with('district','layanan.opd','antrian')->get();
+            $title1 = "Dinas Kependudukan dan Catatan Sipil";
         }
-        elseif($role == 8)
+        elseif($role == 8 || $role == 7)
         {
             $data = Loket::where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->get();
+            $title1 = "Badan Pendapatan Daerah";
         }
 
-        return view ('live',compact('data'));
+        return view ('live',compact('data','title1'));
     }
 
     public function statusLoket(Request $request)
@@ -141,56 +144,122 @@ class LoketController extends Controller
 
     public function hapusAntrian(Request $request)
     {
-        $loket = Antrian::find($request->idAntrian);
-        $loket->status_antrian = 3;
-        $loket->save();
+        
 
-        $role = auth()->user()->role->id;        
-        $doc = new UserDocuments;
-        $doc->antrian_id = $request->idAntrian;
+        if(isset($_POST['lewat']))
+        {
+            $loket = Antrian::find($request->idAntrian);
+            $loket->status_antrian = 1;
+            $loket->save();
+
+            $role = auth()->user()->role->id;
+            if ($role == 3) {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with(['layanan.opd', 'antrian'])->layananDinas()->get();
+            }
+            elseif($role == 5)
+            {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('district','layanan.opd','antrian')->get();
+            }
+            elseif($role == 7)
+            {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('layanan.opd','antrian')->get();
+            }
+            return view('loketLive', compact('data2'));
+        }
+           
+        elseif(isset($_POST['tolak']))
+        {
+            $loket = Antrian::find($request->idAntrian);
+            $loket->status_antrian = 3;
+            $loket->save();
+
+            $tolakDoc = new UserDocuments;
+            $tolakDoc->antrian_id = $request->idAntrian;
+            $tolakDoc->status_berkas= 3; // berkas tidak Lengkap
+            $tolakDoc->status_baca = false;
+            $tolakDoc->status_pengiriman =0;
+            $tolakDoc->note = "Berkas Tidak Lengkap";
+
+            $tolakDoc->save();
+
+            $tolakDocs = new NotifDocuments;
+            $tolakDocs->antrian_id = $request->idAntrian;
+            $tolakDocs->status_berkas= 3; // berkas tidak Lengkap
+            $tolakDocs->status_baca = false;
+            $tolakDocs->status_pengiriman =0;
+            $tolakDocs->note = "Berkas Tidak Lengkap";
+
+            $tolakDocs->save();
+
+            $role = auth()->user()->role->id;
+            if ($role == 3) {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with(['layanan.opd', 'antrian'])->layananDinas()->get();
+            }
+            elseif($role == 5)
+            {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('district','layanan.opd','antrian')->get();
+            }
+            elseif($role == 7)
+            {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('layanan.opd','antrian')->get();
+            }
+            return view('loketLive', compact('data2'));
+
+        }
+
+        elseif(isset($_POST['selesai']))
+        {
+            $loket = Antrian::find($request->idAntrian);
+            $loket->status_antrian = 3;
+            $loket->save();
+
+            $role = auth()->user()->role->id;
+            $doc = new UserDocuments;
+            $doc->antrian_id = $request->idAntrian;
+            if($role == 3)
+            {
+                $doc->status_berkas= 1;
+            }
+            else{
+                $doc->status_berkas= 0;
+            }
+            $doc->status_baca = false;
+            $doc->status_pengiriman =0;
+
+            $doc->save();
+
+            $doc = new NotifDocuments;
+            $doc->antrian_id = $request->idAntrian;
+            
+            if($role == 3)
+            {
+                $doc->status_berkas= 1;
+            }
+            else{
+                $doc->status_berkas= 0;
+            }
+            $doc->status_baca = false;
+            $doc->status_pengiriman =0;
+
+            $doc->save();
+
+            if ($role == 3) {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with(['layanan.opd', 'antrian'])->layananDinas()->get();
+            }
+            elseif($role == 5)
+            {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('district','layanan.opd','antrian')->get();
+            }
+            elseif($role == 7)
+            {
+                $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('layanan.opd','antrian')->get();
+            }
+            return view('loketLive', compact('data2'));
+        }
 
         
-        if($role == 3)
-        {
-            $doc->status_berkas= 1;
-        }
-        else{
-            $doc->status_berkas= 0;
-        }
-        $doc->status_baca = false;
-        $doc->status_pengiriman =0;
-
-        $doc->save();
-
-        $doc = new NotifDocuments;;
-        $doc->antrian_id = $request->idAntrian;
         
-        if($role == 3)
-        {
-            $doc->status_berkas= 1;
-        }
-        else{
-            $doc->status_berkas= 0;
-        }
-        $doc->status_baca = false;
-        $doc->status_pengiriman =0;
-
-        $doc->save();
-
-        $role = auth()->user()->role->id;
-        if ($role == 3) {
-            $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with(['layanan.opd', 'antrian'])->layananDinas()->get();
-        }
-        elseif($role == 5)
-        {
-            $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('district','layanan.opd','antrian')->get();
-        }
-        elseif($role == 7)
-        {
-            $data2 = Loket::where('id',$loket['loket_id'])->where('child_id',auth()->user()->child_id)->where('status_loket',1)->with('layanan.opd','antrian')->get();
-        }
         
-        return view('loketLive', compact('data2'));
     }
 
     
@@ -211,8 +280,8 @@ class LoketController extends Controller
         }   
         elseif($role == 4 || $role == 8 )
         {
-            $layanan = Layanan::get();
-            $namaLoket = User::where('child_id',$child)->get();
+            $layanan = Layanan::where('opd_id',3)->get();
+            $namaLoket = User::where('child_id',$child)->where('role_id','!=',$role)->get();
         }
         
         return view('loket.create',compact('layanan','namaLoket'));
@@ -286,7 +355,7 @@ class LoketController extends Controller
         elseif($role == 4 || $role == 8)
         {
             $loket = Loket::where('id', $id)->get();
-            $layanan = Layanan::get();
+            $layanan = Layanan::where('opd_id',3)->get();
             $namaLoket = User::where('child_id',$child)->get();
         }
         
@@ -367,20 +436,58 @@ class LoketController extends Controller
     public function mobilePrint(Request $request)
     {
         $res = $request->get('qrCode');
-        $antri = Antrian::where('id',$res)->update(['status_antrian' => 1]);
-
+        $checkAntri = Antrian::find($res);
         $role = auth()->user()->role->id;
-        if($role == 2)
+        $an = $checkAntri->tanggal_antrian;
+        if($an != date('Y-m-d'))
         {
-            return redirect()->route('dinas.offlines.index')->with('status','Terima Kasih, SIlahkan Menunggu Nomor Antrian Anda Dipanggil');
+            if($role == 2)
+            {
+                return redirect()->route('dinas.offlines.index')->with('error','Mohon Maaf, Silahkan CEK Tanggal Antrian anda!');
+            }
+            elseif($role == 4)
+            {
+                return redirect()->route('kecamatan.offlines.index')->with('error','Mohon Maaf, Silahkan CEK Tanggal Antrian anda!');
+            }
+            elseif($role == 8)
+            {
+                return redirect()->route('adminUpt.offlines.index')->with('error','Mohon Maaf, Silahkan CEK Tanggal Antrian anda!');
+            }
         }
-        elseif($role == 4)
-        {
-            return redirect()->route('kecamatan.offlines.index')->with('status','Terima Kasih, SIlahkan Menunggu Nomor Antrian Anda Dipanggil');
-        }
-        elseif($role == 8)
-        {
-            return redirect()->route('adminUpt.offlines.index')->with('status','Terima Kasih, SIlahkan Menunggu Nomor Antrian Anda Dipanggil');
+        else{
+            $waktuAnt = strtotime($checkAntri->waktu_antrian);
+            $realTime = strtotime(Carbon::now());
+            if($waktuAnt > $realTime)
+            {
+                $antri = Antrian::where('id',$res)->update(['status_antrian' => 1]);
+                if($role == 2)
+                {
+                    return redirect()->route('dinas.offlines.index')->with('status','Terima Kasih, SIlahkan Menunggu Nomor Antrian Anda Dipanggil');
+                }
+                elseif($role == 4)
+                {
+                    return redirect()->route('kecamatan.offlines.index')->with('status','Terima Kasih, SIlahkan Menunggu Nomor Antrian Anda Dipanggil');
+                }
+                elseif($role == 8)
+                {
+                    return redirect()->route('adminUpt.offlines.index')->with('status','Terima Kasih, SIlahkan Menunggu Nomor Antrian Anda Dipanggil');
+                }
+            }
+            else{
+                if($role == 2)
+                {
+                    return redirect()->route('dinas.offlines.index')->with('error','Mohon Maaf Antrian Anda Sudah KADALUARSA, Karena Waktu Antrian Anda Sudah Melebihi Batas');
+                }
+                elseif($role == 4)
+                {
+                    return redirect()->route('kecamatan.offlines.index')->with('error','Mohon Maaf Antrian Anda Sudah KADALUARSA, Karena Waktu Antrian Anda Sudah Melebihi Batas');
+                }
+                elseif($role == 8)
+                {
+                    return redirect()->route('adminUpt.offlines.index')->with('error','Mohon Maaf Antrian Anda Sudah KADALUARSA, Karena Waktu Antrian Anda Sudah Melebihi Batas');
+                }
+            }
+            
         }
     }
 
@@ -394,10 +501,10 @@ class LoketController extends Controller
         ], 200);
     }
 
-    public function UptLoket($id)
+    public function UptLoket($id,$layanan_id)
     {
         $uptid = Districts::where('id',$id)->pluck('upt_id');
-        $loket = Loket::where('child_id', $uptid[0])->where('loket_antrian',1)->with('upt')->get();
+        $loket = Loket::where('child_id', $uptid[0])->where('loket_antrian',1)->where('layanan_id',$layanan_id)->with('upt')->get();
         return Response([
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',

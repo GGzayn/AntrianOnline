@@ -8,6 +8,8 @@ use App\Models\Layanan;
 use App\Models\Antrian;
 use App\Models\Opd;
 use App\Models\Loket;
+use App\Models\Districts;
+use App\Models\Urbans;
 
 class OfflineRegisterController extends Controller
 {
@@ -29,12 +31,38 @@ class OfflineRegisterController extends Controller
     public function create()
     {
         $role = auth()->user()->role->id;
+        $child = auth()->user()->child_id;
         if ($role == 2) {
             $layanan = Layanan::with('opd')->has('loketOff')->dinas()->get();
-        }else{
-            $layanan = Layanan::has('loketOff')->get();
+
+            return view ('offlineRegister',compact('layanan'));
         }
-        return view ('offlineRegister',compact('layanan'));
+        elseif($role == 4)
+        {
+            $layanan = Layanan::where('opd_id',2)->has('loketOff')->get();
+            $data = Urbans::where('district_id', $child)->get();
+
+            return view ('offlineRegister',compact('layanan','data'));
+        }
+        elseif($role == 8)
+        {
+            $layanan = Layanan::where('opd_id',3)->has('loketOff')->get();
+            $kecamatan = Districts::where('upt_id',$child)->get();
+
+            $kelurahan = Urbans::whereHas('district', function ($query) use($child) {
+                $query->where('upt_id', '=', $child);
+            })->get();
+
+            return view ('offlineRegister',compact('layanan','kecamatan','kelurahan'));
+        }
+        
+       
+    }
+
+    public function getUrban($id)
+    {
+        $urban = Urbans::where('district_id',$id)->pluck('id','urban');
+        return response()->json($urban);
     }
 
     /**
@@ -85,52 +113,114 @@ class OfflineRegisterController extends Controller
                 break;
             }
             $result[] = $value;
+            
         }
-
-        $data_antrian = Antrian::selectRaw('CAST(waktu_antrian AS char) AS waktu_antrian_text')->where('loket_id', $loket_id)->get()->pluck('waktu_antrian_text')->toArray();
-        $diff_array = array_diff($result, $data_antrian);
-        $waktu_antrian = $diff_array[array_key_first($diff_array)];
-
-
-        $nomAntri = count($data_antrian) +1;
-        foreach($kodelay as $r)
+        if(!isset($result))
         {
-            $has = $r;
+            $role = auth()->user()->role->id;
+            if($role == 2)
+            {
+                return redirect()->route('dinas.offlines.index')->with('error','Mohon Maaf Antrian Hari ini Sudah Penuh!');
+            }
+            elseif($role == 4)
+            {
+                return redirect()->route('kecamatan.offlines.index')->with('error','Mohon Maaf Antrian Hari ini Sudah Penuh!');
+                
+            }
+            elseif($role == 8)
+            {
+                return redirect()->route('adminUpt.offlines.index')->with('error','Mohon Maaf Antrian Hari ini Sudah Penuh!');
+                
+            }
+        }
+        else{
+            $data_antrian = Antrian::selectRaw('CAST(waktu_antrian AS char) AS waktu_antrian_text')->where('loket_id', $loket_id)->get()->pluck('waktu_antrian_text')->toArray();
+            $diff_array = array_diff($result, $data_antrian);
+            $waktu_antrian = $diff_array[array_key_first($diff_array)];
+            $nomAntri = count($data_antrian) +1;
+            foreach($kodelay as $r)
+            {
+                $has = $r;
+            }
+            
+            $finalNoAntri = "$has - $nomAntri";
+
+            $role = auth()->user()->role->id;
+            if($role == 2)
+            {
+                $antrian = new Antrian;
+                $antrian->tanggal_booking = now();
+                $antrian->loket_id = $loket_id;
+                $antrian->nama = $request->nama;
+                $antrian->nik = $request->nik;
+                $antrian->tanggal_antrian = now();
+                $antrian->waktu_antrian = substr($waktu_antrian, 0, -3);
+                $antrian->jenis_antrian = 1;
+                $antrian->status_antrian = 1;
+                $antrian->province_id = 36;
+                $antrian->city_id = 3603;
+                $antrian->alamat = $request->alamat;
+                $antrian->rt = $request->rt;
+                $antrian->rw = $request->rw;
+                $antrian->no_antrian = $finalNoAntri;
+                $antrian->save();
+
+                return redirect()->route('dinas.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
+            }
+            elseif($role == 4)
+            {
+                $antrian = new Antrian;
+                $antrian->tanggal_booking = now();
+                $antrian->loket_id = $loket_id;
+                $antrian->nama = $request->nama;
+                $antrian->nik = $request->nik;
+                $antrian->tanggal_antrian = now();
+                $antrian->waktu_antrian = substr($waktu_antrian, 0, -3);
+                $antrian->jenis_antrian = 1;
+                $antrian->status_antrian = 1;
+                $antrian->alamat = $request->alamat;
+                $antrian->rt = $request->rt;
+                $antrian->rw = $request->rw;
+                $antrian->province_id = 36;
+                $antrian->city_id = 3603;
+                $antrian->district_id = auth()->user()->child_id;
+                $antrian->urban_id = $request->kelurahan;
+                $antrian->no_antrian = $finalNoAntri;
+                $antrian->save();
+
+                return redirect()->route('kecamatan.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
+            }
+            elseif($role == 8)
+            {
+                $antrian = new Antrian;
+                $antrian->tanggal_booking = now();
+                $antrian->loket_id = $loket_id;
+                $antrian->nama = $request->nama;
+                $antrian->nik = $request->nik;
+                $antrian->tanggal_antrian = now();
+                $antrian->waktu_antrian = substr($waktu_antrian, 0, -3);
+                $antrian->jenis_antrian = 1;
+                $antrian->status_antrian = 1;
+                // $antrian->alamat = $request->alamat;
+                // $antrian->rt = $request->rt;
+                // $antrian->rw = $request->rw;
+                // $antrian->nop = $request->nop;
+                $antrian->province_id = 36;
+                $antrian->city_id = 3603;
+                // $antrian->district_id = $request->kecamatan;
+                // $antrian->urban_id = $request->kelurahan;
+                // $antrian->nama_wp = $request->nama_wp;
+                // $antrian->jumlah_berkas = $request->jumlah_berkas;
+                $antrian->no_antrian = $finalNoAntri;
+                $antrian->save();
+
+                return redirect()->route('adminUpt.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
+            }
+            
         }
         
-        $finalNoAntri = "$has - $nomAntri";
 
-        $antrian = new Antrian;
-
-        $antrian->tanggal_booking = now();
-        $antrian->loket_id = $loket_id;
-        $antrian->nama = $request->nama;
-        $antrian->nik = $request->nik;
-        $antrian->tanggal_antrian = now();
-        $antrian->waktu_antrian = substr($waktu_antrian, 0, -3);
-        $antrian->jenis_antrian = 1;
-        $antrian->status_antrian = 1;
-        $antrian->no_antrian = $finalNoAntri;
-
-        $antrian->save();
-        // $nik = $antrian->id;
-        // $nama = $antrian->nama;
-
-        // return view ('offlineCheck',compact('nik','nama'));
-
-        $role = auth()->user()->role->id;
-        if($role == 2)
-        {
-            return redirect()->route('dinas.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
-        }
-        elseif($role == 4)
-        {
-            return redirect()->route('kecamatan.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
-        }
-        elseif($role == 8)
-        {
-            return redirect()->route('adminUpt.offlines.index')->with('status','Terima Kasih, Silahkan Menunggu Nomor Antrian Anda Dipanggil');
-        }
+        
 
         
     }

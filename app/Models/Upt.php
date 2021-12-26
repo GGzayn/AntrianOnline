@@ -14,7 +14,13 @@ class Upt extends Model
 
     protected $fillable = [
         'kode_upt',
-        'upt'
+        'upt',
+        'alamat'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
     ];
 
     public function district()
@@ -23,6 +29,6 @@ class Upt extends Model
     }
     public function loket()
     {
-        return $this->hasMany(Loket::class);
+        return $this->hasMany(Loket::class,'child_id','id');
     }
 }

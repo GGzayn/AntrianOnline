@@ -46,6 +46,8 @@
                     <tr>
                         <th>Nama UPT</th>
                         <th>Kode UPT</th>
+                        <th>Alamat</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,6 +55,20 @@
                         <tr>
                             <td>{{$row->upt}}</td>
                             <td>{{$row->kode_upt}}</td>
+                            <td>{{$row->alamat}}</td>
+                            <td>
+                                <form action="{{route('admin.upts.edit', $row->id) }}" method="post">
+                                    @csrf
+                                    @method('GET')
+                                    <button type="submit" class="btn btn-info btn-rounded">EDIT</button>
+                                </form>
+                                <hr>
+                                <form action="{{route('admin.upts.destroy', $row->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-rounded">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

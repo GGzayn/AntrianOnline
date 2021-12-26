@@ -16,6 +16,11 @@ class Provinces extends Model
         'province',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
+
     public function city()
     {
         return $this->hasMany(Cities::class);

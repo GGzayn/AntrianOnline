@@ -56,6 +56,7 @@
                             <tr>
                                 <th>Nama Petugas</th>
                                 <th>Nama Loket</th>
+                                <th>Loket Antrian</th>
                                 <th>Antrian Hari Ini</th>
                                 <th>Status Loket</th>
                                 <th>ACTION</th>
@@ -67,6 +68,13 @@
 
                                 <td>{{$row->nama_petugas}}</td>
                                 <td>{{$row->nama_loket}}</td>
+                                <td>
+                                    @if($row->loket_antrian == 1)
+                                    Antrian Online
+                                    @else
+                                    Antrian Offline
+                                    @endif
+                                </td>
                                 <td><b>{{$row->count_of_today}}</b></td>
                                 <td>
                                     @if( $row->status_loket == 1 )
@@ -76,7 +84,6 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($row->count_of_today != 0)
                                         @if(Auth::user()->role_id == 3)
                                         <form action="{{route('loket.statusLoket')}}" method="post" class="form-horizontal">
                                         @elseif(Auth::user()->role_id == 5)
@@ -88,9 +95,7 @@
                                             <input type="hidden" value="{{$row->id}}" name="idLoket">
                                             <button type="submit" class="btn btn-rounded btn-success">Mulai Antrian</button>
                                         </form>
-                                        <hr>
-                                    @endif
-                                        <br>
+
                                         @if(Auth::user()->role_id == 3)
                                         <form action="{{route('loket.hapusLoket')}}" method="post" class="form-horizontal">
                                         @elseif(Auth::user()->role_id == 5)
@@ -100,7 +105,7 @@
                                         @endif
                                             @csrf
                                             <input type="hidden" value="{{$row->id}}" name="idLoket">
-                                            <button type="submit" class="btn btn-rounded btn-danger">Stop Antrian</button>
+                                            <button type="submit" class="btn btn-rounded btn-danger ">Stop Antrian</button>
                                         </form>
                                         
                                 </td>

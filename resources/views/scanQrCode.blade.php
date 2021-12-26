@@ -30,7 +30,9 @@
 						<img src="{{asset('img')}}/Smartcity.png" alt="Smart City Logo" width="200px" height="100px">
 					</span>
                     <span class="login100-form-title p-b-15 p-t-27">    
-                        SCAN YOUR QR CODE HERE
+                        <h1>{{ Auth::user()->name }}</h1>
+                        <br>
+                        SCAN QR CODE
 					</span>
                     <video id="preview" height="250" weight="250"></video>
                     <input type="hidden" id="qrCode" name="qrCode" class="form-control">

@@ -30,7 +30,7 @@
                     <label for="upt" class="col-sm-2 control-label">UPT</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="upt" class="form-control" id="upt" placeholder="UPT">
+                      <input type="text" name="upt" class="form-control" id="upt" placeholder="UPT" required>
                     </div>
                   </div>
 
@@ -38,7 +38,15 @@
                     <label for="kode_upt" class="col-sm-2 control-label">Kode UPT</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="kode_upt" class="form-control" id="kode_upt" placeholder="Kode UPT">
+                      <input type="text" name="kode_upt" class="form-control" id="kode_upt" placeholder="Kode UPT" required>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="alamat" class="col-sm-2 control-label">Alamat</label>
+
+                    <div class="col-sm-10">
+                      <textarea required name="alamat" id="alamat" cols="30" rows="10"></textarea>
                     </div>
                   </div>
 

@@ -63,6 +63,7 @@
                             <tr>
                                 <th>Nama </th>
                                 <th>NIK</th>
+                                <th>Nomor Dokumen</th>
                                 <th>Nomor Antrian</th>
                                 <th>Tanggal Antrian</th>
                                 <th>Loket</th>
@@ -76,6 +77,7 @@
                                     <tr>
                                         <td>{{$ska->nama }}</td>
                                         <td>{{$ska->nik }}</td>
+                                        <td>{{$row->layanan_id}}.{{$ska->id }}</td>
                                         <td>{{$ska->no_antrian }}</td>
                                         <td>{{$ska->tanggal_antrian }}</td>
                                         <td>{{$ska->loket['nama_loket']}}</td>
@@ -102,12 +104,21 @@
                                     <tr>
                                         <td>{{$ska->nama }}</td>
                                         <td>{{$ska->nik }}</td>
+                                        <td>{{$row->layanan_id}}.{{$ska->id }}</td>
                                         <td>{{$ska->no_antrian }}</td>
                                         <td>{{$ska->tanggal_antrian }}</td>
                                         <td>{{$ska->loket['nama_loket']}}</td>
                                         <td><b style = "color : green ">Di Loket</b></td>
                                         <td>
                                             <button class=" btn btnSelect"><i class="fa fa-microphone"></i></button>
+                                            @if(Auth::user()->role_id == 7)
+                                            <form action="{{route('upt.antrians.edit', $ska->id)}}" method="post">
+                                                @csrf
+                                                @method('GET')
+                                                <button type="submit" name="edit" class="btn btn-rounded btn-info">Edit Berkas</button>
+                                            </form>
+                                            @endif
+                                            <hr>
                                             @if(Auth::user()->role_id == 3)
                                             <form action="{{route('loket.hapusAntrian')}}" method="post" class="form-horizontal">
                                             @elseif(Auth::user()->role_id == 5)
@@ -117,9 +128,13 @@
                                             @endif
                                                 @csrf
                                                 <input type="hidden" value="{{$ska->id}}" name="idAntrian">
-                                                <button type="submit" class="btn btn-rounded btn-danger">Selesai</button>
+                                                <button type="submit" name="lewat" class="btn btn-rounded btn-warning float-right">Lewati</button>
+                                                <button type="submit" name="selesai"  class="btn btn-rounded btn-success">Selesai</button>
+                                                <button type="submit" name="tolak" class="btn btn-rounded btn-danger float-right">Tolak Berkas</button>
+                                                
+                                                
                                             </form>
-                                            <br>
+
                                         </td>
                                         
                                     </tr>
@@ -155,8 +170,8 @@
             
             var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
             var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-            var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
-            var col4=currentRow.find("td:eq(4)").text(); // get current row 4th TD
+            var col3=currentRow.find("td:eq(3)").text(); // get current row 3rd TD
+            var col4=currentRow.find("td:eq(5)").text(); // get current row 4th TD
             // var lok = $("#naLok").val();
             var data=col1+"\n"+col2+"\n"+col3;
             
@@ -168,7 +183,7 @@
                 {
                 pitch: 1, 
                 rate: 0.9, 
-                volume: 4
+                volume: 5
                 }
             );
         });

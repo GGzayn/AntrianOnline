@@ -40,6 +40,7 @@ class UptController extends Controller
 
         $data->upt = $request->upt;
         $data->kode_upt = $request->kode_upt;
+        $data->alamat = $request->alamat;
 
         $data->save();
 
@@ -65,7 +66,8 @@ class UptController extends Controller
      */
     public function edit($id)
     {
-        //
+        $upt = Upt::where('id',$id)->get();
+        return view('upt.edit',compact('upt'));
     }
 
     /**
@@ -77,7 +79,14 @@ class UptController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Upt::find($id);
+        $data->upt = $request->upt;
+        $data->kode_upt = $request->kode_upt;
+        $data->alamat = $request->alamat;
+
+        $data->save();
+
+        return redirect()->route('admin.upts.index')->with('status','UPT has been Edited.');
     }
 
     /**
@@ -88,7 +97,10 @@ class UptController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $upt = Upt::find($id);
+        $upt->delete();
+        return redirect()->route('admin.upts.index')->with('status','UPT has been Deleted.');
+
     }
 
     public function show_upt()

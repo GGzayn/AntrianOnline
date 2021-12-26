@@ -41,7 +41,7 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table id="example2" class="table table-bordered table-hover">
+                    <table id="example1" class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>Kode OPD</th>
@@ -62,19 +62,17 @@
                                 <td>{{$row->nip_kordinator}}</td>
                                 <td>{{$row->jabatan}}</td>
                                 <td>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-default dropdown-toggle"
-                                            data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">VIEW</a></li>
-                                            <li><a href="#">EDIT</a></li>
-                                            <li><a href="#">DELETE</a></li>
-
-                                        </ul>
-                                    </div>
+                                    <form action="{{route('admin.opds.edit', $row->id) }}" method="post">
+                                        @csrf
+                                        @method('GET')
+                                        <button type="submit" class="btn btn-info btn-rounded">EDIT</button>
+                                    </form>
+                                    <hr>
+                                    <form action="{{route('admin.opds.destroy', $row->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-rounded">Delete</button>
+                                    </form>
                                 </td>
 
                             </tr>

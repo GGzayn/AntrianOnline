@@ -14,6 +14,8 @@ use App\Http\Controllers\A_kelurahanController;
 use App\Http\Controllers\UptController;
 use App\Http\Controllers\UptAccountController;
 use App\Http\Controllers\AdminDashboard;
+use App\Http\Controllers\Syarat;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +37,7 @@ Route::middleware(['cors'])->group(function () {
     Route::middleware('auth')->group( function () {
         Route::middleware('admin')->prefix('admin')->name('admin.')->group( function () {
             Route::resource('opds', OpdController::class);
+            Route::resource('syarats', Syarat::class);
             Route::resource('akuns', AkunController::class);
             Route::resource('upts', UptController::class);
             Route::resource('uptsAcc', UptAccountController::class);
@@ -65,6 +68,7 @@ Route::middleware(['cors'])->group(function () {
             Route::post('hapusAntrian', [LoketController::class, 'hapusAntrian'])->name('hapusAntrian');
             Route::get('scan', [LoketController::class, 'scanQr'])->name('scan');
             Route::get('mobilePrint', [LoketController::class, 'mobilePrint'])->name('mobilePrint');
+            
         });
 
         Route::middleware('adminUpt')->prefix('adminUpt')->name('adminUpt.')->group( function () {
@@ -82,6 +86,7 @@ Route::middleware(['cors'])->group(function () {
             Route::post('hapusAntrian', [LoketController::class, 'hapusAntrian'])->name('hapusAntrian');
             Route::get('scan', [LoketController::class, 'scanQr'])->name('scan');
             Route::get('mobilePrint', [LoketController::class, 'mobilePrint'])->name('mobilePrint');
+            Route::get('dashboard', [AdminDashboard::class, 'dashUpt'])->name('dashboard');
         });
 
         Route::middleware('kecamatan')->prefix('kecamatan')->name('kecamatan.')->group( function () {
@@ -97,6 +102,7 @@ Route::middleware(['cors'])->group(function () {
             Route::post('berkasKelurahan', [DocumentController::class, 'ck_berkas'])->name('berkasKelurahan');
             Route::get('scan', [LoketController::class, 'scanQr'])->name('scan');
             Route::get('mobilePrint', [LoketController::class, 'mobilePrint'])->name('mobilePrint');
+            Route::get('dashboard', [AdminDashboard::class, 'dashKec'])->name('dashboard');
         });
 
         Route::middleware('loketKecamatan')->prefix('loketKecamatan')->name('loketKecamatan.')->group( function () {
@@ -123,6 +129,8 @@ Route::middleware(['cors'])->group(function () {
             Route::post('berkasKirim', [DocumentController::class, 'berkas_kirim'])->name('berkasKirim');
             Route::get('scan', [LoketController::class, 'scanQr'])->name('scan');
             Route::get('mobilePrint', [LoketController::class, 'mobilePrint'])->name('mobilePrint');
+            Route::get('berkasMasuk', [DocumentController::class, 'berkasMasuk'])->name('berkasMasuk');
+            Route::post('berkasKeluar', [DocumentController::class, 'berkasKeluar'])->name('berkasKeluar');
         });
 
         Route::middleware('loket')->prefix('loket')->name('loket.')->group( function () {
@@ -137,10 +145,12 @@ Route::middleware(['cors'])->group(function () {
         });
         
         Route::get('home', [HomeController::class, 'index'])->name('home');
+        // Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
         // Route::get('scan', [LoketController::class, 'scanQr'])->name('scan');
         Route::get('mobilePrint', [LoketController::class, 'mobilePrint'])->name('mobilePrint');
         Route::get('laporan', [DocumentController::class, 'report_v'])->name('laporan');
         Route::post('laporanBerkas', [DocumentController::class, 'report'])->name('laporanBerkas');
+        Route::get('getUrban/{id}', [OfflineRegisterController::class, 'getUrban'])->name('getUrban');
         
     
     });

@@ -50,7 +50,17 @@
                       </p>
                         <!-- LAMAN TTM -->
 					</span>
-                        
+                    @if (session('status'))
+						<div class="alert alert-success" role="alert">
+							{{ session('status') }}
+						</div>
+					@endif
+
+					@if (session('error'))
+						<div class="alert alert-danger" role="alert">
+							{{ session('error') }}
+						</div>
+					@endif
 					<div class="wrap-input100 validate-input" data-validate = "Enter Email">
 						<input class="input100 @error('email') is-invalid @enderror" id="email" type="email" name="email" value="{{ old('email') }}" placeholder="Email" required autocomplete="email" autofocus>
 						<span class="focus-input100" data-placeholder="&#xf207;"></span>

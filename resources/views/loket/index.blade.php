@@ -36,8 +36,8 @@
                     @if(Auth::user()->role_id == 2)
                     <a href="{{route('dinas.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
                     <a href="{{route('dinas.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>
-                    <a href="{{route('dinas.export')}}" class="btn btn-rounded btn-primary">Report/Hari</a>
-                    <a href="{{route('dinas.exportMonth')}}" class="btn btn-rounded btn-primary">Report/Bulan</a>
+                    <!-- <a href="{{route('dinas.export')}}" class="btn btn-rounded btn-primary">Report/Hari</a>
+                    <a href="{{route('dinas.exportMonth')}}" class="btn btn-rounded btn-primary">Report/Bulan</a> -->
                     @elseif(Auth::user()->role_id == 4)
                     <a href="{{route('kecamatan.lokets.create')}}" class="btn btn-rounded btn-danger">Tambah Loket</a>
                     <a href="{{route('kecamatan.liveAntrian')}}" target="_blank" class="btn btn-rounded btn-success">Lihat Semua Antrian</a>

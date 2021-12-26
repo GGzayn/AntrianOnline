@@ -70,7 +70,8 @@ class OpdController extends Controller
      */
     public function edit($id)
     {
-        //
+        $opd = Opd::where('id',$id)->get();
+        return view('opd.edit',compact('opd'));
     }
 
     /**
@@ -82,7 +83,16 @@ class OpdController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = Opd::find($id);
+        $data->id_opd = $request->id_opd;
+        $data->nama_opd = $request->nama_opd;
+        $data->nama_kordinator = $request->nama_kordinator;
+        $data->nip_kordinator = $request->nip_kordinator;
+        $data->jabatan = $request->jabatan;
+
+        $data->save();
+
+        return redirect()->route('admin.opds.index')->with('status',' OPD has Been Edited');
     }
 
     /**
@@ -93,7 +103,9 @@ class OpdController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Opd::find($id);
+        $data->delete();
+        return redirect()->route('admin.opds.index')->with('status',' OPD has Been Deleted');
     }
 
     public function MobileOpdList()

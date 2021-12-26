@@ -30,7 +30,7 @@
                         <label for="name" class="col-sm-2 control-label">Nama</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Nama">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Nama" required>
                         </div>
                     </div>
 
@@ -38,7 +38,7 @@
                         <label for="email" class="col-sm-2 control-label">Email</label>
 
                         <div class="col-sm-10">
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
                         </div>
                     </div>
 
@@ -46,7 +46,7 @@
                         <label for="password" class="col-sm-2 control-label">Password</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="password" class="form-control" id="password" placeholder="Password">
+                            <input type="text" name="password" class="form-control" id="password" placeholder="Password" required>
                         </div>
                     </div>
 
@@ -54,7 +54,7 @@
                         <label for="role" class="col-sm-2 control-label">Role</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="role">
+                            <select class="form-control select2" style="width: 100%;" name="role" required>
                                 @foreach($role as $row)
                                     <option value = "{{$row->id}}"  id="role">{{$row->role}}</option>
                                 @endforeach
@@ -66,7 +66,7 @@
                         <label for="upt" class="col-sm-2 control-label">UPT</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="upt">
+                            <select class="form-control select2" style="width: 100%;" name="upt" required>
                                 @foreach($upt as $row)
                                     <option value = "{{$row->id}}" id="upt">{{$row->upt}}</option>
                                 @endforeach

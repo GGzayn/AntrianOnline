@@ -29,7 +29,7 @@
                     <label for="nama_layanan" class="col-sm-2 control-label">Nama Layanan</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="nama_layanan" class="form-control" id="nama_layanan" placeholder="Nama Layanan">
+                      <input type="text" name="nama_layanan" class="form-control" id="nama_layanan" placeholder="Nama Layanan" required>
                     </div>
 
                     <div class="col-sm-10">
@@ -41,7 +41,7 @@
                     <label for="kode_layanan" class="col-sm-2 control-label">Kode Layanan</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="kode_layanan" class="form-control" id="kode_layanan" placeholder="Kode Layanan">
+                      <input type="text" name="kode_layanan" class="form-control" id="kode_layanan" placeholder="Kode Layanan" required>
                     </div>
                     
                   </div>
@@ -50,7 +50,7 @@
                     <label for="kata_kunci" class="col-sm-2 control-label">Kata Kunci</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="kata_kunci" class="form-control" id="kata_kunci" placeholder="Masukkan Maksimal 3 Karakter Menggunakan Huruf Kapital">
+                      <input required type="text" name="kata_kunci" class="form-control" id="kata_kunci" placeholder="Masukkan Maksimal 3 Karakter Menggunakan Huruf Kapital">
                     </div>
                     
                   </div>
@@ -59,7 +59,7 @@
                     <label for="alamat" class="col-sm-2 control-label">Alamat</label>
 
                     <div class="col-sm-10">
-                      <textarea name="alamat" id="alamat" cols="70" rows="10"></textarea>
+                      <textarea required  name="alamat" id="alamat" cols="70" rows="10"></textarea>
                     </div>
                     
                   </div>
@@ -68,7 +68,7 @@
                     <label for="no_telepon" class="col-sm-2 control-label">Nomor Telepon</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="no_telepon" class="form-control" id="no_telepon" placeholder="Nomor Telepon">
+                      <input type="text" name="no_telepon" class="form-control" id="no_telepon" placeholder="Nomor Telepon (021123456789)" required>
                     </div>
                     
                   </div>
@@ -77,7 +77,7 @@
                       <label for="jenis_layanan" class="col-sm-2 control-label">Jenis Layanan</label>
 
                       <div class="col-sm-10">
-                          <select class="form-control select2" style="width: 100%;" name="jenis_layanan">
+                          <select class="form-control select2" style="width: 100%;" name="jenis_layanan" required>
                             <option value = "1">Antrian Online</option>
                             <option value = "2">Full Online</option>
                           </select>

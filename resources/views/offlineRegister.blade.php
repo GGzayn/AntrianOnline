@@ -62,14 +62,14 @@
                                 <label for="nama" class="col-sm-2 control-label">Nama</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama">
+                                    <input type="text" name="nama" class="form-control" id="nama" placeholder="Nama" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="nik" class="col-sm-2 control-label">NIK</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="nik" class="form-control" id="nik" placeholder="NIK">
+                                    <input type="text" name="nik" class="form-control" id="nik" size="16" maxlength="16" minlength="16" placeholder="NIK" required> 
                                 </div>
                             </div>
 
@@ -77,14 +77,31 @@
                                 <label for="layanan_id" class="col-sm-2 control-label">Pilih Layanan</label>
 
                                 <div class="col-sm-10">
-                                    <select class="form-control select2" style="width: 100%;" name="layanan_id">
+                                    <select class="form-control select2" style="width: 100%;" name="layanan_id" required> 
                                         @foreach($layanan as $row)
-                                        <option value="{{$row->id}}" id="role">{{$row->nama_layanan}}</option>
+                                        <option value="{{$row->id}}" id="layanan_id">{{$row->nama_layanan}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
+                            @if(Auth::user()->role_id == 4)
+
+                                <div class="form-group">
+                                    <label for="kelurahan" class="col-sm-2 control-label">Pilih Kelurahan</label>
+
+                                    <div class="col-sm-10">
+                                        <select class="form-control select2" style="width: 100%;" name="kelurahan">
+                                            @foreach($data as $row)
+                                            <option value="{{$row->id}}" id="kelurahan">{{$row->urban}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif 
+
+                            
+                            
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer">
@@ -141,9 +158,34 @@
     </script>
 
     <script type = "text/javascript">
+        $(document).ready(function(){
+            $('#keca').change(function(){
+                var keca = $(this).val();
+                if(keca) {
+                    $.ajax({
+                        url: "{{url('adminUpt/getUrban')}}/"+keca,
+                        type: "GET",
+                        dataType: "json",
+                        // data: {id: keca},
+                        success:function(data)
+                        {
+                            if(data){
+                                $('#kelu').empty();
+                                $('#kelu').append('<option hidden>Pilih Kelurahan</option>'); 
+                                $.each(data, function(key, kelu){
+                                    $('select[name="kelurahan"]').append('<option value="'+ kelu +'">' + key+ '</option>');
+                                });
+                            }else{
+                                $('#kelu').empty();
+                            }
+                        }
+                    });
+                }else{
+                    $('#kelu').empty();
+                }
+            });
+        });
         
-       
-
     </script>
 
 </body>

@@ -35,6 +35,9 @@ class CreateAntriansTable extends Migration
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();
             $table->longText('patokan')->nullable();
+            $table->longText('nama_wp')->nullable();
+            $table->longText('nop')->nullable();
+            $table->string('jumlah_berkas')->nullable();
             $table->timestamps();
         });
     }

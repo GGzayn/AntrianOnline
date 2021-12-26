@@ -17,6 +17,7 @@ class CreateUptsTable extends Migration
             $table->id();
             $table->string('kode_upt');
             $table->string('upt');
+            $table->longText('alamat');
             $table->timestamps();
         });
     }

@@ -30,7 +30,7 @@
                     <label for="kodeOpd" class="col-sm-2 control-label">Kode OPD</label>
 
                     <div class="col-sm-10">
-                      <input type="number" name="id_opd" class="form-control" id="kodeOpd" placeholder="Kode OPD">
+                      <input type="number" name="id_opd" class="form-control" id="kodeOpd" placeholder="Kode OPD" required>
                     </div>
                   </div>
 
@@ -38,7 +38,7 @@
                     <label for="namaOpd" class="col-sm-2 control-label">Nama OPD</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="nama_opd" class="form-control" id="namaOpd" placeholder="Nama OPD">
+                      <input type="text" name="nama_opd" class="form-control" id="namaOpd" placeholder="Nama OPD" required>
                     </div>
                   </div>
 
@@ -46,7 +46,7 @@
                     <label for="nama_kordinator" class="col-sm-2 control-label">Nama Kordinator</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="nama_kordinator" class="form-control" id="nama_kordinator" placeholder="Nama Kordinator">
+                      <input type="text" name="nama_kordinator" class="form-control" id="nama_kordinator" placeholder="Nama Kordinator" required>
                     </div>
                   </div>
 
@@ -54,7 +54,7 @@
                     <label for="nip_kordinator" class="col-sm-2 control-label">NIP Kordinator</label>
 
                     <div class="col-sm-10">
-                      <input type="number" name="nip_kordinator" class="form-control" id="nip_kordinator" placeholder="NIP Kordinator">
+                      <input type="number" name="nip_kordinator" class="form-control" id="nip_kordinator" placeholder="NIP Kordinator" required>
                     </div>
                   </div>
 
@@ -62,7 +62,7 @@
                     <label for="jabatan" class="col-sm-2 control-label">Jabatan</label>
 
                     <div class="col-sm-10">
-                      <input type="text" name="jabatan" class="form-control" id="jabatan" placeholder="Jabatan">
+                      <input type="text" name="jabatan" class="form-control" id="jabatan" placeholder="Jabatan" required>
                     </div>
                   </div>
                   

@@ -17,6 +17,11 @@ class Urbans extends Model
         'district_id'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
+
     public function district()
     {
         return $this->belongsTo(Districts::class);

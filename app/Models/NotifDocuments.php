@@ -18,6 +18,10 @@ class NotifDocuments extends Model
         'status_pengiriman',
         'note'
     ];
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
 
     public function antrian()
     {

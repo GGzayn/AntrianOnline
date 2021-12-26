@@ -1,5 +1,9 @@
 @extends('admin.layout')
 
+@section('newBerkas')
+{{$newBerkas}}
+@endsection
+
 @section('content')
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -48,6 +52,7 @@
                     <tr>
                         <th>Nama</th>
                         <th>NIK</th>
+                        <th>Nomor Dokumen</th>
                         <th>Status Berkas</th>
                         <th>Catatan</th>
                         <th>Action</th>
@@ -57,32 +62,36 @@
                     @foreach($data as $row)
                         @foreach($row->antrian as $waw)
                             @if($waw->status_antrian == 3)
-                            <tr>
-                                <td>{{$waw->nama}}</td>
-                                <td>{{$waw->nik}}</td>
                                 @foreach($waw->userDoc as $usr)
                                     @if($usr->status_berkas == 0)
-                                    <td><b style = "color : blue ">Berkas Di Proses</b> </td>
-                                    @elseif($usr->status_berkas == 1)
-                                    <td> <b style = "color : green "> Berkas Di Terima </b></td>
-                                    @elseif($usr->status_berkas == 2)
-                                    <td> <b style = "color : red "> Berkas Di Tolak </b></td>
+                                    <tr>
+                                        <td>{{$waw->nama}}</td>
+                                        <td>{{$waw->nik}}</td>
+                                        <td>{{$row->layanan_id}}.{{$waw->id}}</td>
+                                        @if($usr->status_berkas == 0)
+                                        <td><b style = "color : blue ">Verifikasi Berkas</b> </td>
+                                        @elseif($usr->status_berkas == 1)
+                                        <td> <b style = "color : green "> Berkas Di Terima </b></td>
+                                        @elseif($usr->status_berkas == 2)
+                                        <td> <b style = "color : red "> Berkas Di Tolak </b></td>
+                                        @endif
+                                        <td>{{$usr->note}}</td>
+                                    
+                                        <td>
+                                        @if(Auth::user()->role_id == 4)
+                                            <form action="{{route('kecamatan.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
+                                        @elseif(Auth::user()->role_id == 8)
+                                            <form action="{{route('adminUpt.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
+                                        @endif
+                                                @csrf
+                                                @method('GET')
+                                                <button type="submit" class="btn btn-success btn-rounded">Update Status Berkas</button>
+                                            </form>
+                                        </td>
+                                        
+                                    </tr>
                                     @endif
-                                    <td>{{$usr->note}}</td>
-                                
-                                    <td>
-                                    @if(Auth::user()->role_id == 4)
-                                        <form action="{{route('kecamatan.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
-                                    @elseif(Auth::user()->role_id == 8)
-                                        <form action="{{route('adminUpt.documents.edit', $usr->id) }}" method="post" class="form-horizontal">
-                                    @endif
-                                            @csrf
-                                            @method('GET')
-                                            <button type="submit" class="btn btn-success btn-rounded">Update Status Berkas</button>
-                                        </form>
-                                    </td>
                                 @endforeach
-                            </tr>
                             @endif
                         @endforeach
                     

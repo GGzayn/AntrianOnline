@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use App\Models\Layanan;
 use App\Models\Opd;
 use App\Models\Loket;
+use App\Models\Districts;
 
 class LayananController extends Controller
 {
@@ -123,6 +124,16 @@ class LayananController extends Controller
             'status' => 'success',
             'message' => 'Pengambilan data berhasil',
             'layanan' => $layanan,
+        ], 200);
+    }
+
+    public function showUpt()
+    {
+        $kecamatan = Districts::where('city_id',3603)->with('upt')->get();
+        return Response([
+            'status' => 'success',
+            'message' => 'Pengambilan data berhasil',
+            'data' => $kecamatan,
         ], 200);
     }
 }

@@ -50,7 +50,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-calendar"></i>
                         </div>
-                            <input type="text" class="form-control" id="reservation" name="reservation">
+                            <input type="text" class="form-control" id="reservation" name="reservation" required>
                         </div>
                         <!-- /.input group -->
                     </div>

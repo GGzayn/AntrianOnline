@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Opd;
 use App\Models\Loket;
+use App\Models\SyaratLayanan;
+
+use Carbon\Carbon;
 
 class Layanan extends Model
 {
@@ -21,10 +24,19 @@ class Layanan extends Model
         'jenis_layanan',
         'kata_kunci'
     ];
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
 
     public function opd()
     {
         return $this->belongsTo(Opd::class);
+    }
+
+    public function syaratLayanan()
+    {
+        return $this->hasOne(SyaratLayanan::class);
     }
 
     public function loket()

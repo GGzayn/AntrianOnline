@@ -19,6 +19,11 @@ class UserDocuments extends Model
         'note'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
+
     public function antrian()
     {
         return $this->belongsTo(Antrian::class);

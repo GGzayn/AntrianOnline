@@ -21,6 +21,10 @@ class Districts extends Model
         'upt_id'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
     public function upt()
     {
         return $this->belongsTo(Upt::class);
@@ -32,7 +36,7 @@ class Districts extends Model
     }
     public function urban()
     {
-        return $this->hasMany(Urbans::class);
+        return $this->hasMany(Urbans::class,'district_id','id');
     }
 
     public function loket()

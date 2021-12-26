@@ -29,7 +29,7 @@ class A_kecamatanController extends Controller
     public function create()
     {
         $role = Role::all();
-        $district = Districts::get();
+        $district = Districts::where('city_id',3603)->get();
         return view('a_kecamatan.create',compact('district','role'));
     }
 

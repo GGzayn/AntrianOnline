@@ -36,7 +36,7 @@
                         <label for="nama_petugas" class="col-sm-2 control-label">Nama Petugas</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="nama_petugas">
+                            <select class="form-control select2" style="width: 100%;" name="nama_petugas" required>
                                 @foreach($namaLoket as $row)
                                     <option value = "{{$row->email}}"  id="nama_petugas">{{$row->email}}</option>
                                 @endforeach
@@ -48,7 +48,7 @@
                         <label for="nama_loket" class="col-sm-2 control-label">Nama Loket</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="nama_loket" class="form-control" id="nama_loket" placeholder="Nama Loket">
+                            <input type="text" name="nama_loket" class="form-control" id="nama_loket" placeholder="Nama Loket" required>
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                         <label for="nama_layanan" class="col-sm-2 control-label">Nama Layanan</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="nama_layanan">
+                            <select class="form-control select2" style="width: 100%;" name="nama_layanan" required>
                                 @foreach($layanan as $row)
                                     <option value = "{{$row->id}}"  id="nama_layanan">{{$row->nama_layanan}}</option>
                                 @endforeach
@@ -68,7 +68,7 @@
                         <label for="waktu_buka" class="col-sm-2 control-label">Waktu Buka</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="waktu_buka" class="form-control" id="waktu_buka" placeholder="Waktu Buka">
+                            <input type="text" name="waktu_buka" class="form-control" id="waktu_buka" placeholder="contoh : 09:00" required>
                         </div>
                     </div>
 
@@ -76,7 +76,7 @@
                         <label for="waktu_tutup" class="col-sm-2 control-label">Waktu Tutup</label>
 
                         <div class="col-sm-10">
-                            <input type="text" name="waktu_tutup" class="form-control" id="waktu_tutup" placeholder="Waktu Tutup">
+                            <input type="text" name="waktu_tutup" class="form-control" id="waktu_tutup" placeholder="contoh : 15:00" required>
                         </div>
                     </div>
 
@@ -84,7 +84,7 @@
                         <label for="interval_waktu" class="col-sm-2 control-label">Interval Waktu</label>
 
                         <div class="col-sm-10">
-                            <input type="number" name="interval_waktu" class="form-control" id="interval_waktu" placeholder="Interval Waktu Dalam menit">
+                            <input type="number" name="interval_waktu" class="form-control" id="interval_waktu" placeholder="Interval Waktu Dalam menit (10)" required>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@
                         <label for="loket_antrian" class="col-sm-2 control-label">Loket Antrian</label>
 
                         <div class="col-sm-10">
-                            <select class="form-control select2" style="width: 100%;" name="loket_antrian">
+                            <select class="form-control select2" style="width: 100%;" name="loket_antrian" required>
                                 <option value="1">Antrian Online</option>
                                 <option value="2">Antrian Offline</option>
                             </select>

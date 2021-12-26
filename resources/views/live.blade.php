@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="refresh" content="30" >
+	<meta http-equiv="refresh" content="10" >
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -25,7 +25,10 @@
 			<h1>SELAMAT DATANG</h1>
 		</div>
 		<div class="row justify-content-center">
-			<h1>Antrian Online di {{ Auth::user()->name }}</h1>
+			<h1>{{$title1}}</h1>
+		</div>
+		<div class="row justify-content-center">
+			<h1>{{ Auth::user()->name }}</h1>
 		</div>
 		<div class="row justify-content-center">
 			@foreach ($data as $row)

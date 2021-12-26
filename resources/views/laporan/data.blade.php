@@ -62,6 +62,8 @@
                     <tr>
                        <th>Nama</th>
                        <th>NIK</th>
+                       <th>Nomor Dokumen</th>
+                       <th>Nama Layanan</th>
                        <th>Tanggal/Waktu</th>
                        <th>Status Berkas</th>
                     </tr>
@@ -71,23 +73,37 @@
                         <tr>
                             <td>{{$row->antrian['nama']}}</td>
                             <td>{{$row->antrian['nik']}}</td>
-                            <td>{{$row->updated_at}}</td>
-                            @if($row->status_pengiriman == 0)
-                                <td> <b style = "color : green "> Proses Pencetakan Berkas di Dinas </b></td>
-                            @elseif($row->status_pengiriman == 1)
-                                <td> <b style = "color : green "> Berkas Telah Dicetak dan Dikirim ke Kecamatan/UPT </b></td>
-                            @elseif($row->status_pengiriman == 2)
-                                <td> <b style = "color : green "> Berkas Dikirim Ke Kelurahan </b></td>
-                            @elseif($row->status_pengiriman == 3)
-                                <td> <b style = "color : green "> Berkas Di Pickup Oleh Kurir Tancap Gas </b></td>
-                            @elseif($row->status_pengiriman == 4)
-                                <td> <b style = "color : green "> Berkas Di Antar Oleh Kurir Tancap Gas </b></td>
-                            @elseif($row->status_pengiriman == 5)
-                                <td> <b style = "color : green "> Berkas Berhasil Terkirim </b></td>
-                            @elseif($row->status_pengiriman == 6)
-                                <td> <b style = "color : red "> Berkas Gagal Terkirim </b></td>
-                            @elseif($row->status_pengiriman == 7)
-                                <td> <b style = "color : green "> Kurir Ditugaskan </b></td>
+                            <td>{{$row->antrian->loket['layanan_id']}}.{{$row->antrian['id']}}</td>
+                            <td>{{$row->antrian->loket->layanan['nama_layanan']}}</td>
+                            <td>{{$row->updated_at->format('d-m-Y H:i:s')}}</td>
+                            @if($row->status_berkas == 0)
+                                <td> <b style = "color : blue "> Proses Verifikasi Berkas </b></td>
+                            @elseif($row->status_berkas == 2)
+                                <td> <b style = "color : red "> Berkas DiTolak Oleh UPT </b></td>
+                            @elseif($row->status_berkas == 3)
+                                <td> <b style = "color : red "> Berkas Tidak Lengkap </b></td>
+                            @elseif($row->status_berkas == 4)
+                                <td> <b style = "color : red "> Berkas Ditolak Oleh Dinas </b></td>
+                            @else
+                                @if($row->status_pengiriman == 0)
+                                    <td> <b style = "color : green "> Berkas Dikirim ke Dinas </b></td>
+                                @elseif($row->status_pengiriman == 1)
+                                    <td> <b style = "color : green "> Berkas Telah Diproses Oleh Dinas </b></td>
+                                @elseif($row->status_pengiriman == 2)
+                                    <td> <b style = "color : green "> Berkas Dikirim Ke Petugas Pengiriman </b></td>
+                                @elseif($row->status_pengiriman == 3)
+                                    <td> <b style = "color : green "> Berkas Di Pickup Oleh Kurir Tancap Gas </b></td>
+                                @elseif($row->status_pengiriman == 4)
+                                    <td> <b style = "color : green "> Berkas Di Antar Oleh Kurir Tancap Gas </b></td>
+                                @elseif($row->status_pengiriman == 5)
+                                    <td> <b style = "color : green "> Berkas Berhasil Terkirim ke Masyarakat</b></td>
+                                @elseif($row->status_pengiriman == 6)
+                                    <td> <b style = "color : red "> Berkas Gagal Terkirim </b></td>
+                                @elseif($row->status_pengiriman == 7)
+                                    <td> <b style = "color : green "> Kurir Ditugaskan </b></td>
+                                @elseif($row->status_pengiriman == 8)
+                                    <td> <b style = "color : green "> Berkas Diterima Oleh Dinas </b></td>
+                                @endif
                             @endif
                         </tr>
                         

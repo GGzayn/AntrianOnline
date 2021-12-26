@@ -30,8 +30,9 @@ class Loket extends Model
     protected $casts = [
         'waktu_buka' => 'datetime:H:i',
         'waktu_tutup' => 'datetime:H:i',
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
     ];
-    
 
     public function layanan()
     {

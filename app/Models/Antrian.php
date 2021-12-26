@@ -40,12 +40,18 @@ class Antrian extends Model
         'longitude',
         'latitude',
         'patokan',
+        'nama_wp',
+        'nop',
+        'jumlah_berkas'
 
     ];
 
     protected $casts = [
         'waktu_antrian' => 'datetime:H:i',
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
     ];
+    
 
     protected $appends = [
         'count_of_today',
@@ -106,7 +112,7 @@ class Antrian extends Model
 
     public function getCountOfTodayAttribute()
     {
-        return $this->where('tanggal_antrian',date('Y-m-d'))->Where('status_antrian',1)->count();
+        return $this->where('tanggal_antrian',date('Y-m-d'))->Where('status_antrian','=', 1)->count();
     }
     public function getCountOfDayAttribute()
     {

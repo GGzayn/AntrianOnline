@@ -24,29 +24,32 @@ class DocumentController extends Controller
     public function index()
     {
         $role = auth()->user()->role->id;
+        $child = auth()->user()->child_id;
         if ($role == 2 ) {
-            $data = UserDocuments::where('status_berkas',1)->where('status_pengiriman',0)->with('antrian')->orderBy('id','DESC')->get();
-            // $newBerkas = UserDocuments::Where('status_pengiriman',0)->where('status_berkas',1)->count();
-            $newBerkas = Loket::where('child_id',auth()->user()->child_id)->whereHas('antrian', function($q)
+            $data = UserDocuments::where('status_berkas',1)->where('status_pengiriman',8)->with('antrian')->orderBy('id','DESC')->get();
+            $newBerkas = Loket::whereHas('layanan',function($l) use($child)
+                {
+                    $l->where('opd_id',$child);
+                })
+                ->whereHas('antrian', function($q)
                 {
                     $q->where('status_antrian', '=', 3)->whereHas('userDoc',function($e)
                     {
-                        $e->where('status_berkas','=', 1)->where('status_pengiriman','=',0);
+                        $e->where('status_berkas','=', 1)->where('status_pengiriman','=',8);
                     });
                 })->count();
             return view('opd_berkas.index',compact('data','newBerkas'));
         }
-        elseif($role == 4 )
+        elseif($role == 4 || $role == 8 )
         {
             $data = Loket::where('child_id',auth()->user()->child_id)->with('antrian.userDoc')->orderBy('id','DESC')->get();
-            // $newBerkas = UserDocuments::Where('status_berkas',0)->count();
-            $newBerkas = Loket::where('child_id',auth()->user()->child_id)->whereHas('antrian', function($q)
+            $newBerkas = UserDocuments::where('status_berkas',0)->with(['antrian.loket.upt','antrian.loket.district'])->whereHas('antrian', function($a) use($child)
+            {
+                $a->where('status_antrian',3)->whereHas('loket', function($l) use($child) 
                 {
-                    $q->where('status_antrian', '=', 3)->whereHas('userDoc',function($e)
-                    {
-                        $e->where('status_berkas','=', 0);
-                    });
-                })->count();
+                    $l->where('child_id', $child);
+                });
+            })->count();
             return view('kec_berkas.index',compact('data','newBerkas'));
         }
         
@@ -176,17 +179,38 @@ class DocumentController extends Controller
 
     public function berkas_kirim(Request $request)
     {
-        $data = UserDocuments::find($request->idBerkas);
-        $data->status_pengiriman = 1;
-        $data->save();
+        if(isset($_POST['terima']))
+        {
+            $data = UserDocuments::find($request->idBerkas);
+            $data->status_pengiriman = 1;
+            $data->save();
+    
+            $not = new NotifDocuments;
+            $not->antrian_id = $data->antrian_id;
+            $not->status_berkas = $data->status_berkas;
+            $not->note = $request->note;
+            $not->status_baca = false;
+            $not->status_pengiriman = $data->status_pengiriman;
+            $not->save();
+        }
+        elseif(isset($_POST['tolak']))
+        {
+            $data = UserDocuments::find($request->idBerkas);
+            $data->status_pengiriman = 0;
+            $data->status_berkas = 4; //berkas ditolak oleh Dinas
+            $data->note = $request->note;
+            $data->status_baca = false;
+            $data->save();
 
-        $not = new NotifDocuments;
-        $not->antrian_id = $data->antrian_id;
-        $not->status_berkas = $data->status_berkas;
-        $not->note = $request->note;
-        $not->status_baca = false;
-        $not->status_pengiriman = $data->status_pengiriman;
-        $not->save();
+            $not = new NotifDocuments;
+            $not->antrian_id = $data->antrian_id;
+            $not->status_berkas = $data->status_berkas;
+            $not->note = $request->note;
+            $not->status_baca = false;
+            $not->status_pengiriman = $data->status_pengiriman;
+            $not->save();
+        }
+        
 
         return redirect()->route('dinas.documents.index')->with('status','Berkas Telah DiPerbarui');
     }
@@ -203,13 +227,13 @@ class DocumentController extends Controller
         $exp = explode(' - ',$request->reservation);
         $start = $exp[0];
         $end = $exp[1];
-        $doc = UserDocuments::where('status_berkas',1)->whereBetween('created_at', [$start, $end])->with('antrian')->get();
+        $doc = UserDocuments::whereBetween('updated_at', [$start, $end])->with('antrian.loket.layanan')->get();
         return view('laporan.data',compact('doc'));
     }
 
     public function g_berkas()
     {
-        $doc = UserDocuments::where('status_pengiriman',2)->orWhere('status_pengiriman',1)->with('antrian')->get();
+        $doc = UserDocuments::where('status_pengiriman',2)->with('antrian')->get();
         return Response([
             'status' => true,
             'message' => 'Pengambilan data berhasil',
@@ -242,25 +266,69 @@ class DocumentController extends Controller
 
     public function c_berkas()
     {
-        // $data = Loket::where('child_id',auth()->user()->child_id)->with('antrian.userDoc')->get();
-        $data = UserDocuments::where('status_berkas',1)->where('status_pengiriman',1)->with('antrian.loket')->get();
-        $newBerkas = UserDocuments::Where('status_pengiriman',1)->count();
-        return view('berkasTercetak',compact('data','newBerkas'));
+        $dataOnline = UserDocuments::where('status_berkas',1)->where('status_pengiriman',1)->with('antrian.loket')
+        ->whereHas('antrian',function($a){
+            $a->where('jenis_antrian',0)->whereHas('loket',function($l){
+                $l->where('child_id',auth()->user()->child_id);
+            });
+        })
+        ->get();
+        $dataOffline = UserDocuments::where('status_berkas',1)->where('status_pengiriman',1)->with('antrian.loket')
+        ->whereHas('antrian',function($a){
+            $a->where('jenis_antrian',1)->whereHas('loket',function($l){
+                $l->where('child_id',auth()->user()->child_id);
+            });
+        })
+        ->get();
+        $newBerkasOnline = UserDocuments::where('status_berkas',1)->where('status_pengiriman',1)->with('antrian.loket')
+        ->whereHas('antrian',function($a){
+            $a->where('jenis_antrian',0)->whereHas('loket',function($l){
+                $l->where('child_id',auth()->user()->child_id);
+            });
+        })
+        ->count();
+
+        $newBerkasOffline = UserDocuments::where('status_berkas',1)->where('status_pengiriman',1)->with('antrian.loket')
+        ->whereHas('antrian',function($a){
+            $a->where('jenis_antrian',1)->whereHas('loket',function($l){
+                $l->where('child_id',auth()->user()->child_id);
+            });
+        })
+        ->count();
+        return view('berkasTercetak',compact('dataOnline','dataOffline','newBerkasOnline','newBerkasOffline'));
     }
 
     public function ck_berkas(Request $request)
     {
-        $doc = UserDocuments::find($request->idBerkas);
-        $doc->status_pengiriman = 2;
-        $doc->save();
+        if(isset($_POST['petugas']))
+        {
+            $doc = UserDocuments::find($request->idBerkas);
+            $doc->status_pengiriman = 2;
+            $doc->save();
 
-        $not = new NotifDocuments;
-        $not->antrian_id = $doc->antrian_id;
-        $not->status_berkas = $doc->status_berkas;
-        $not->note = $request->note;
-        $not->status_baca = false;
-        $not->status_pengiriman = $doc->status_pengiriman;
-        $not->save();
+            $not = new NotifDocuments;
+            $not->antrian_id = $doc->antrian_id;
+            $not->status_berkas = $doc->status_berkas;
+            $not->note = $request->note;
+            $not->status_baca = false;
+            $not->status_pengiriman = $doc->status_pengiriman;
+            $not->save();
+        }
+        elseif(isset($_POST['masyarakat']))
+        {
+            $doc = UserDocuments::find($request->idBerkas);
+            $doc->status_pengiriman = 5;
+            $doc->save();
+
+            $not = new NotifDocuments;
+            $not->antrian_id = $doc->antrian_id;
+            $not->status_berkas = $doc->status_berkas;
+            $not->note = $request->note;
+            $not->status_baca = false;
+            $not->status_pengiriman = $doc->status_pengiriman;
+            $not->save();
+        }
+        
 
         $role = auth()->user()->role->id;
         if ($role == 4)
@@ -298,6 +366,44 @@ class DocumentController extends Controller
         $not->save();
 
         return redirect()->route('kelurahan.kelurahanBerkas')->with('status','Berkas Telah DiPerbarui');
+    }
+
+    public function berkasMasuk()
+    {
+        $role = auth()->user()->role->id;
+        $child = auth()->user()->child_id;
+        if ($role == 2 ) {
+            $data = UserDocuments::where('status_berkas',1)->where('status_pengiriman',0)->with('antrian')->orderBy('id','DESC')->get();
+            $newBerkas = Loket::whereHas('layanan',function($l) use($child)
+                {
+                    $l->where('opd_id',$child);
+                })
+                ->whereHas('antrian', function($q)
+                {
+                    $q->where('status_antrian', '=', 3)->whereHas('userDoc',function($e)
+                    {
+                        $e->where('status_berkas','=', 1)->where('status_pengiriman','=',0);
+                    });
+                })->count();
+            return view('opd_berkas.berkasMasuk',compact('data','newBerkas'));
+        }
+    }
+
+    public function berkasKeluar(Request $request)
+    {
+            $data = UserDocuments::find($request->idBerkas);
+            $data->status_pengiriman = 8;
+            $data->save();
+    
+            $not = new NotifDocuments;
+            $not->antrian_id = $data->antrian_id;
+            $not->status_berkas = $data->status_berkas;
+            $not->note = $request->note;
+            $not->status_baca = false;
+            $not->status_pengiriman = $data->status_pengiriman;
+            $not->save();
+
+            return redirect()->route('dinas.berkasMasuk')->with('status','Berkas Telah Diterima');
     }
     
 }

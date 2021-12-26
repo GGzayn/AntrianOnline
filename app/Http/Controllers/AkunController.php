@@ -9,6 +9,7 @@ use App\Models\Opd;
 use App\Models\Role;
 use App\Models\Districts;
 
+
 class AkunController extends Controller
 {
     /**
@@ -74,7 +75,10 @@ class AkunController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = User::where('id',$id)->get();
+        $role = Role::all();
+        $opd = Opd::all();
+        return view('akun.edit',compact('data','role','opd'));
     }
 
     /**
@@ -86,7 +90,16 @@ class AkunController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = User::find($id);
+        $data->name = $request->name;
+        $data->email = $request->email;
+        $data->password = bcrypt($request->password);
+        $data->role_id = $request->role;
+        $data->child_id = $request->opd;
+
+        $data->save();
+
+        return redirect()->route('admin.akuns.index')->with('status',' Account has Been Edited');
     }
 
     /**
@@ -97,16 +110,29 @@ class AkunController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = User::find($id);
+        $data->delete();
+        return redirect()->route('admin.akuns.index')->with('status',' Account has Been Deleted');
     }
 
     public function pengguna()
     {
-        $user = User::where('role_id',2)->orWhere('role_id',4)->orWhere('role_id',6)->orWhere('role_id',7)->with('opd','role','district','urban','upt')->get();
+        $user = User::with('opd','role','district','urban','upt')->get();
         return Response([
             'status' => 'success',
-            'message' => 'Input data berhasil',
+            'message' => 'data berhasil ditampilkan',
             'data' => $user
         ], 200);
+    }
+
+    public function role()
+    {
+        $role = Role::get();
+        return Response([
+            'status' => 'success',
+            'message' => 'data berhasil ditampilkan',
+            'data' => $role
+        ], 200);
+
     }
 }

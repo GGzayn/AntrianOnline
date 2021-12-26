@@ -18,6 +18,11 @@ class Cities extends Model
         'province_id',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y H:i:s',
+        'updated_at' => 'datetime:d-m-Y H:i:s',
+    ];
+
     public function province()
     {
         return $this->belongsTo(Provinces::class);

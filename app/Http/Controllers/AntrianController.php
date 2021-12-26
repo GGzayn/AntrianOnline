@@ -30,12 +30,12 @@ class AntrianController extends Controller
         }
         elseif($role == 4 || $role == 5)
         {
-            $data = Loket::where('layanan_id',1)->where('child_id',auth()->user()->child_id)->with('district','layanan.opd','antrian')->paginate(10);
+            $data = Loket::where('layanan_id',1)->where('child_id',auth()->user()->child_id)->where('nama_petugas',auth()->user()->email)->with('district','layanan.opd','antrian')->paginate(10);
         }
 
         elseif($role == 7)
         {
-            $data = Loket::where('layanan_id',2)->where('child_id',auth()->user()->child_id)->with(['layanan.opd', 'antrian'])->paginate(10);
+            $data = Loket::where('child_id',auth()->user()->child_id)->where('nama_petugas',auth()->user()->email)->with(['layanan.opd', 'antrian'])->paginate(10);
         }
         return view ('antrian.index',compact('data'));
     }
@@ -79,7 +79,23 @@ class AntrianController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = auth()->user()->role->id;
+        $child = auth()->user()->child_id;
+        
+        if($role == 5)
+        {
+            $data = Urbans::where('district_id', $child)->get();
+            return view('antrian.edit',compact('data'));
+        }
+        elseif($role == 7)
+        {
+            $kecamatan = Districts::where('upt_id',$child)->get();
+            $userAntrians = Antrian::where('id',$id)->get();
+
+            return view('antrian.edit',compact('userAntrians','kecamatan'));
+        }
+
+        
     }
 
     /**
@@ -91,7 +107,30 @@ class AntrianController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $antrian = Antrian::find($id);
+        $antrian->alamat = $request->alamat;
+        $antrian->rt = $request->rt;
+        $antrian->rw = $request->rw;
+        $antrian->nop = $request->nop;
+        $antrian->district_id = $request->kecamatan;
+        $antrian->urban_id = $request->kelurahan;
+        $antrian->nama_wp = $request->nama_wp;
+        $antrian->jumlah_berkas = $request->jumlah_berkas;
+        $antrian->save();
+            
+            
+        
+        $role = auth()->user()->role->id;
+        if($role == 7)
+        {
+        return redirect()->route('upt.antrians.index')->with('status','berkas dengan Nomor Dokumen '.$id.' Telah di Perbarui');
+        }
+        if($role == 5)
+        {
+        return redirect()->route('loketKecamatan.antrians.index')->with('status','berkas dengan Nomor Dokumen '.$id.' Telah di Perbarui');
+        }
+        
     }
 
     /**
@@ -167,6 +206,9 @@ class AntrianController extends Controller
         $antrian->longitude = $request->longitude;
         $antrian->latitude = $request->latitude;
         $antrian->patokan = $request->patokan;
+        $antrian->nama_wp = $request->nama_wp;
+        $antrian->nop = $request->nop;
+        $antrian->jumlah_berkas = $request->jumlah_berkas;
 
         $dataAntri = Antrian::where('tanggal_antrian',$request->tanggal_antrian)->where('waktu_antrian',$request->waktu_antrian)->where('loket_id',$idLok)->get();
         $antriQ = Antrian::where('nik',$request->nik)->where('tanggal_antrian',$request->tanggal_antrian)->with('loket.layanan')->get()->pluck('loket.layanan.id');
@@ -200,7 +242,7 @@ class AntrianController extends Controller
 
     public function historyAntrian($nik)
     {
-        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->orderBy('id','desc')->get();
+        $antrian = Antrian::where('nik', $nik)->with('loket.district','loket.upt','loket.layanan.opd')->orderBy('id','desc')->get();
        
 
         return Response([
@@ -213,7 +255,7 @@ class AntrianController extends Controller
 
     public function homeAntrian($nik)
     {
-        $antrian = Antrian::where('nik', $nik)->with('loket.layanan.opd')->orderBy('id', 'desc')->limit(5)->get();
+        $antrian = Antrian::where('nik', $nik)->with('loket.district','loket.upt','loket.layanan.opd')->orderBy('id', 'desc')->limit(5)->get();
 
         return Response([
             'status' => 'success',

@@ -31,6 +31,7 @@
   <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="{{asset('adminlte')}}/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
 
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -86,11 +87,11 @@
 <!-- SlimScroll -->
 <script src="{{asset('adminlte')}}/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- ChartJS -->
-<script src="{{asset('adminlte')}}/bower_components/chart.js/Chart.js"></script>
+<!-- <script src="{{asset('adminlte')}}/bower_components/chart.js/Chart.js"></script> -->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="{{asset('adminlte')}}/dist/js/pages/dashboard2.js"></script>
+<!-- <script src="{{asset('adminlte')}}/dist/js/pages/dashboard2.js"></script> -->
 <!-- AdminLTE for demo purposes -->
-<script src="{{asset('adminlte')}}/dist/js/demo.js"></script>
+<!-- <script src="{{asset('adminlte')}}/dist/js/demo.js"></script> -->
 <!-- date-range-picker -->
 <script src="{{asset('adminlte')}}/bower_components/moment/min/moment.min.js"></script>
 <script src="{{asset('adminlte')}}/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
@@ -108,6 +109,7 @@
 <script>
   $(function () {
     $('#example1').DataTable()
+    $('#example3').DataTable()
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,
@@ -137,7 +139,8 @@
     
     });
 </script>
+
 </body>
 </html>
 
-
+@yield('footscript')
