@@ -557,6 +557,7 @@ class ComposerStaticInit6d3ae061c9c6f941b59b007d09ffea2d
         'App\\Http\\Controllers\\LoketController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoketController.php',
         'App\\Http\\Controllers\\OfflineRegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/OfflineRegisterController.php',
         'App\\Http\\Controllers\\OpdController' => __DIR__ . '/../..' . '/app/Http/Controllers/OpdController.php',
+        'App\\Http\\Controllers\\Syarat' => __DIR__ . '/../..' . '/app/Http/Controllers/Syarat.php',
         'App\\Http\\Controllers\\UptAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/UptAccountController.php',
         'App\\Http\\Controllers\\UptController' => __DIR__ . '/../..' . '/app/Http/Controllers/UptController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

@@ -26,6 +26,7 @@ return array(
     'App\\Http\\Controllers\\LoketController' => $baseDir . '/app/Http/Controllers/LoketController.php',
     'App\\Http\\Controllers\\OfflineRegisterController' => $baseDir . '/app/Http/Controllers/OfflineRegisterController.php',
     'App\\Http\\Controllers\\OpdController' => $baseDir . '/app/Http/Controllers/OpdController.php',
+    'App\\Http\\Controllers\\Syarat' => $baseDir . '/app/Http/Controllers/Syarat.php',
     'App\\Http\\Controllers\\UptAccountController' => $baseDir . '/app/Http/Controllers/UptAccountController.php',
     'App\\Http\\Controllers\\UptController' => $baseDir . '/app/Http/Controllers/UptController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
